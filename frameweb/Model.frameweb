@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frameweb:FramewebProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:frameweb="http://nemo.inf.ufes.br/projects/frameweb/FW-2015">
+  <compose xsi:type="frameweb:EntityModel" name="Entity Model"/>
+  <compose xsi:type="frameweb:NavigationModel" name="Navigation Model"/>
+  <compose xsi:type="frameweb:PersistenceModel" name="Persistence Model"/>
+  <compose xsi:type="frameweb:ApplicationModel" name="Application Model"/>
+</frameweb:FramewebProject>
