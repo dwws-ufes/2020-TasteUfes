@@ -442,3 +442,10 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 obj/*
+
+Models/*
+Controllers/*
+!Controllers/WeatherForecastController.cs
+Services/*
+Data/*
+Repositories/*
