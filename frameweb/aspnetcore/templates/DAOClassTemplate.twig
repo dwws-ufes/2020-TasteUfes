@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+namespace {{ package.Name }}
+{
+	public class {{ class.Name }} {% if generalizations is not empty %}: {{ ((generalizations[0]).GeneralizationSets[0]).Name }}, {{ "I" ~ class.Name }}{% else %}: {{ "I" ~ class.Name }}{% endif %}
+	{
+	    private readonly ApplicationDbContext _context;
+	    
+	    public {{ class.Name }}(ApplicationDbContext context)
+	    {
+	    	_context = context;
+	    }
+	    
+	    {% for method in methods %}
+			{{ method.Visibility.Name }} {% if method.MethodType is null %}void{% else %}{{ method.MethodType.Name }}{% endif %} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %})
+			{
+				throw new NotImplementedException();
+			}
+		{% endfor %}
+	}
+}
