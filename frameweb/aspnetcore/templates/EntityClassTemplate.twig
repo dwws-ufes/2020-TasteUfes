@@ -23,7 +23,7 @@ namespace {{ package.Name }}
 			{% if attribute.isUnique() == true %}
 				// Adicione a regra UNIQUE via Fluent API
 			{% endif %}
-			{{ attribute.Visibility.Name }} {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; }
+			{{ attribute.Visibility.Name }} {{ attribute.Type.Name }}{% if attribute.isIsNull() == true %}?{% endif %} {{ attribute.Name }} { get; set; }
 	    {% endif %}
 	{% endfor %}
 	
@@ -46,7 +46,6 @@ namespace {{ package.Name }}
 			    [InverseProperty("{{ sourceName }}")]
 			    public {{ collection }}<{{ targetTypeName }}> {{ targetName }} { get; set; }	
 			{% elseif sourceToTargetCardinality == "OneToOne" %}
-				{# TODO escrever o código da Fluent API #}
 				/* !!! Essa entidade contém uma relação 1..1 para si própria, o mapeamento dela
 				deve ser feito através da Fluent API. */
 				public {{ targetTypeName }} {{ targetName }} { get; set; }
