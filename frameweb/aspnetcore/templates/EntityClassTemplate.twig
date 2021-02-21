@@ -12,7 +12,7 @@ namespace {{ package.Name }}
 	{% for attribute in attributes %}
 	    {% if attribute.isID() == true %}
 		    [Key]
-		    {{ attribute.Visibility.Name }} {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; };
+		    {{ attribute.Visibility.Name }} {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; }
 	    {% else %}
 			{% if attribute.isIsNull() == false %}
 				[Required]
@@ -23,7 +23,7 @@ namespace {{ package.Name }}
 			{% if attribute.isUnique() == true %}
 				// Adicione a regra UNIQUE via Fluent API
 			{% endif %}
-			{{ attribute.Visibility.Name }} {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; };
+			{{ attribute.Visibility.Name }} {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; }
 	    {% endif %}
 	{% endfor %}
 	
@@ -41,19 +41,19 @@ namespace {{ package.Name }}
 			{% if sourceToTargetCardinality == "OneToMany" or sourceToTargetCardinality == "ManyToOne" %}
 			    [ForeignKey("{{ sourceName }}Id")]
 			    public {{ sourceTypeName }} {{ sourceName }} { get; set; }
-			    public Guid? {{ sourceName }}Id { get; set; };
+			    public Guid? {{ sourceName }}Id { get; set; }
 				
 			    [InverseProperty("{{ sourceName }}")]
-			    public {{ collection }}<{{ targetTypeName }}> {{ targetName }} { get; set; };		
+			    public {{ collection }}<{{ targetTypeName }}> {{ targetName }} { get; set; }	
 			{% elseif sourceToTargetCardinality == "OneToOne" %}
 				{# TODO escrever o código da Fluent API #}
 				/* !!! Essa entidade contém uma relação 1..1 para si própria, o mapeamento dela
 				deve ser feito através da Fluent API. */
-				public {{ targetTypeName }} {{ targetName }} { get; set; };
-				public Guid? {{ targetName }}Id { get; set; };
+				public {{ targetTypeName }} {{ targetName }} { get; set; }
+				public Guid? {{ targetName }}Id { get; set; }
 				
-				public {{ sourceTypeName }} {{ sourceName }} { get; set; };
-				public Guid? {{ sourceTypeName }}Id { get; set; };
+				public {{ sourceTypeName }} {{ sourceName }} { get; set; }
+				public Guid? {{ sourceTypeName }}Id { get; set; }
 			{% elseif sourceToTargetCardinality == "ManyToMany" %}
 				/* Crie uma classe intermediária entre {{ sourceTypeName }} e {{ targetTypeName }} com as seguintes propriedades:
 				[ForeignKey("{{ sourceTypeName }}SourceId")]
@@ -66,23 +66,23 @@ namespace {{ package.Name }}
 				
 				Por fim substitua o tipo Object abaixo */
 				[InverseProperty("{{ sourceTypeName }}Source")]
-				public {{ collection }}<Object> {{ targetName }} { get; set; };
+				public {{ collection }}<Object> {{ targetName }} { get; set; }
 				[InverseProperty("{{ targetTypeName }}Target")]
-				public {{ collection }}<Object> {{ sourceName }} { get; set; };
+				public {{ collection }}<Object> {{ sourceName }} { get; set; }
 			{% endif %}
 			
 		{% elseif sourceTypeName == class.Name %}
 			{% if sourceToTargetCardinality == "OneToMany" %}
 				[InverseProperty("{{ sourceName }}")]
-				public {{ collection }}<{{ targetTypeName }}> {{ targetName }} { get; set; };
+				public {{ collection }}<{{ targetTypeName }}> {{ targetName }} { get; set; }
 			{% elseif sourceToTargetCardinality == "ManyToOne" %}
 				[ForeignKey("{{ targetName }}Id")]
-				public {{ targetTypeName }} {{ targetName }} { get; set; };
-				public Guid {{ targetName }}Id { get; set; };
+				public {{ targetTypeName }} {{ targetName }} { get; set; }
+				public Guid {{ targetName }}Id { get; set; }
 			{% elseif sourceToTargetCardinality == "OneToOne" %}
 				/* !!! Caso essa entidade contenha mais de uma relação 1..1 entre {{ targetTypeName }} e {{ sourceTypeName }},
 				o mapeamento delas deve ser feito através da Fluent API. */
-				public {{ targetTypeName }} {{ targetName }} { get; set; };
+				public {{ targetTypeName }} {{ targetName }} { get; set; }
 			{% elseif sourceToTargetCardinality == "ManyToMany" %}
 				/* Crie uma classe intermediária entre {{ sourceTypeName }} e {{ targetTypeName }} com as seguintes propriedades:
 				
@@ -96,22 +96,22 @@ namespace {{ package.Name }}
 				
 				Por fim substitua o tipo Object abaixo */
 				[InverseProperty("{{ sourceName }}")]
-				public {{ collection }}<Object> {{ targetName }} { get; set; };
+				public {{ collection }}<Object> {{ targetName }} { get; set; }
 			{% endif %}
 		{% elseif targetTypeName == class.Name %}
 			{% if targetToSourceCardinality == "OneToMany" %}
 				[InverseProperty("{{ targetName }}")]
-				public {{ collection }}<{{ sourceTypeName }}> {{ sourceName }} { get; set; };
+				public {{ collection }}<{{ sourceTypeName }}> {{ sourceName }} { get; set; }
 			{% elseif targetToSourceCardinality == "ManyToOne" %}
 				[ForeignKey("{{ sourceName }}Id")]
-				public {{ sourceTypeName }} {{ sourceName }} { get; set; };
-				public Guid {{ sourceName }}Id { get; set; };
+				public {{ sourceTypeName }} {{ sourceName }} { get; set; }
+				public Guid {{ sourceName }}Id { get; set; }
 			{% elseif sourceToTargetCardinality == "OneToOne" %}
 				/* !!! Caso essa entidade contenha mais de uma relação 1..1 entre {{ targetTypeName }} e {{ sourceTypeName }},
 				o mapeamento delas deve ser feito através da Fluent API. */
 				[ForeignKey("{{ sourceName }}Id")]
-				public {{ sourceTypeName }} {{ sourceName }} { get; set; };
-				public Guid? {{ sourceName }}Id { get; set; };
+				public {{ sourceTypeName }} {{ sourceName }} { get; set; }
+				public Guid? {{ sourceName }}Id { get; set; }
 			{% elseif sourceToTargetCardinality == "ManyToMany" %}
 				/* Crie uma classe intermediária entre {{ sourceTypeName }} e {{ targetTypeName }} com as seguintes propriedades:
 				
@@ -125,7 +125,7 @@ namespace {{ package.Name }}
 				
 				Por fim substitua o tipo Object abaixo*/
 				[InverseProperty("{{ targetName }}")]
-				public {{ collection }}<Object> {{ sourceName }} { get; set; };
+				public {{ collection }}<Object> {{ sourceName }} { get; set; }
 			{% endif %}
 		{% endif %}
 	{% endfor %}
