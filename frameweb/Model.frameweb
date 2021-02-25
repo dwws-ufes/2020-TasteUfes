@@ -3,7 +3,7 @@
   <compose xsi:type="frameweb:EntityModel" name="Entity Model">
     <packagedElement xsi:type="frameweb:DomainPackage" name="Models">
       <packagedElement xsi:type="frameweb:DomainClass" name="Recipe">
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" isUnique="false" size="255">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" isUnique="false" size="256">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Servings" visibility="public" isUnique="false">
@@ -25,12 +25,12 @@
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Step" visibility="public" isUnique="false">
           <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/int"/>
         </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Description" visibility="public" isUnique="false">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Description" visibility="public" isUnique="false" size="2048">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="Food">
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" size="255">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" size="256">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
       </packagedElement>
@@ -40,9 +40,6 @@
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="ServingSizeUnit" visibility="public" type="//@compose.0/Models/Measures" isUnique="false"/>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="ServingEnergy" visibility="public" isUnique="false">
-          <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/double"/>
-        </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="DailyEnergy" visibility="public" isUnique="false">
           <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/double"/>
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="DailyValue" visibility="public" isUnique="false">
@@ -59,10 +56,13 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="Nutrient">
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" size="127">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" size="64">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="EnergyPerGram" visibility="public" isUnique="false">
+          <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/double"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="DailyRecommendation" visibility="public" isUnique="false">
           <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/double"/>
         </ownedAttribute>
       </packagedElement>
@@ -144,13 +144,13 @@
         <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/@packagedElement.15"/>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="User">
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="FirstName" visibility="public" isUnique="false">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="FirstName" visibility="public" isUnique="false" size="128">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="LastName" visibility="public" isUnique="false">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="LastName" visibility="public" isUnique="false" size="128">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Username" visibility="public" isUnique="false">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Username" visibility="public" isUnique="false" size="16">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Password" visibility="public" isUnique="false">
@@ -161,7 +161,7 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="Role">
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Name" visibility="public" size="16">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
       </packagedElement>
@@ -186,7 +186,7 @@
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
         <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" association="//@compose.0/Models/@packagedElement.19">
-          <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
+          <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="1"/>
         </ownedEnd>
       </packagedElement>
     </packagedElement>
@@ -199,6 +199,53 @@
     <packagedElement xsi:type="frameweb:PersistencePackage" name="Data"/>
   </compose>
   <compose xsi:type="frameweb:ApplicationModel" name="Application Model">
-    <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services"/>
+    <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
+      <packagedElement xsi:type="frameweb:ServiceClass" name="UserService"/>
+      <packagedElement xsi:type="frameweb:ServiceInterface" name="IUserService"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services/UserService" supplier="//@compose.3/Services/IUserService"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
+      <packagedElement xsi:type="frameweb:ServiceClass" name="RecipeService">
+        <ownedOperation xsi:type="frameweb:ServiceMethod" name="RecalculateRecipePerServing" methodType="//@compose.0/Models/Recipe">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+            <defaultValue xsi:type="uml:LiteralString" value=""/>
+          </ownedParameter>
+          <ownedParameter name="servings">
+            <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/int"/>
+            <defaultValue xsi:type="uml:LiteralString" value=""/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:ServiceMethod" name="CalculateAnonymousRecipe" methodType="//@compose.0/Models/Recipe">
+          <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:ServiceMethod" name="RecommendRecipesByIngredients">
+          <ownedParameter name="ingredients">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+            <defaultValue xsi:type="uml:LiteralString" value=""/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceInterface" name="IRecipeService"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.1/RecipeService" supplier="//@compose.3/Services.1/IRecipeService"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
+      <packagedElement xsi:type="frameweb:ServiceClass" name="FoodService"/>
+      <packagedElement xsi:type="frameweb:ServiceInterface" name="IFoodService"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.2/FoodService" supplier="//@compose.3/Services.2/IFoodService"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
+      <packagedElement xsi:type="frameweb:ServiceInterface" name="INutritionFactsService"/>
+      <packagedElement xsi:type="frameweb:ServiceClass" name="NutritionFactsService"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.3/NutritionFactsService" supplier="//@compose.3/Services.3/INutritionFactsService"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
+      <packagedElement xsi:type="frameweb:ServiceClass" name="NutrientService"/>
+      <packagedElement xsi:type="frameweb:ServiceInterface" name="INutrientService"/>
+      <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.4/NutrientService" supplier="//@compose.3/Services.4/INutrientService"/>
+    </packagedElement>
   </compose>
 </frameweb:FramewebProject>
