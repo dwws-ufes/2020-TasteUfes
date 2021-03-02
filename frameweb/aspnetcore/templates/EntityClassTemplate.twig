@@ -8,7 +8,6 @@ namespace {{ package.Name }}
 {
 	public class {{ class.Name }} : Entity
 	{
-	{# ATTRIBUTES #}
 	{% for attribute in attributes %}
 	    {% if attribute.isID() == true %}
 		    [Key]
@@ -27,7 +26,6 @@ namespace {{ package.Name }}
 	    {% endif %}
 	{% endfor %}
 	
-	{# ASSOCIATIONS #}
 	{% for association in associations %}
 		{%- set sourceToTargetCardinality = association.SourceToTargetCardinality -%}
 		{%- set targetToSourceCardinality = association.TargetToSourceCardinality -%}
@@ -129,7 +127,6 @@ namespace {{ package.Name }}
 		{% endif %}
 	{% endfor %}
 	
-	{# METHODS #}
 	{% for method in methods %}
 		{% if method.isAbstract() %}
 			{{ method.Visibility.Name }} abstract {% if method.MethodType is null %}void{% else %}{{ method.MethodType.Name }}{% endif %} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %});
