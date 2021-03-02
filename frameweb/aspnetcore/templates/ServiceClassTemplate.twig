@@ -3,42 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using KissLog;
+using FluentValidation;
+
+{% set entityName = (class.Name | replace({'Service' : ''})) %}
 
 namespace {{ package.Name }}
 {
-	public class {{ class.Name }} {% if generalizations is not empty %}: {{ ((generalizations[0]).GeneralizationSets[0]).Name }}, {{ "I" ~ class.Name }}{% else %}: {{ "I" ~ class.Name }}{% endif %}
+	public class {{ class.Name }} : EntityService<{{ entityName }}>, {{ "I" ~ class.Name }}
 	{
-		{% if generalizations is empty %}
-			private readonly IUnitOfWork _unitOfWork;
-			private readonly ILogger _logger;
-			private readonly INotificator _notificator;	
-		{% endif %}
-		
-		public {{ class.Name}}(IUnitOfWork unitOfWork, ILogger logger, INotificator notificator)
-			{% if generalizations is not empty %}: base(unitOfWork, logger, notificator){% endif %}
-		{
-			{% if generalizations is empty %}
-				_unitOfWork = unitOfWork;
-				_logger = logger;
-				_notificator = notificator;	
-			{% endif %}
-		}
+		public {{ class.Name}}(IUnitOfWork unitOfWork, INotificator notificator, ILogger logger)
+			: base(unitOfWork, notificator, logger) { }
 		
 		{% for attribute in attributes %}
-			public {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; };
+			{{ attribute.Visibility.Name }} {{ attribute.Type.Name }} {{ attribute.Name }} { get; set; }
 		{% endfor %}
 		
 		{% for method in methods %}
-			{{ method.Visibility.Name }} {% if method.MethodType is null %}void{% else %}{{ method.MethodType.Name }}{% endif %} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %})
+			{% set methodType = "MethodType" %}
+
+			{% if method.MethodType is null  %}
+				{% set methodType = "void" %}
+			{% elseif ((method.MethodType.Name == "IEnumerable") or (method.MethodType.Name == "List")) %}
+				{% set methodType = (method.MethodType.Name ~ "<" ~ entityName ~ ">") %}
+			{% else %}
+				{% set methodType = method.MethodType.Name %}
+			{% endif %}
+
+			{{ method.Visibility.Name }} {{ methodType }} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %})
 			{
 				throw new NotImplementedException();
 			}
 		{% endfor %}
-
-		public void Dispose()
-        {
-        	_unitOfWork?.Dispose();
-		}
 	}
 }
 

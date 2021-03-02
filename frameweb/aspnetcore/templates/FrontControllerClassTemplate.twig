@@ -4,82 +4,33 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+{% set entityName = (class.Name | replace({'Controller' : ''})) %}
+
 namespace {{ package.Name }}
 {
-	public class {{ class.Name }} {% if generalizations is not empty %}: {{ ((generalizations[0]).GeneralizationSets[0]).Name }} {% endif %}
+	[Authorize, ActiveUser]
+	public class {{ class.Name }} : BaseController
 	{
 		{% for association in associations %}
 			private readonly {{ association.TargetMember.Type.Name }} _{{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }};
 		{% endfor %}
-
-		{% if generalizations is empty %}
-			private readonly IMapper _mapper;
-			private readonly INotificator _notificator;
-		{% endif %}
 		
-		public {{ class.Name}}({% for association in associations %}{{ association.TargetMember.Type.Name }} {{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }}{% if loop.last == false %}, {% endif %}{% endfor %}, IMapper mapper, INotificator notificator)
-			{% if generalizations is not empty %}: base(mapper, notificator){% endif %}
+		public {{ class.Name }}({% for association in associations %}{{ association.TargetMember.Type.Name }} {{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }}{% if loop.last == false %}, {% endif %}{% endfor %}, IMapper mapper, INotificator notificator, ILogger logger)
+			: base(mapper, notificator, logger)
 		{
 			{% for association in associations %}
 				_{{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }} = {{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }};
 			{% endfor %}
-
-			{% if generalizations is empty %}
-				_mapper = mapper;
-				_notificator = notificator;
-			{% endif %}
 		}
 		
 		{% set domainClassName = class.Name | replace({'Controller': ''}) %}
 		
-        public IActionResult Index()
-        {
-        	throw new NotImplementedException();
-        }
-        
-        public IActionResult Details(Guid id)
-        {
-        	throw new NotImplementedException();
-        }
-        
-     	public IActionResult Create()
-        {
-        	throw new NotImplementedException();
-		}
-		
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create({{ domainClassName }} {{ domainClassName | lower_first }})
-        {
-			throw new NotImplementedException();
-		}
-		
-		public IActionResult Edit(Guid id)
-        {
-        	throw new NotImplementedException();
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, {{ domainClassName }} {{ domainClassName | lower_first }})
-        {
-        	throw new NotImplementedException();
-        }
-        
-    	public IActionResult Delete(Guid id)
-        {
-        	throw new NotImplementedException();
-        }
-        
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(Guid id)
-        {
-        	throw new NotImplementedException();
-        }
-		
 		{% for method in methods %}
-			{{ method.Visibility.Name }} {% if method.MethodType is null %}void{% else %}{{ method.MethodType.Name }}{% endif %} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %})
+			{% if method.RequestMethod == "POST" %}
+				[HttpPost, ActionName("{{ method.Name | replace({'Confirmed':''}) }})"]
+				[ValidateAntiForgeryToken]
+			{% endif %}
+			public IActionResult {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %})
 			{
 				throw new NotImplementedException();
 			}

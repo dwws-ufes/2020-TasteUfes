@@ -1,16 +1,27 @@
+using SCAP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+
+{% set entityName = (interface.Name | slice(1, interface.Name.length()) | replace({'Repository' : ''})) %}
 
 namespace {{ package.Name }}
 {
-	public interface {{ interface.Name }} : IDisposable
+	public interface {{ interface.Name }} : IEntityRepository<{{ entityName }}>
 	{
 		{% for method in methods %}
-			{% if method.MethodType is null %}void{% else %}{{ method.MethodType.Name }}{% endif %} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %});
+			{% set methodType = "MethodType" %}
+
+			{% if method.MethodType is null  %}
+				{% set methodType = "void" %}
+			{% elseif ((method.MethodType.Name == "IEnumerable") or (method.MethodType.Name == "List")) %}
+				{% set methodType = (method.MethodType.Name ~ "<" ~ entityName ~ ">") %}
+			{% else %}
+				{% set methodType = method.MethodType.Name %}
+			{% endif %}
+
+			{{ methodType }} {{ method.Name }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %});
 		{% endfor %}
 	}
 }

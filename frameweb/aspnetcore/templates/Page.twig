@@ -1,7 +1,39 @@
-{% for form in forms %}
-	{% set dependency = form.ClientDependencies[0] %}
-	{% set controllerName = dependency.Targets[0].Name | replace({'Controller': ''}) %}
-	{% set methodName = dependency.Method.Name %}
+{%- for attribute in page.OwnedAttributes -%}
+	{%- if attribute.Type.Name == "table" -%}
+		<table class="table table-hover table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					{%- for value in (attribute.Default | split(",")) -%}
+						<th>{{ value }}</th>
+					{%- endfor -%}
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	{%- elseif attribute.Type.Name == "dl" -%}
+		<dl>
+			{%- for value in (attribute.Default | split(",")) -%}
+				<dt>
+					{{ value }}
+				</dt>
+				<dd>
+
+				</dd>
+			{%- endfor -%}
+		</dl>
+	{%- endif -%}
+{%- endfor -%}
+
+{%- for form in forms -%}
+	{%- set dependency = "" -%}
+	{%- set controllerName = "Controller" -%}
+	{%- set methodName = "Action" -%}
+	{%- if (not empty(form.ClientDependencies)) -%}
+		{%- set dependency = form.ClientDependencies[0] -%}
+		{%- set controllerName = dependency.Targets[0].Name | replace({'Controller': ''}) -%}
+		{%- set methodName = dependency.Method.Name -%}
+	{%- endif -%}
 
 	<form asp-controller="{{ controllerName }}" asp-action="{{ methodName }}">
 		{% for attribute in form.Attributes %}
@@ -25,15 +57,35 @@
 					<textarea rows="5" asp-for="{{ attribute.Name }}" class="form-control"></textarea>
 					<span asp-validation-for="{{ attribute.Name }}" class="text-danger"></span>
 				{% elseif attribute.Type.Name == "select" %}
-					<label asp-for="{{ attribute.Name }}Id" class="control-label"></label><br />
+					<label asp-for="{{ attribute.Name }}" class="control-label"></label><br />
 					<select class="form-control"
-							asp-for="{{ attribute.Name }}Id"
-							asp-items="@ViewBag.{{ attribute.Name }}Id">
+							asp-for="{{ attribute.Name }}"
+							asp-items="@ViewBag.{{ attribute.Name }}">
 						<option disabled selected value=""></option>
+						{% for value in (attribute.Default | split(",")) %}
+							<option value="{{ loop.index }}">{{ value }}</option>
+						{% endfor %}
 					</select>
-					<span asp-validation-for="{{ attribute.Name }}Id" class="text-danger"></span>
+					<span asp-validation-for="{{ attribute.Name }}" class="text-danger"></span>
 				{% elseif attribute.Type.Name == "label" %}
 					<label for="{{ attribute.Name }}" value="{ value of {{ attribute.Name }} }" />
+				{% elseif attribute.Type.Name == "switch" %}
+					<label asp-for="{{ attribute.Name }}" class="control-label"></label>
+					<div class="custom-control custom-switch">
+						<input asp-for="{{ attribute.Name }}" type="checkbox" class="custom-control-input" />
+						<label asp-for="{{ attribute.Name }}" class="custom-control-label">{{ attribute.Name }}</label>
+					</div>
+					<span asp-validation-for="{{ attribute.Name }}" class="text-danger"></span>
+				{% elseif attribute.Type.Name == "checkbox" %}
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" asp-for="{{ attribute.Name }}">
+						<label class="form-check-label" for="{{ attribute.Name }}">
+							{{ attribute.Name }}
+						</label>
+					</div>
+					<span asp-validation-for="{{ attribute.Name }}" class="text-danger"></span>
+				{% elseif attribute.Type.Name == "hidden" %}
+					<input type="hidden" asp-for="{{ attribute.Name }}" />
 				{% elseif attribute.Type.Name == "link_back" %}
 					<a class="btn btn-outline-primary" href="javascript:history.back()">{{ attribute.Name }}</a>
 				{% elseif attribute.Type.Name == "button" %}

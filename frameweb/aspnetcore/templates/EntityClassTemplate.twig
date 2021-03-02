@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace {{ package.Name }}
 {
-	public class {{ class.Name }} {% if generalizations is not empty %}: {{ ((generalizations[0]).GeneralizationSets[0]).Name }} {% endif %}
+	public class {{ class.Name }} : Entity
 	{
 	{# ATTRIBUTES #}
 	{% for attribute in attributes %}
