@@ -196,7 +196,14 @@
     <packagedElement xsi:type="frameweb:ControllerPackage" name="Controllers"/>
   </compose>
   <compose xsi:type="frameweb:PersistenceModel" name="Persistence Model">
-    <packagedElement xsi:type="frameweb:PersistencePackage" name="Data"/>
+    <packagedElement xsi:type="frameweb:PersistencePackage" name="Data">
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IRecipeRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="RecipeRepository">
+        <generalization xsi:type="frameweb:DAOGeneralization"/>
+        <generalization xsi:type="frameweb:DAOGeneralization"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RecipeRepository" supplier="//@compose.2/Data/IRecipeRepository"/>
+    </packagedElement>
   </compose>
   <compose xsi:type="frameweb:ApplicationModel" name="Application Model">
     <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
