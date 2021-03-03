@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <frameweb:FramewebProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:frameweb="http://nemo.inf.ufes.br/projects/frameweb/FW-2015">
-  <configures xsi:type="frameweb:FrameWebConfiguration" name="FrameWeb Configuration" srcPath="src-gen/" viewPath="src-gen/Views" frameworkDefinitionPath="aspnetcore/templates/" classExtension=".cs" pageExtension=".cshtml"/>
+  <configures xsi:type="frameweb:FrameWebConfiguration" name="FrameWeb Configuration" srcPath="src-gen/" viewPath="src-gen/Views" frameworkDefinitionPath="aspnetcore/templates/" classExtension=".cs" pageExtension=".vue"/>
 </frameweb:FramewebProject>
