@@ -146,8 +146,314 @@
     </packagedElement>
   </compose>
   <compose xsi:type="frameweb:NavigationModel" name="Navigation Model">
-    <packagedElement xsi:type="frameweb:ViewPackage" name="Views"/>
-    <packagedElement xsi:type="frameweb:ControllerPackage" name="Controllers"/>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components.Recipes">
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.0/@ownedEnd.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" association="//@compose.1/Components.Recipes/@packagedElement.0"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Create" visibility="private">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Recipes/Create.1" association="//@compose.1/Components.Recipes/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Create" visibility="private">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Servings" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Create" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.3/@ownedEnd.0 //@compose.1/Components.Recipes/Create/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Recipes/Create" association="//@compose.1/Components.Recipes/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Edit" visibility="private">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Recipes/Edit.1" association="//@compose.1/Components.Recipes/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Edit" visibility="private">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Servings" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Create" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.6/@ownedEnd.0 //@compose.1/Components.Recipes/Edit/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Recipes/Edit" association="//@compose.1/Components.Recipes/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Index" visibility="private"/>
+      <packagedElement xsi:type="frameweb:Page" name="Details" visibility="private"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ControllerPackage" name="Controllers">
+      <packagedElement xsi:type="frameweb:FrontControllerClass" name="RecipesController" visibility="public">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_Recipe" visibility="private">
+          <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Put_Recipe" visibility="private">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Recipe" visibility="private">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Recipe" visibility="private" methodType="//@compose.0/Models/Recipe">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:FrontControllerClass" name="FoodsController">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_Food" visibility="private">
+          <ownedParameter name="food" type="//@compose.0/Models/Food"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Put_Food" visibility="private">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="food" type="//@compose.0/Models/Food"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Food" visibility="private">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Food" visibility="private" methodType="//@compose.0/Models/Food">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:FrontControllerClass" name="UserController">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_User" visibility="private">
+          <ownedParameter name="user"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Put_User" visibility="private">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="user"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_User" visibility="private">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_User" visibility="private">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Authenticate_User" visibility="private">
+          <ownedParameter name="email">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
+          </ownedParameter>
+          <ownedParameter name="password">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="POST,/api/v1/recipes" client="//@compose.1/Components.Recipes/Create.1" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Post_Recipe"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="PUT,/api/v1/recipes" client="//@compose.1/Components.Recipes/Edit.1" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Put_Recipe"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" name="" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Edit" resultMethod="//@compose.1/Controllers/RecipesController/Post_Recipe" httpStatus="">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Get_Recipe"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Index" resultMethod="//@compose.1/Controllers/RecipesController/Get_Recipe">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Components.Recipes/Edit">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Components.Recipes/Create">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Components.Recipes/Details">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Details" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Get_Recipe.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Details" resultMethod="//@compose.1/Controllers/RecipesController/Get_Recipe.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components.Foods">
+      <packagedElement xsi:type="frameweb:Page" name="Create">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Foods/Create.1" association="//@compose.1/Components.Foods/@packagedElement.2"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Create"/>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Foods/@packagedElement.2/@ownedEnd.0 //@compose.1/Components.Foods/Create/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Foods/Create" association="//@compose.1/Components.Foods/@packagedElement.2"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Edit">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Foods/Edit.1" association="//@compose.1/Components.Foods/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Edit"/>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Foods/@packagedElement.5/@ownedEnd.0 //@compose.1/Components.Foods/Edit/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Foods/Edit" association="//@compose.1/Components.Foods/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Index"/>
+      <packagedElement xsi:type="frameweb:Page" name="Details"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Create.1" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Post_Food"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Edit" resultMethod="//@compose.1/Controllers/FoodsController/Post_Food">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Components.Foods/Create">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Components.Foods/Edit">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Get_Food"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Index" resultMethod="//@compose.1/Controllers/FoodsController/Get_Food" httpStatus="">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Details" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Get_Food.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Details" resultMethod="//@compose.1/Controllers/FoodsController/Get_Food.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Post_User"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Put_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Post_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Edit" resultMethod="//@compose.1/Controllers/RecipesController/Put_Recipe">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Edit" resultMethod="//@compose.1/Controllers/FoodsController/Put_Food">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Put_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Get_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Get_User.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Components.Foods/Details">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components.Users">
+      <packagedElement xsi:type="frameweb:Page" name="Create">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Users/Create.1" association="//@compose.1/Components.Users/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Edit">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Users/Edit.1" association="//@compose.1/Components.Users/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Index"/>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Create">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Email" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-email"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Password" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="RepeatPassword" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Users/@packagedElement.4/@ownedEnd.0 //@compose.1/Components.Users/Create/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Users/Create" association="//@compose.1/Components.Users/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Edit">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Email" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-email"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Password" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="RepeatPassword" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Users/@packagedElement.6/@ownedEnd.0 //@compose.1/Components.Users/Edit/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Users/Edit" association="//@compose.1/Components.Users/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Details"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components">
+      <packagedElement xsi:type="frameweb:Page" name="Toolbar">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Toolbar" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-toolbar"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Login">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Login.1" association="//@compose.1/Components/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Login">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Email" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-email"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Password" visibility="private">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components/@packagedElement.3/@ownedEnd.0 //@compose.1/Components/Login/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components/Login" association="//@compose.1/Components/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="App">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Toolbar"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" visibility="private" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Recipes/Index">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Foods/Index">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Users/Index">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Create.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Post_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Edit" resultMethod="//@compose.1/Controllers/UserController/Post_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Edit.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Put_User"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Edit.1" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Put_Food"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Index" resultMethod="//@compose.1/Controllers/UserController/Get_User" httpStatus="">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Details" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Details" resultMethod="//@compose.1/Controllers/UserController/Get_User.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Edit" resultMethod="//@compose.1/Controllers/UserController/Put_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Login.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Authenticate_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App" resultMethod="//@compose.1/Controllers/UserController/Authenticate_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
   </compose>
   <compose xsi:type="frameweb:PersistenceModel" name="Persistence Model">
     <packagedElement xsi:type="frameweb:PersistencePackage" name="Data"/>

@@ -449,3 +449,4 @@ Controllers/*
 Services/*
 Data/*
 Repositories/*
+Views/*

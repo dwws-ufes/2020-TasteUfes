@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <frameweb:FramewebProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:frameweb="http://nemo.inf.ufes.br/projects/frameweb/FW-2015">
-  <configures xsi:type="frameweb:FrontControllerTemplate" name="Razor" classTemplate="FrontControllerClassTemplate.twig" pageTemplate="Page.twig" formTemplate="%09%3Ch%3Aform%20id%3D%22FW_ID%22%3EFW_BODY%0A%09%3C%2Fh%3Aform%3E" classExtension=".cs" pageExtension=".cshtml" restClassTemplate="RestControllerClassTemplate.twig">
-    <packagedElement xsi:type="frameweb:TagLib" name="Razor">
-      <packagedElement xsi:type="frameweb:Tag" name="input"/>
+  <configures xsi:type="frameweb:FrontControllerTemplate" name="Vue" classTemplate="FrontControllerClassTemplate.twig" pageTemplate="Page.twig" formTemplate="%09%3Ch%3Aform%20id%3D%22FW_ID%22%3EFW_BODY%0A%09%3C%2Fh%3Aform%3E" classExtension=".cs" pageExtension=".vue" restClassTemplate="RestControllerClassTemplate.twig">
+    <packagedElement xsi:type="frameweb:TagLib" name="Vue">
       <packagedElement xsi:type="frameweb:Tag" name="select"/>
       <packagedElement xsi:type="frameweb:Tag" name="date"/>
-      <packagedElement xsi:type="frameweb:Tag" name="date_time"/>
       <packagedElement xsi:type="frameweb:Tag" name="radio"/>
       <packagedElement xsi:type="frameweb:Tag" name="submit"/>
       <packagedElement xsi:type="frameweb:Tag" name="button"/>
@@ -13,8 +11,16 @@
       <packagedElement xsi:type="frameweb:Tag" name="span"/>
       <packagedElement xsi:type="frameweb:Tag" name="textarea"/>
       <packagedElement xsi:type="frameweb:Tag" name="file"/>
-      <packagedElement xsi:type="frameweb:Tag" name="link_back"/>
       <packagedElement xsi:type="frameweb:Tag" name="link"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-text-field"/>
+      <packagedElement xsi:type="frameweb:Tag" name="email"/>
+      <packagedElement xsi:type="frameweb:Tag" name="password"/>
+      <packagedElement xsi:type="frameweb:Tag" name="checkbox"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-alert"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-toolbar"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-btn"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-text-email"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-text-password"/>
     </packagedElement>
   </configures>
 </frameweb:FramewebProject>
