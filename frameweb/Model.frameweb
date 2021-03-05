@@ -75,73 +75,73 @@
         <ownedLiteral name="UN" classifier="//@compose.0/Models/Measures"/>
         <ownedLiteral name="KCAL" classifier="//@compose.0/Models/Measures"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.9/Recipe //@compose.0/Models/@packagedElement.9/Preparation">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.9/Recipe"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.9/Preparation"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.9"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/@packagedElement.9"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/@packagedElement.9">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has/Recipe //@compose.0/Models/has/Preparation">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has/Recipe"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has/Preparation"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/has"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/has">
           <lowerValue xsi:type="uml:LiteralInteger"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.10/Preparation //@compose.0/Models/@packagedElement.10/Steps" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.10/Preparation"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.10/Steps"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.10"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/@packagedElement.10"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Steps" type="//@compose.0/Models/PreparationStep" association="//@compose.0/Models/@packagedElement.10">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.1/Preparation //@compose.0/Models/has.1/Steps" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.1/Preparation"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.1/Steps"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.1"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/has.1"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Steps" type="//@compose.0/Models/PreparationStep" association="//@compose.0/Models/has.1">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.11/Ingredients //@compose.0/Models/@packagedElement.11/Food" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.11/Ingredients"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.11/Food"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.11"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/@packagedElement.11">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.2/Ingredients //@compose.0/Models/has.2/Food" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.2/Ingredients"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.2/Food"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.2"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/has.2">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/@packagedElement.11"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/has.2"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.12/NutritionFacts //@compose.0/Models/@packagedElement.12/NutritionFactsNutrients" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.12/NutritionFacts"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.12/NutritionFactsNutrients"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.12"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/@packagedElement.12"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/@packagedElement.12">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.3/NutritionFacts //@compose.0/Models/has.3/NutritionFactsNutrients" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.3/NutritionFacts"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.3/NutritionFactsNutrients"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.3"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/has.3"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/has.3">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.13/NutritionFactsNutrients //@compose.0/Models/@packagedElement.13/Nutrient" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.13/NutritionFactsNutrients"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.13/Nutrient"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.13"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/@packagedElement.13">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.4/NutritionFactsNutrients //@compose.0/Models/has.4/Nutrient" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.4/NutritionFactsNutrients"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.4/Nutrient"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.4"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/has.4">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Nutrient" type="//@compose.0/Models/Nutrient" association="//@compose.0/Models/@packagedElement.13"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Nutrient" type="//@compose.0/Models/Nutrient" association="//@compose.0/Models/has.4"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.14/Ingredients //@compose.0/Models/@packagedElement.14/Recipe" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.14/Ingredients"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.14/Recipe"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.14"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/@packagedElement.14">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="belongs to" memberEnd="//@compose.0/Models/belongs%20to/Ingredients //@compose.0/Models/belongs%20to/Recipe" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/belongs%20to/Ingredients"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/belongs%20to/Recipe"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/belongs%20to"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/belongs%20to">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/@packagedElement.14"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/belongs%20to"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.15/NutritionFacts //@compose.0/Models/@packagedElement.15/Food">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.15/NutritionFacts"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.15/Food"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.15"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/@packagedElement.15">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="belongs to" memberEnd="//@compose.0/Models/belongs%20to.1/NutritionFacts //@compose.0/Models/belongs%20to.1/Food">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/belongs%20to.1/NutritionFacts"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/belongs%20to.1/Food"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/belongs%20to.1"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/belongs%20to.1">
           <lowerValue xsi:type="uml:LiteralInteger"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/@packagedElement.15"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/belongs%20to.1"/>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="User">
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="FirstName" visibility="public" isUnique="false" size="128">
@@ -165,27 +165,27 @@
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.18/Users //@compose.0/Models/@packagedElement.18/Roles" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.18/Users"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.18/Roles"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.18"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" isUnique="false" association="//@compose.0/Models/@packagedElement.18">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.5/Users //@compose.0/Models/has.5/Roles" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.5/Users"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.5/Roles"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.5"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" isUnique="false" association="//@compose.0/Models/has.5">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Roles" type="//@compose.0/Models/Role" isUnique="false" association="//@compose.0/Models/@packagedElement.18">
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Roles" type="//@compose.0/Models/Role" isUnique="false" association="//@compose.0/Models/has.5">
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.19/Recipes //@compose.0/Models/@packagedElement.19/Users" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.19/Recipes"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.19/Users"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.19"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipes" type="//@compose.0/Models/Recipe" isUnique="false" association="//@compose.0/Models/@packagedElement.19">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="belongs to" memberEnd="//@compose.0/Models/belongs%20to.2/Recipes //@compose.0/Models/belongs%20to.2/Users" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/belongs%20to.2/Recipes"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/belongs%20to.2/Users"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/belongs%20to.2"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipes" type="//@compose.0/Models/Recipe" isUnique="false" association="//@compose.0/Models/belongs%20to.2">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" association="//@compose.0/Models/@packagedElement.19">
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" association="//@compose.0/Models/belongs%20to.2">
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="1"/>
         </ownedEnd>
       </packagedElement>
