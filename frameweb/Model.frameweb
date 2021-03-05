@@ -203,6 +203,37 @@
         <generalization xsi:type="frameweb:DAOGeneralization"/>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RecipeRepository" supplier="//@compose.2/Data/IRecipeRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IUserRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="UserRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/UserRepository" supplier="//@compose.2/Data/IUserRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization"/>
+      <packagedElement xsi:type="frameweb:DAORealization"/>
+      <packagedElement xsi:type="frameweb:DAORealization"/>
+      <packagedElement xsi:type="frameweb:DAORealization" name=""/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IFoodRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="FoodRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/FoodRepository" supplier="//@compose.2/Data/IFoodRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IIngredientRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="IngredientRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/IngredientRepository" supplier="//@compose.2/Data/IIngredientRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="INutrientRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="NutrientRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/NutrientRepository" supplier="//@compose.2/Data/INutrientRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="INutritionFactsRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="NutritionFactsRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/NutritionFactsRepository" supplier="//@compose.2/Data/INutritionFactsRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="INutritionFactsNutrientsRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="NutritionFactsNutrientsRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/NutritionFactsNutrientsRepository" supplier="//@compose.2/Data/INutritionFactsNutrientsRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IPreparationRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="PreparationRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/PreparationRepository" supplier="//@compose.2/Data/IPreparationRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IPreparationStepRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="PreparationStepRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/PreparationStepRepository" supplier="//@compose.2/Data/IPreparationStepRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IRoleRepsitory"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="RoleRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RoleRepository" supplier="//@compose.2/Data/IRoleRepsitory"/>
     </packagedElement>
   </compose>
   <compose xsi:type="frameweb:ApplicationModel" name="Application Model">
