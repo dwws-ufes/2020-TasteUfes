@@ -150,7 +150,7 @@
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="LastName" visibility="public" isUnique="false" size="128">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Username" visibility="public" isUnique="false" size="16">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Username" visibility="public" size="16">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Password" visibility="public" isUnique="false">
