@@ -209,7 +209,6 @@
       <packagedElement xsi:type="frameweb:DAOClass" name="UserRepository">
         <ownedOperation xsi:type="frameweb:DAOMethod" name="GetUserWhithRecipe" methodType="//@compose.0/Models/Recipe"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/UserRepository" supplier="//@compose.2/Data/IUserRepository"/>
       <packagedElement xsi:type="frameweb:DAORealization"/>
       <packagedElement xsi:type="frameweb:DAORealization"/>
       <packagedElement xsi:type="frameweb:DAORealization"/>
@@ -239,6 +238,7 @@
       <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RoleRepository"/>
       <packagedElement xsi:type="frameweb:DAOInterface" name="IRoleRepository"/>
       <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RoleRepository" supplier="//@compose.2/Data/IRoleRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/UserRepository" supplier="//@compose.2/Data/IUserRepository"/>
     </packagedElement>
   </compose>
   <compose xsi:type="frameweb:ApplicationModel" name="Application Model">
