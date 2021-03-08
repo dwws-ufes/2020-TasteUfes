@@ -75,73 +75,73 @@
         <ownedLiteral name="UN" classifier="//@compose.0/Models/Measures"/>
         <ownedLiteral name="KCAL" classifier="//@compose.0/Models/Measures"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.9/Recipe //@compose.0/Models/@packagedElement.9/Preparation">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.9/Recipe"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.9/Preparation"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.9"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/@packagedElement.9"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/@packagedElement.9">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has/Recipe //@compose.0/Models/has/Preparation">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has/Recipe"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has/Preparation"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/has"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/has">
           <lowerValue xsi:type="uml:LiteralInteger"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.10/Preparation //@compose.0/Models/@packagedElement.10/Steps" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.10/Preparation"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.10/Steps"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.10"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/@packagedElement.10"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Steps" type="//@compose.0/Models/PreparationStep" association="//@compose.0/Models/@packagedElement.10">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.1/Preparation //@compose.0/Models/has.1/Steps" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.1/Preparation"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.1/Steps"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.1"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Preparation" type="//@compose.0/Models/Preparation" association="//@compose.0/Models/has.1"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Steps" type="//@compose.0/Models/PreparationStep" association="//@compose.0/Models/has.1">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.11/Ingredients //@compose.0/Models/@packagedElement.11/Food" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.11/Ingredients"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.11/Food"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.11"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/@packagedElement.11">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.2/Ingredients //@compose.0/Models/has.2/Food" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.2/Ingredients"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.2/Food"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.2"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/has.2">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/@packagedElement.11"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/has.2"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.12/NutritionFacts //@compose.0/Models/@packagedElement.12/NutritionFactsNutrients" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.12/NutritionFacts"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.12/NutritionFactsNutrients"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.12"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/@packagedElement.12"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/@packagedElement.12">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.3/NutritionFacts //@compose.0/Models/has.3/NutritionFactsNutrients" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.3/NutritionFacts"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.3/NutritionFactsNutrients"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.3"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/has.3"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/has.3">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.13/NutritionFactsNutrients //@compose.0/Models/@packagedElement.13/Nutrient" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.13/NutritionFactsNutrients"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.13/Nutrient"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.13"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/@packagedElement.13">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.4/NutritionFactsNutrients //@compose.0/Models/has.4/Nutrient" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.4/NutritionFactsNutrients"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.4/Nutrient"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.4"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFactsNutrients" type="//@compose.0/Models/NutritionFactsNutrients" association="//@compose.0/Models/has.4">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Nutrient" type="//@compose.0/Models/Nutrient" association="//@compose.0/Models/@packagedElement.13"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Nutrient" type="//@compose.0/Models/Nutrient" association="//@compose.0/Models/has.4"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.14/Ingredients //@compose.0/Models/@packagedElement.14/Recipe" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.14/Ingredients"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.14/Recipe"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.14"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/@packagedElement.14">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="belongs to" memberEnd="//@compose.0/Models/belongs%20to/Ingredients //@compose.0/Models/belongs%20to/Recipe" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/belongs%20to/Ingredients"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/belongs%20to/Recipe"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/belongs%20to"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Ingredients" type="//@compose.0/Models/Ingredient" association="//@compose.0/Models/belongs%20to">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/@packagedElement.14"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipe" type="//@compose.0/Models/Recipe" association="//@compose.0/Models/belongs%20to"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.15/NutritionFacts //@compose.0/Models/@packagedElement.15/Food">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.15/NutritionFacts"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.15/Food"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.15"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/@packagedElement.15">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="belongs to" memberEnd="//@compose.0/Models/belongs%20to.1/NutritionFacts //@compose.0/Models/belongs%20to.1/Food">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/belongs%20to.1/NutritionFacts"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/belongs%20to.1/Food"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/belongs%20to.1"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="NutritionFacts" type="//@compose.0/Models/NutritionFacts" association="//@compose.0/Models/belongs%20to.1">
           <lowerValue xsi:type="uml:LiteralInteger"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/@packagedElement.15"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Food" type="//@compose.0/Models/Food" association="//@compose.0/Models/belongs%20to.1"/>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="User">
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="FirstName" visibility="public" isUnique="false" size="128">
@@ -150,7 +150,7 @@
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="LastName" visibility="public" isUnique="false" size="128">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Username" visibility="public" isUnique="false" size="16">
+        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Username" visibility="public" size="16">
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Password" visibility="public" isUnique="false">
@@ -165,35 +165,496 @@
           <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.18/Users //@compose.0/Models/@packagedElement.18/Roles" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.18/Users"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.18/Roles"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.18"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" isUnique="false" association="//@compose.0/Models/@packagedElement.18">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="has" memberEnd="//@compose.0/Models/has.5/Users //@compose.0/Models/has.5/Roles" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/has.5/Users"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/has.5/Roles"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/has.5"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" isUnique="false" association="//@compose.0/Models/has.5">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Roles" type="//@compose.0/Models/Role" isUnique="false" association="//@compose.0/Models/@packagedElement.18">
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Roles" type="//@compose.0/Models/Role" isUnique="false" association="//@compose.0/Models/has.5">
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:DomainAssociation" name="" memberEnd="//@compose.0/Models/@packagedElement.19/Recipes //@compose.0/Models/@packagedElement.19/Users" collection="list">
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/@packagedElement.19/Recipes"/>
-        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/@packagedElement.19/Users"/>
-        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/@packagedElement.19"/>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipes" type="//@compose.0/Models/Recipe" isUnique="false" association="//@compose.0/Models/@packagedElement.19">
+      <packagedElement xsi:type="frameweb:DomainAssociation" name="belongs to" memberEnd="//@compose.0/Models/belongs%20to.2/Recipes //@compose.0/Models/belongs%20to.2/Users" collection="list">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.0/Models/belongs%20to.2/Recipes"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.0/Models/belongs%20to.2/Users"/>
+        <ownedRule xsi:type="frameweb:VocabularyConstraints" name="Vocabulary Constraint" constrainedElement="//@compose.0/Models/belongs%20to.2"/>
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Recipes" type="//@compose.0/Models/Recipe" isUnique="false" association="//@compose.0/Models/belongs%20to.2">
           <lowerValue xsi:type="uml:LiteralInteger"/>
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="*"/>
         </ownedEnd>
-        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" association="//@compose.0/Models/@packagedElement.19">
+        <ownedEnd xsi:type="frameweb:DomainProperty" name="Users" type="//@compose.0/Models/User" association="//@compose.0/Models/belongs%20to.2">
           <upperValue xsi:type="uml:LiteralUnlimitedNatural" value="1"/>
         </ownedEnd>
       </packagedElement>
     </packagedElement>
   </compose>
   <compose xsi:type="frameweb:NavigationModel" name="Navigation Model">
-    <packagedElement xsi:type="frameweb:ViewPackage" name="Views"/>
-    <packagedElement xsi:type="frameweb:ControllerPackage" name="Controllers"/>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components.Recipes">
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.0/@ownedEnd.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" association="//@compose.1/Components.Recipes/@packagedElement.0"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Create" visibility="private">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Recipes/Create.1" association="//@compose.1/Components.Recipes/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Create" visibility="private">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Servings" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Create" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.3/@ownedEnd.0 //@compose.1/Components.Recipes/Create/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Recipes/Create" association="//@compose.1/Components.Recipes/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Edit" visibility="private">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Recipes/Edit.1" association="//@compose.1/Components.Recipes/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Edit" visibility="private">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Servings" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Save" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.6/@ownedEnd.0 //@compose.1/Components.Recipes/Edit/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Recipes/Edit" association="//@compose.1/Components.Recipes/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Index" visibility="private">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="TableRecipes">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-data-table"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Details" visibility="private"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ControllerPackage" name="Controllers">
+      <packagedElement xsi:type="frameweb:FrontControllerClass" name="RecipesController" visibility="public">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_Recipe" visibility="public" requestMethod="POST">
+          <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Put_Recipe" visibility="public" requestMethod="PUT">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Recipe" visibility="public" requestMethod="GET">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Recipe" visibility="public" methodType="//@compose.0/Models/Recipe" requestMethod="GET">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Delete_Recipe" requestMethod="DELETE">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Recipes_By_User">
+          <ownedParameter name="user_id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="RecalculateRecipePerServing" methodType="//@compose.0/Models/Recipe" requestMethod="GET">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="servings">
+            <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/int"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="CalculateAnonymousRecipe" methodType="//@compose.0/Models/Recipe" requestMethod="GET">
+          <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="RecommendRecipesByIngredients" requestMethod="GET">
+          <ownedParameter name="ingredients">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:FrontControllerClass" name="FoodsController">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_Food" visibility="public" requestMethod="POST">
+          <ownedParameter name="food" type="//@compose.0/Models/Food"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Put_Food" visibility="public" requestMethod="PUT">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="food" type="//@compose.0/Models/Food"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Food" visibility="public" requestMethod="GET">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_Food" visibility="public" methodType="//@compose.0/Models/Food" requestMethod="GET">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Delete_Food" requestMethod="DELETE">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:FrontControllerClass" name="UserController">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_User" visibility="public" requestMethod="POST">
+          <ownedParameter name="user" type="//@compose.0/Models/User"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Put_User" visibility="public" requestMethod="PUT">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="user" type="//@compose.0/Models/User"/>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_User" visibility="public" requestMethod="GET">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Get_User" visibility="public" methodType="//@compose.0/Models/User" requestMethod="GET">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Authenticate_User" visibility="public" methodType="//@compose.0/Models/User" requestMethod="GET">
+          <ownedParameter name="email">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
+          </ownedParameter>
+          <ownedParameter name="password">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
+          </ownedParameter>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Logout_User" requestMethod="GET">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Delete_User" requestMethod="DELETE">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.3/Source //@compose.1/Controllers/@packagedElement.3/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.3/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.3/Target"/>
+        <ownedEnd name="Source" type="//@compose.1/Controllers/RecipesController" association="//@compose.1/Controllers/@packagedElement.3"/>
+        <ownedEnd name="Target" type="//@compose.3/Services.1/IRecipeService" association="//@compose.1/Controllers/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.4/Source //@compose.1/Controllers/@packagedElement.4/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.4/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.4/Target"/>
+        <ownedEnd name="Source" type="//@compose.1/Controllers/UserController" association="//@compose.1/Controllers/@packagedElement.4"/>
+        <ownedEnd name="Target" type="//@compose.3/Services/IUserService" association="//@compose.1/Controllers/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.5/Source //@compose.1/Controllers/@packagedElement.5/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.5/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.5/Target"/>
+        <ownedEnd name="Source" type="//@compose.1/Controllers/FoodsController" association="//@compose.1/Controllers/@packagedElement.5"/>
+        <ownedEnd name="Target" type="//@compose.3/Services.2/IFoodService" association="//@compose.1/Controllers/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.6/Source //@compose.1/Controllers/@packagedElement.6/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.6/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.6/Target"/>
+        <ownedEnd name="Source" type="//@compose.1/Controllers/FoodsController" association="//@compose.1/Controllers/@packagedElement.6"/>
+        <ownedEnd name="Target" type="//@compose.3/Services.4/INutrientService" association="//@compose.1/Controllers/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.7/Source //@compose.1/Controllers/@packagedElement.7/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.7/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.7/Target"/>
+        <ownedEnd name="Source" type="//@compose.1/Controllers/RecipesController" association="//@compose.1/Controllers/@packagedElement.7"/>
+        <ownedEnd name="Target" type="//@compose.3/Services.2/IFoodService" association="//@compose.1/Controllers/@packagedElement.7"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.8/Source //@compose.1/Controllers/@packagedElement.8/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.8/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.1/Controllers/@packagedElement.8/Target"/>
+        <ownedEnd name="Source" type="//@compose.1/Controllers/FoodsController" association="//@compose.1/Controllers/@packagedElement.8"/>
+        <ownedEnd name="Target" type="//@compose.3/Services.3/INutritionFactsService" association="//@compose.1/Controllers/@packagedElement.8"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="POST,/api/v1/recipes" client="//@compose.1/Components.Recipes/Create.1" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Post_Recipe"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="PUT,/api/v1/recipes" client="//@compose.1/Components.Recipes/Edit.1" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Put_Recipe"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" name="" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Edit" resultMethod="//@compose.1/Controllers/RecipesController/Post_Recipe" httpStatus="">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Get_Recipe"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Index" resultMethod="//@compose.1/Controllers/RecipesController/Get_Recipe">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Components.Recipes/Edit">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Components.Recipes/Create">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Components.Recipes/Details">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Details" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Get_Recipe.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Details" resultMethod="//@compose.1/Controllers/RecipesController/Get_Recipe.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components.Foods">
+      <packagedElement xsi:type="frameweb:Page" name="Create">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Foods/Create.1" association="//@compose.1/Components.Foods/@packagedElement.2"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Create">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Foods/@packagedElement.2/@ownedEnd.0 //@compose.1/Components.Foods/Create/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Foods/Create" association="//@compose.1/Components.Foods/@packagedElement.2"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Edit">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Foods/Edit.1" association="//@compose.1/Components.Foods/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Edit">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Foods/@packagedElement.5/@ownedEnd.0 //@compose.1/Components.Foods/Edit/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Foods/Edit" association="//@compose.1/Components.Foods/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Index">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="TableFoods">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-data-table"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Details"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Create.1" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Post_Food"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Edit" resultMethod="//@compose.1/Controllers/FoodsController/Post_Food">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Components.Foods/Create">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Components.Foods/Edit">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Get_Food"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Index" resultMethod="//@compose.1/Controllers/FoodsController/Get_Food" httpStatus="">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Details" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Get_Food.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Details" resultMethod="//@compose.1/Controllers/FoodsController/Get_Food.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Post_User"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Put_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Post_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Edit" resultMethod="//@compose.1/Controllers/RecipesController/Put_Recipe">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Edit" resultMethod="//@compose.1/Controllers/FoodsController/Put_Food">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Put_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Get_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" resultMethod="//@compose.1/Controllers/UserController/Get_User.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Components.Foods/Details">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components.Users">
+      <packagedElement xsi:type="frameweb:Page" name="Create">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Users/Create.1" association="//@compose.1/Components.Users/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Edit">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components.Users/Edit.1" association="//@compose.1/Components.Users/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Index">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="TableUsers">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-data-table"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Create">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="FirstName" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="LastName" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Username" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Email" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-email"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Password">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="RepeatPassword">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Create">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Users/@packagedElement.4/@ownedEnd.0 //@compose.1/Components.Users/Create/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Users/Create" association="//@compose.1/Components.Users/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Edit">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="FirstName" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="LastName" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Username" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Email" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-email"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Save">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Users/@packagedElement.6/@ownedEnd.0 //@compose.1/Components.Users/Edit/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Users/Edit" association="//@compose.1/Components.Users/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Details"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ViewPackage" name="Components">
+      <packagedElement xsi:type="frameweb:Page" name="Toolbar">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Toolbar" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-toolbar"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Login">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Login.1" association="//@compose.1/Components/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:UIComponent" name="Login">
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Email" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-email"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Password" visibility="public">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-password"/>
+        </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="Login">
+          <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components/@packagedElement.3/@ownedEnd.0 //@compose.1/Components/Login/@ownedAttribute.0">
+        <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components/Login" association="//@compose.1/Components/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="App">
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Toolbar"/>
+        <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Toolbar"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:Page" name="Recommendation"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" visibility="private" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Recipes/Index">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Foods/Index">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Users/Index">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Create.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Post_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Edit" resultMethod="//@compose.1/Controllers/UserController/Post_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Edit.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Put_User"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Edit.1" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Put_Food"/>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Index" resultMethod="//@compose.1/Controllers/UserController/Get_User" httpStatus="">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Details" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Get_User.1"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Details" resultMethod="//@compose.1/Controllers/UserController/Get_User.1">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Edit" resultMethod="//@compose.1/Controllers/UserController/Put_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Login.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Authenticate_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App" resultMethod="//@compose.1/Controllers/UserController/Authenticate_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Logout_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App" resultMethod="//@compose.1/Controllers/UserController/Logout_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Components.Users/Details">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Components.Users/Edit">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Components.Users/Create">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Details" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Delete_Recipe"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Details" resultMethod="//@compose.1/Controllers/RecipesController/Delete_Recipe">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Details" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Delete_Food"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Details" resultMethod="//@compose.1/Controllers/FoodsController/Delete_Food">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" name="" client="//@compose.1/Components.Users/Details" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Delete_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Details" resultMethod="//@compose.1/Controllers/UserController/Delete_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Get_Recipes_By_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Index" resultMethod="//@compose.1/Controllers/RecipesController/Get_Recipes_By_User">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Recommendation" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components/Recommendation" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
   </compose>
   <compose xsi:type="frameweb:PersistenceModel" name="Persistence Model">
     <packagedElement xsi:type="frameweb:PersistencePackage" name="Data">
@@ -248,6 +709,18 @@
       <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services/UserService" supplier="//@compose.3/Services/IUserService"/>
       <packagedElement xsi:type="frameweb:ServiceRealization"/>
       <packagedElement xsi:type="frameweb:ServiceRealization"/>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services/@packagedElement.5/Source //@compose.3/Services/@packagedElement.5/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services/@packagedElement.5/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services/@packagedElement.5/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services/UserService" association="//@compose.3/Services/@packagedElement.5"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IUserRepository" association="//@compose.3/Services/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services/@packagedElement.6/Source //@compose.3/Services/@packagedElement.6/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services/@packagedElement.6/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services/@packagedElement.6/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services/UserService" association="//@compose.3/Services/@packagedElement.6"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IRoleRepository" association="//@compose.3/Services/@packagedElement.6"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
       <packagedElement xsi:type="frameweb:ServiceClass" name="RecipeService">
@@ -274,21 +747,87 @@
       </packagedElement>
       <packagedElement xsi:type="frameweb:ServiceInterface" name="IRecipeService"/>
       <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.1/RecipeService" supplier="//@compose.3/Services.1/IRecipeService"/>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.1/@packagedElement.3/Source //@compose.3/Services.1/@packagedElement.3/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.3/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.3/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.1/RecipeService" association="//@compose.3/Services.1/@packagedElement.3"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IRecipeRepository" association="//@compose.3/Services.1/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.1/@packagedElement.4/Source //@compose.3/Services.1/@packagedElement.4/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.4/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.4/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.1/RecipeService" association="//@compose.3/Services.1/@packagedElement.4"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IPreparationRepository" association="//@compose.3/Services.1/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.1/@packagedElement.5/Source //@compose.3/Services.1/@packagedElement.5/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.5/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.5/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.1/RecipeService" association="//@compose.3/Services.1/@packagedElement.5"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IPreparationStepRepository" association="//@compose.3/Services.1/@packagedElement.5"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.1/@packagedElement.6/Source //@compose.3/Services.1/@packagedElement.6/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.6/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.6/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.1/RecipeService" association="//@compose.3/Services.1/@packagedElement.6"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IIngredientRepository" association="//@compose.3/Services.1/@packagedElement.6"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.1/@packagedElement.7/Source //@compose.3/Services.1/@packagedElement.7/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.7/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.1/@packagedElement.7/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.1/RecipeService" association="//@compose.3/Services.1/@packagedElement.7"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IFoodRepository" association="//@compose.3/Services.1/@packagedElement.7"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
       <packagedElement xsi:type="frameweb:ServiceClass" name="FoodService"/>
       <packagedElement xsi:type="frameweb:ServiceInterface" name="IFoodService"/>
       <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.2/FoodService" supplier="//@compose.3/Services.2/IFoodService"/>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.2/@packagedElement.3/Source //@compose.3/Services.2/@packagedElement.3/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.2/@packagedElement.3/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.2/@packagedElement.3/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.2/FoodService" association="//@compose.3/Services.2/@packagedElement.3"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/IFoodRepository" association="//@compose.3/Services.2/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.2/@packagedElement.4/Source //@compose.3/Services.2/@packagedElement.4/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.2/@packagedElement.4/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.2/@packagedElement.4/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.2/FoodService" association="//@compose.3/Services.2/@packagedElement.4"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/INutritionFactsRepository" association="//@compose.3/Services.2/@packagedElement.4"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
       <packagedElement xsi:type="frameweb:ServiceInterface" name="INutritionFactsService"/>
       <packagedElement xsi:type="frameweb:ServiceClass" name="NutritionFactsService"/>
       <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.3/NutritionFactsService" supplier="//@compose.3/Services.3/INutritionFactsService"/>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.3/@packagedElement.3/Source //@compose.3/Services.3/@packagedElement.3/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.3/@packagedElement.3/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.3/@packagedElement.3/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.3/NutritionFactsService" association="//@compose.3/Services.3/@packagedElement.3"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/INutritionFactsRepository" association="//@compose.3/Services.3/@packagedElement.3"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.3/@packagedElement.4/Source //@compose.3/Services.3/@packagedElement.4/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.3/@packagedElement.4/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.3/@packagedElement.4/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.3/NutritionFactsService" association="//@compose.3/Services.3/@packagedElement.4"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/INutritionFactsNutrientsRepository" association="//@compose.3/Services.3/@packagedElement.4"/>
+      </packagedElement>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.3/@packagedElement.5/Source //@compose.3/Services.3/@packagedElement.5/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.3/@packagedElement.5/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.3/@packagedElement.5/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.3/NutritionFactsService" association="//@compose.3/Services.3/@packagedElement.5"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/INutrientRepository" association="//@compose.3/Services.3/@packagedElement.5"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xsi:type="frameweb:ApplicationPackage" name="Services">
       <packagedElement xsi:type="frameweb:ServiceClass" name="NutrientService"/>
       <packagedElement xsi:type="frameweb:ServiceInterface" name="INutrientService"/>
       <packagedElement xsi:type="frameweb:ServiceRealization" client="//@compose.3/Services.4/NutrientService" supplier="//@compose.3/Services.4/INutrientService"/>
+      <packagedElement xsi:type="frameweb:DAOServiceAssociation" memberEnd="//@compose.3/Services.4/@packagedElement.3/Source //@compose.3/Services.4/@packagedElement.3/Target">
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Source Constraint" constrainedElement="//@compose.3/Services.4/@packagedElement.3/Source"/>
+        <ownedRule xsi:type="frameweb:DomainConstraints" name="Target Constraint" constrainedElement="//@compose.3/Services.4/@packagedElement.3/Target"/>
+        <ownedEnd name="Source" type="//@compose.3/Services.4/NutrientService" association="//@compose.3/Services.4/@packagedElement.3"/>
+        <ownedEnd name="Target" type="//@compose.2/Data/INutrientRepository" association="//@compose.3/Services.4/@packagedElement.3"/>
+      </packagedElement>
     </packagedElement>
   </compose>
 </frameweb:FramewebProject>
