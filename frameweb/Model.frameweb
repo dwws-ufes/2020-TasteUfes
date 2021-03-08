@@ -201,10 +201,14 @@
       <packagedElement xsi:type="frameweb:DAOClass" name="RecipeRepository">
         <generalization xsi:type="frameweb:DAOGeneralization"/>
         <generalization xsi:type="frameweb:DAOGeneralization"/>
+        <ownedOperation xsi:type="frameweb:DAOMethod" name="GetWhitIngredient" methodType="//@compose.0/Models/Ingredient"/>
+        <ownedOperation xsi:type="frameweb:DAOMethod" name="GetRecipeWithPreparationStep" methodType="//@compose.2/Data/PreparationStepRepository"/>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RecipeRepository" supplier="//@compose.2/Data/IRecipeRepository"/>
       <packagedElement xsi:type="frameweb:DAOInterface" name="IUserRepository"/>
-      <packagedElement xsi:type="frameweb:DAOClass" name="UserRepository"/>
+      <packagedElement xsi:type="frameweb:DAOClass" name="UserRepository">
+        <ownedOperation xsi:type="frameweb:DAOMethod" name="GetUserWhithRecipe" methodType="//@compose.0/Models/Recipe"/>
+      </packagedElement>
       <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/UserRepository" supplier="//@compose.2/Data/IUserRepository"/>
       <packagedElement xsi:type="frameweb:DAORealization"/>
       <packagedElement xsi:type="frameweb:DAORealization"/>
@@ -231,9 +235,10 @@
       <packagedElement xsi:type="frameweb:DAOInterface" name="IPreparationStepRepository"/>
       <packagedElement xsi:type="frameweb:DAOClass" name="PreparationStepRepository"/>
       <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/PreparationStepRepository" supplier="//@compose.2/Data/IPreparationStepRepository"/>
-      <packagedElement xsi:type="frameweb:DAOInterface" name="IRoleRepsitory"/>
       <packagedElement xsi:type="frameweb:DAOClass" name="RoleRepository"/>
-      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RoleRepository" supplier="//@compose.2/Data/IRoleRepsitory"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RoleRepository"/>
+      <packagedElement xsi:type="frameweb:DAOInterface" name="IRoleRepository"/>
+      <packagedElement xsi:type="frameweb:DAORealization" client="//@compose.2/Data/RoleRepository" supplier="//@compose.2/Data/IRoleRepository"/>
     </packagedElement>
   </compose>
   <compose xsi:type="frameweb:ApplicationModel" name="Application Model">
