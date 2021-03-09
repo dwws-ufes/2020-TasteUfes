@@ -19,8 +19,11 @@ namespace TasteUfes.Models
         [InverseProperty("Recipe")]
         public IEnumerable<Ingredient> Ingredients { get; set; }
 
-        [ForeignKey("UsersId")]
-        public User Users { get; set; }
-        public Guid UsersId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+        public Guid UserId { get; set; }
+
+        [NotMapped]
+        public NutritionFacts NutritionFacts { get; set; }
     }
 }

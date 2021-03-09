@@ -9,7 +9,7 @@ using TasteUfes.Data.Context;
 namespace TasteUfes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210307231352_Initial")]
+    [Migration("20210309030816_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,21 +97,21 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f1602bf1-47f8-4310-b42b-ae19f8b14d42"),
+                            Id = new Guid("33c0b713-a929-49df-af1c-5db0a26ac4ef"),
                             DailyRecommendation = 375.0,
                             EnergyPerGram = 4.0,
                             Name = "Carbohydrate"
                         },
                         new
                         {
-                            Id = new Guid("df414894-5d99-41a9-a82f-8db54526d580"),
+                            Id = new Guid("f19b9988-8bab-4a59-83a8-9ceb7e41b498"),
                             DailyRecommendation = 50.0,
                             EnergyPerGram = 4.0,
                             Name = "Protein"
                         },
                         new
                         {
-                            Id = new Guid("d5ed4949-2d1b-4a9a-bea6-b2b03c54b255"),
+                            Id = new Guid("b0b6d60c-8b0a-4b12-8b5e-e0bc4bf08a79"),
                             DailyRecommendation = 80.0,
                             EnergyPerGram = 9.0,
                             Name = "Total Fat"
@@ -123,9 +123,6 @@ namespace TasteUfes.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
-
-                    b.Property<double>("DailyValue")
-                        .HasColumnType("REAL");
 
                     b.Property<double>("ServingEnergy")
                         .HasColumnType("REAL");
@@ -152,9 +149,6 @@ namespace TasteUfes.Migrations
 
                     b.Property<int>("AmountPerServingUnit")
                         .HasColumnType("INTEGER");
-
-                    b.Property<double>("DailyValue")
-                        .HasColumnType("REAL");
 
                     b.Property<Guid>("NutrientId")
                         .HasColumnType("TEXT");
@@ -229,12 +223,12 @@ namespace TasteUfes.Migrations
                     b.Property<int>("Servings")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("UsersId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Recipes");
                 });
@@ -260,7 +254,7 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("48a7328b-4f1e-4b88-b62f-ac9ac6ef03c8"),
+                            Id = new Guid("917324f1-23c6-44b0-873c-9e00d68e067a"),
                             Name = "Admin"
                         });
                 });
@@ -385,12 +379,12 @@ namespace TasteUfes.Migrations
 
             modelBuilder.Entity("TasteUfes.Models.Recipe", b =>
                 {
-                    b.HasOne("TasteUfes.Models.User", "Users")
+                    b.HasOne("TasteUfes.Models.User", "User")
                         .WithMany("Recipes")
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UserId")
                         .IsRequired();
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TasteUfes.Models.UserRole", b =>

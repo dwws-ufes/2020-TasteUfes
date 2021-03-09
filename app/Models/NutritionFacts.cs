@@ -15,7 +15,7 @@ namespace TasteUfes.Models
         [Required]
         public double ServingEnergy { get; set; }
 
-        [Required]
+        [NotMapped]
         public double DailyValue { get; set; }
 
         [InverseProperty("NutritionFacts")]
