@@ -28,8 +28,7 @@ namespace TasteUfes.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     ServingSize = table.Column<double>(type: "REAL", nullable: false),
                     ServingSizeUnit = table.Column<int>(type: "INTEGER", nullable: false),
-                    ServingEnergy = table.Column<double>(type: "REAL", nullable: false),
-                    DailyValue = table.Column<double>(type: "REAL", nullable: false)
+                    ServingEnergy = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,7 +89,6 @@ namespace TasteUfes.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     AmountPerServing = table.Column<double>(type: "REAL", nullable: false),
                     AmountPerServingUnit = table.Column<int>(type: "INTEGER", nullable: false),
-                    DailyValue = table.Column<double>(type: "REAL", nullable: false),
                     NutritionFactsId = table.Column<Guid>(type: "TEXT", nullable: false),
                     NutrientId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
@@ -118,14 +116,14 @@ namespace TasteUfes.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "VARCHAR(255)", maxLength: 256, nullable: false),
                     Servings = table.Column<int>(type: "INTEGER", nullable: false),
-                    UsersId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipes_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_Recipes_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -224,22 +222,22 @@ namespace TasteUfes.Migrations
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("f1602bf1-47f8-4310-b42b-ae19f8b14d42"), 375.0, 4.0, "Carbohydrate" });
+                values: new object[] { new Guid("33c0b713-a929-49df-af1c-5db0a26ac4ef"), 375.0, 4.0, "Carbohydrate" });
 
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("df414894-5d99-41a9-a82f-8db54526d580"), 50.0, 4.0, "Protein" });
+                values: new object[] { new Guid("f19b9988-8bab-4a59-83a8-9ceb7e41b498"), 50.0, 4.0, "Protein" });
 
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("d5ed4949-2d1b-4a9a-bea6-b2b03c54b255"), 80.0, 9.0, "Total Fat" });
+                values: new object[] { new Guid("b0b6d60c-8b0a-4b12-8b5e-e0bc4bf08a79"), 80.0, 9.0, "Total Fat" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("48a7328b-4f1e-4b88-b62f-ac9ac6ef03c8"), "Admin" });
+                values: new object[] { new Guid("917324f1-23c6-44b0-873c-9e00d68e067a"), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Foods_Name",
@@ -291,9 +289,9 @@ namespace TasteUfes.Migrations
                 column: "PreparationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipes_UsersId",
+                name: "IX_Recipes_UserId",
                 table: "Recipes",
-                column: "UsersId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",

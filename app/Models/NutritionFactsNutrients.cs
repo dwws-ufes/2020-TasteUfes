@@ -12,7 +12,7 @@ namespace TasteUfes.Models
         [Required]
         public Measures AmountPerServingUnit { get; set; }
 
-        [Required]
+        [NotMapped]
         public double DailyValue { get; set; }
 
         [ForeignKey("NutritionFactsId")]

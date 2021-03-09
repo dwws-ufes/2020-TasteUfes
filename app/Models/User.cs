@@ -28,7 +28,7 @@ namespace TasteUfes.Models
         // Fluent API : Many-to-Many
         public IEnumerable<Role> Roles { get; set; }
 
-        [InverseProperty("Users")]
+        [InverseProperty("User")]
         public IEnumerable<Recipe> Recipes { get; set; }
     }
 }

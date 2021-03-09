@@ -22,6 +22,9 @@ namespace {{ package.Name }}
 			{% if attribute.isUnique() == true %}
 				// Adicione a regra UNIQUE via Fluent API
 			{% endif %}
+			{% if attribute.isPersistent() == false %}
+				[NotMapped]
+			{% endif %}
 			{{ attribute.Visibility.Name }} {{ attribute.Type.Name }}{% if attribute.isIsNull() == true %}?{% endif %} {{ attribute.Name }} { get; set; }
 	    {% endif %}
 	{% endfor %}
