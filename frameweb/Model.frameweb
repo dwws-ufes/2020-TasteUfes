@@ -246,6 +246,7 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:Page" name="Details" visibility="private"/>
+      <packagedElement xsi:type="frameweb:Page" name="Recommendation"/>
     </packagedElement>
     <packagedElement xsi:type="frameweb:ControllerPackage" name="Controllers">
       <packagedElement xsi:type="frameweb:FrontControllerClass" name="RecipesController" visibility="public">
@@ -594,7 +595,6 @@
         <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Toolbar"/>
         <ownedAttribute xsi:type="frameweb:NavigationCompositionWhole" type="//@compose.1/Components/Toolbar"/>
       </packagedElement>
-      <packagedElement xsi:type="frameweb:Page" name="Recommendation"/>
     </packagedElement>
     <packagedElement xsi:type="frameweb:PageDependency" visibility="private" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Recipes/Index">
       <pageDependencyConstraint/>
@@ -643,8 +643,16 @@
     <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Index" resultMethod="//@compose.1/Controllers/RecipesController/GetRecipesByUser">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
-    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Recommendation" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components/Recommendation" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients">
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Recommendation" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Recommendation" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Delete_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Index" resultMethod="//@compose.1/Controllers/UserController/Delete_User">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
     <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Index" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/Delete_Recipe"/>
@@ -652,11 +660,7 @@
       <resultDependencyConstraint result="null"/>
     </packagedElement>
     <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Delete_Food"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Index" resultMethod="//@compose.1/Controllers/FoodsController/Delete_Food" httpStatus="">
-      <resultDependencyConstraint result="null"/>
-    </packagedElement>
-    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Delete_User"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Index" resultMethod="//@compose.1/Controllers/UserController/Delete_User">
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Index" resultMethod="//@compose.1/Controllers/FoodsController/Delete_Food">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
   </compose>
