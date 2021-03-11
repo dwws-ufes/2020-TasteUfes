@@ -11,7 +11,7 @@ namespace TasteUfes.Data.Context.Extensions
                 .GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys()))
             {
-                relationship.DeleteBehavior = Microsoft.EntityFrameworkCore.DeleteBehavior.ClientSetNull;
+                relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
             }
         }
     }

@@ -50,7 +50,13 @@ namespace TasteUfes.Data.Context
             modelBuilder.Seed<Nutrient>();
             modelBuilder.Seed<Role>();
 
-            modelBuilder.VarcharMaxLengthWhenUndefined(255);
+            /**
+             * Por padrão a engine do SQLite mapeia "string" para "text" sem especificar o tamanho máximo.
+             * ref: https://www.devart.com/dotconnect/sqlite/docs/DataTypeMapping.html
+             *
+             * Abaixo há uma forma de resolver este problema, mas manteremos o mapeamento padrão da engine.
+             * modelBuilder.VarcharMaxLengthWhenUndefined(255);
+             */
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             modelBuilder.OnDeleteClientSetNull();
 
