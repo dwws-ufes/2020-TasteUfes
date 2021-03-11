@@ -25,7 +25,7 @@ namespace TasteUfes.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("NutritionFactsId")
                         .HasColumnType("TEXT");
@@ -83,7 +83,7 @@ namespace TasteUfes.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -95,21 +95,21 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("33c0b713-a929-49df-af1c-5db0a26ac4ef"),
+                            Id = new Guid("f8f85450-70bf-483f-9b58-e88d4fd700a6"),
                             DailyRecommendation = 375.0,
                             EnergyPerGram = 4.0,
                             Name = "Carbohydrate"
                         },
                         new
                         {
-                            Id = new Guid("f19b9988-8bab-4a59-83a8-9ceb7e41b498"),
+                            Id = new Guid("831c3d2f-4f95-4291-9b05-aaec98b8b9d7"),
                             DailyRecommendation = 50.0,
                             EnergyPerGram = 4.0,
                             Name = "Protein"
                         },
                         new
                         {
-                            Id = new Guid("b0b6d60c-8b0a-4b12-8b5e-e0bc4bf08a79"),
+                            Id = new Guid("22c8fc61-40fe-466c-8c6e-0eecc9b713b4"),
                             DailyRecommendation = 80.0,
                             EnergyPerGram = 9.0,
                             Name = "Total Fat"
@@ -192,7 +192,7 @@ namespace TasteUfes.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(2048)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("PreparationId")
                         .HasColumnType("TEXT");
@@ -216,7 +216,7 @@ namespace TasteUfes.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Servings")
                         .HasColumnType("INTEGER");
@@ -240,7 +240,7 @@ namespace TasteUfes.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -252,7 +252,7 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("917324f1-23c6-44b0-873c-9e00d68e067a"),
+                            Id = new Guid("398da46e-c2f7-4953-8ec1-68367a661724"),
                             Name = "Admin"
                         });
                 });
@@ -265,26 +265,26 @@ namespace TasteUfes.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("VARCHAR(255)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

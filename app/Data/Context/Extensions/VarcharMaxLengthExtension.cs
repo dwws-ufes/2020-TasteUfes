@@ -12,7 +12,7 @@ namespace TasteUfes.Data.Context.Extensions
                 .SelectMany(e => e.GetProperties())
                 .Where(p => p.ClrType == typeof(string)))
             {
-                property.SetColumnType($"VARCHAR({maxLength})");
+                property.SetColumnType($"VARCHAR({property.GetMaxLength() ?? maxLength})");
             }
         }
     }
