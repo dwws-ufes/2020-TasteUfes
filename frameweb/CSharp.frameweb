@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frameweb:FramewebProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:frameweb="http://nemo.inf.ufes.br/projects/frameweb/FW-2015" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <compose xsi:type="frameweb:EntityModel" name="CSharp">
+    <packagedElement xsi:type="uml:PrimitiveType" name="byte"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="short"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="int"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="long"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="char"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="bool"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="float"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="double"/>
+    <packagedElement xsi:type="uml:PrimitiveType" name="decimal"/>
+    <packagedElement xsi:type="uml:Class" name="string"/>
+    <packagedElement xsi:type="uml:Class" name="Guid"/>
+    <packagedElement xsi:type="uml:Class" name="IEnumerable"/>
+    <packagedElement xsi:type="uml:Class" name="TEntity"/>
+    <packagedElement xsi:type="uml:Class" name="TUser"/>
+    <packagedElement xsi:type="uml:Class" name="DateTime"/>
+    <packagedElement xsi:type="uml:Class" name="TimeSpan"/>
+    <packagedElement xsi:type="uml:Class" name="List"/>
+    <packagedElement xsi:type="uml:Class" name="ClaimsPrincipal"/>
+    <packagedElement xsi:type="uml:Class" name="IActionResult"/>
+    <packagedElement xsi:type="uml:Class" name="Expression"/>
+    <packagedElement xsi:type="uml:Class" name="IFormFile"/>
+    <packagedElement xsi:type="uml:Class" name="Task"/>
+  </compose>
+</frameweb:FramewebProject>

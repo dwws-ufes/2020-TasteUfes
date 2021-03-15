@@ -1,0 +1,27 @@
+<template>
+	{%- for attribute in page.OwnedAttributes -%}
+		{%- if attribute.Type.Name == "v-data-table" -%}
+			<v-data-table :items-per-page="10" class="elevation-1"></v-data-table>
+		{% elseif attribute.Type.Name == "v-toolbar" %}
+			<v-toolbar></v-toolbar>
+		{%- endif -%}
+	{%- endfor -%}
+	
+	{%- for form in forms -%}
+		<v-form ref="form">
+			<div class="form-group">
+				{% for attribute in form.Attributes %}
+					{% if attribute.Type.Name == "v-text-field" %}
+						<v-text-field label="{{ attribute.Name }}" hide-details="auto" class="form-control" required/>
+					{% elseif attribute.Type.Name == "v-text-email" %}
+						<v-text-field v-model="email" label="{{ attribute.Name }}" hide-details="auto" class="form-control" required/>
+					{% elseif attribute.Type.Name == "v-text-password" %}
+						<v-text-field v-model="password" label="{{ attribute.Name }}" class="form-control" required/>
+					{% elseif attribute.Type.Name == "v-btn" %}
+						<v-btn elevation="2">{{ attribute.Name }}</v-btn>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</v-form>
+	{% endfor %}
+</template>

@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
+{% set entityName = (controllerName | replace({'Controller' : ''})) %}
+
+namespace TasteUfes.{{ package.Name }}
+{
+	[Authorize]
+	[ApiController]
+	[Route("api/[controller]")]
+	public class {{ class.Name }} : BaseController
+	{
+		{% for association in associations %}
+			private readonly {{ association.TargetMember.Type.Name }} _{{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }};
+		{% endfor %}
+		
+		public {{ class.Name }}({% for association in associations %}{{ association.TargetMember.Type.Name }} {{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }}{% if loop.last == false %}, {% endif %}{% endfor %}{% if associations is not empty %}, {% endif %}IMapper mapper, INotificator notificator)
+			: base(mapper, notificator)
+		{
+			{% for association in associations %}
+				_{{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }} = {{ association.TargetMember.Type.Name | slice(1, association.TargetMember.Type.Name.length()) | lower_first }};
+			{% endfor %}
+		}
+		
+		{% for method in methods %}
+			{% set methodName = (method.Name | split('_'))[0] %}
+
+			{% if (method.RequestMethod | upper) == "GET" %}
+				[HttpGet]
+			{% elseif (method.RequestMethod | upper) == "POST" %}
+				[HttpPost]
+			{% elseif (method.RequestMethod | upper) == "PUT" %}
+				[HttpPut]
+			{% elseif (method.RequestMethod | upper) == "DELETE" %}
+				[HttpDelete]
+			{% endif %}
+			public IActionResult {{ methodName }}({% for parameter in method.OwnedParameters %}{{ parameter.Type.Name }} {{ parameter.Name }}{% if loop.last == false %}, {% endif %}{% endfor %})
+			{
+				throw new NotImplementedException();
+			}
+		{% endfor %}
+	}
+}

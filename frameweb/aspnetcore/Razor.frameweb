@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frameweb:FramewebProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:frameweb="http://nemo.inf.ufes.br/projects/frameweb/FW-2015">
+  <configures xsi:type="frameweb:FrontControllerTemplate" name="Vue" classTemplate="FrontControllerClassTemplate.twig" pageTemplate="Page.twig" formTemplate="%09%3Ch%3Aform%20id%3D%22FW_ID%22%3EFW_BODY%0A%09%3C%2Fh%3Aform%3E" classExtension=".cs" pageExtension=".vue" restClassTemplate="RestControllerClassTemplate.twig">
+    <packagedElement xsi:type="frameweb:TagLib" name="Vue">
+      <packagedElement xsi:type="frameweb:Tag" name="v-text-field"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-toolbar"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-btn"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-text-email"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-text-password"/>
+      <packagedElement xsi:type="frameweb:Tag" name="v-data-table"/>
+    </packagedElement>
+  </configures>
+</frameweb:FramewebProject>

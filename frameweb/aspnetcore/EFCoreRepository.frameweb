@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frameweb:FramewebProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:frameweb="http://nemo.inf.ufes.br/projects/frameweb/FW-2015">
+  <configures xsi:type="frameweb:DAOTemplate" name="EF Core Repository" category="ObjetoRelacional" version="1.0" classTemplate="DAOClassTemplate.twig" interfaceTemplate="DAOInterfaceTemplate.twig" classExtension=".cs"/>
+</frameweb:FramewebProject>
