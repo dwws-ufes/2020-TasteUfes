@@ -443,10 +443,10 @@ $RECYCLE.BIN/
 
 obj/*
 
-Models/*
-Controllers/*
+# Models/*
+# Controllers/*
 !Controllers/WeatherForecastController.cs
-Services/*
-Data/*
-Repositories/*
-Views/*
+# Services/*
+# Data/*
+# Repositories/*
+# Views/*
