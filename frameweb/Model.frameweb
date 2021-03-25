@@ -9,9 +9,6 @@
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Servings" visibility="public" isUnique="false" isPersistent="true">
           <type xsi:type="uml:PrimitiveType" href="CSharp.frameweb#//@compose.0/int"/>
         </ownedAttribute>
-        <ownedAttribute xsi:type="frameweb:DomainAttribute" name="NutritionFacts" visibility="public" type="//@compose.0/Models/NutritionFacts" isNull="true">
-          <defaultValue xsi:type="uml:LiteralString" value=""/>
-        </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:DomainClass" name="Ingredient">
         <ownedAttribute xsi:type="frameweb:DomainAttribute" name="Quantity" visibility="public" isUnique="false" isPersistent="true">
