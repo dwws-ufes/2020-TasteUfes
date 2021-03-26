@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using TasteUfes.Models;
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Data.Context;
+using Tasteufes.Data.Interfaces;
 
 namespace TasteUfes.Data
 {
@@ -12,10 +13,15 @@ namespace TasteUfes.Data
         private readonly ApplicationDbContext _context;
         private readonly Dictionary<string, dynamic> _repositories;
 
-        public UnitOfWork(ApplicationDbContext context)
+        private readonly IFoodRepository Foods;
+
+        public UnitOfWork(ApplicationDbContext context,
+            IFoodRepository foods)
         {
             _context = context;
             _repositories = new Dictionary<string, dynamic>();
+
+            _repositories[nameof(Food)] = Foods = foods;
         }
 
         public IEntityRepository<TEntity> Repository<TEntity>() where TEntity : Entity
@@ -34,7 +40,7 @@ namespace TasteUfes.Data
             return _repositories[type];
         }
 
-        public int SaveChanges()
+        public int Commit()
         {
             return _context.SaveChanges();
         }

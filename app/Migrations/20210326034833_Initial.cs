@@ -222,22 +222,22 @@ namespace TasteUfes.Migrations
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("f8f85450-70bf-483f-9b58-e88d4fd700a6"), 375.0, 4.0, "Carbohydrate" });
+                values: new object[] { new Guid("2b2dd419-c6b4-49cc-9be8-50992e91f36c"), 375.0, 4.0, "Carbohydrate" });
 
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("831c3d2f-4f95-4291-9b05-aaec98b8b9d7"), 50.0, 4.0, "Protein" });
+                values: new object[] { new Guid("829e1eb9-5eea-4856-8906-74cff3b95cb1"), 50.0, 4.0, "Protein" });
 
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("22c8fc61-40fe-466c-8c6e-0eecc9b713b4"), 80.0, 9.0, "Total Fat" });
+                values: new object[] { new Guid("db02fbba-a1bb-4bf7-8411-69412b446f50"), 80.0, 9.0, "Total Fat" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("398da46e-c2f7-4953-8ec1-68367a661724"), "Admin" });
+                values: new object[] { new Guid("39a0a3eb-54c9-491b-a57b-5478405884cc"), "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Foods_Name",

@@ -43,7 +43,7 @@ namespace TasteUfes.Services
             try
             {
                 UnitOfWork.Repository<TEntity>().Add(entity);
-                UnitOfWork.SaveChanges();
+                UnitOfWork.Commit();
 
                 return entity;
             }
@@ -61,7 +61,7 @@ namespace TasteUfes.Services
             try
             {
                 UnitOfWork.Repository<TEntity>().Remove(id);
-                UnitOfWork.SaveChanges();
+                UnitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -78,7 +78,7 @@ namespace TasteUfes.Services
             try
             {
                 UnitOfWork.Repository<TEntity>().Update(entity);
-                UnitOfWork.SaveChanges();
+                UnitOfWork.Commit();
 
                 return entity;
             }
