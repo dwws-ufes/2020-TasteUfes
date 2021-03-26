@@ -6,7 +6,7 @@ namespace TasteUfes.Data.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        int SaveChanges();
+        int Commit();
         IDbContextTransaction BeginTransaction();
         IEntityRepository<TEntity> Repository<TEntity>() where TEntity : Entity;
     }

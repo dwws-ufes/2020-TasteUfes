@@ -9,7 +9,7 @@ using TasteUfes.Data.Context;
 namespace TasteUfes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210311040231_Initial")]
+    [Migration("20210326034833_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,21 +97,21 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f8f85450-70bf-483f-9b58-e88d4fd700a6"),
+                            Id = new Guid("2b2dd419-c6b4-49cc-9be8-50992e91f36c"),
                             DailyRecommendation = 375.0,
                             EnergyPerGram = 4.0,
                             Name = "Carbohydrate"
                         },
                         new
                         {
-                            Id = new Guid("831c3d2f-4f95-4291-9b05-aaec98b8b9d7"),
+                            Id = new Guid("829e1eb9-5eea-4856-8906-74cff3b95cb1"),
                             DailyRecommendation = 50.0,
                             EnergyPerGram = 4.0,
                             Name = "Protein"
                         },
                         new
                         {
-                            Id = new Guid("22c8fc61-40fe-466c-8c6e-0eecc9b713b4"),
+                            Id = new Guid("db02fbba-a1bb-4bf7-8411-69412b446f50"),
                             DailyRecommendation = 80.0,
                             EnergyPerGram = 9.0,
                             Name = "Total Fat"
@@ -254,7 +254,7 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("398da46e-c2f7-4953-8ec1-68367a661724"),
+                            Id = new Guid("39a0a3eb-54c9-491b-a57b-5478405884cc"),
                             Name = "Admin"
                         });
                 });
