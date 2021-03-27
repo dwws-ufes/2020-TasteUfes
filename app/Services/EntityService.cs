@@ -42,8 +42,9 @@ namespace TasteUfes.Services
 
             try
             {
-                UnitOfWork.Repository<TEntity>().Add(entity);
-                UnitOfWork.Commit();
+                entity = UnitOfWork.Repository<TEntity>().Add(entity);
+
+                UnitOfWork.SaveChanges();
 
                 return entity;
             }
@@ -61,7 +62,21 @@ namespace TasteUfes.Services
             try
             {
                 UnitOfWork.Repository<TEntity>().Remove(id);
-                UnitOfWork.Commit();
+                UnitOfWork.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.Message);
+                Notify(NotificationType.ERROR, typeof(TEntity).Name, $"There was an error removing {typeof(TEntity).Name}.");
+            }
+        }
+
+        public virtual void Remove(TEntity entity)
+        {
+            try
+            {
+                UnitOfWork.Repository<TEntity>().Remove(entity);
+                UnitOfWork.SaveChanges();
             }
             catch (Exception e)
             {
@@ -77,8 +92,9 @@ namespace TasteUfes.Services
 
             try
             {
-                UnitOfWork.Repository<TEntity>().Update(entity);
-                UnitOfWork.Commit();
+                entity = UnitOfWork.Repository<TEntity>().Update(entity);
+
+                UnitOfWork.SaveChanges();
 
                 return entity;
             }

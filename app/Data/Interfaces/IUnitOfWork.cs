@@ -7,10 +7,13 @@ namespace TasteUfes.Data.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
+        IIngredientRepository Ingredients { get; }
         IFoodRepository Foods { get; }
+        INutritionFactsRepository NutritionFacts { get; }
+        INutritionFactsNutrientsRepository NutritionFactsNutrients { get; }
         IUserRepository Users { get; }
 
-        int Commit();
+        int SaveChanges();
         IDbContextTransaction BeginTransaction();
         IEntityRepository<TEntity> Repository<TEntity>() where TEntity : Entity;
     }

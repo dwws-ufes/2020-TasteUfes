@@ -28,6 +28,15 @@ namespace TasteUfes.Configurations
             services.AddScoped<IFoodRepository, FoodRepository>();
             services.AddScoped<IFoodService, FoodService>();
 
+            // NutritionFacts context
+            services.AddScoped<INutritionFactsRepository, NutritionFactsRepository>();
+
+            // NutritionFactsNutrients context
+            services.AddScoped<INutritionFactsNutrientsRepository, NutritionFactsNutrientsRepository>();
+
+            // Ingredient context
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+
             return services;
         }
     }

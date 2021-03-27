@@ -28,13 +28,13 @@ namespace TasteUfes.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<TEntityResource>> Get()
+        public virtual ActionResult<IEnumerable<TEntityResource>> Get()
         {
             return Ok(Mapper.Map<IEnumerable<TEntityResource>>(Service.GetAll()));
         }
 
         [HttpGet("{id}")]
-        public ActionResult<TEntityResource> Get([FromRoute] Guid id)
+        public virtual ActionResult<TEntityResource> Get([FromRoute] Guid id)
         {
             var entity = Service.Get(id);
 
@@ -45,7 +45,7 @@ namespace TasteUfes.Controllers
         }
 
         [HttpPost]
-        public ActionResult<TEntityResource> Post([FromBody] TEntityResource resource)
+        public virtual ActionResult<TEntityResource> Post([FromBody] TEntityResource resource)
         {
             var mapped = Mapper.Map<TEntity>(resource);
 
@@ -58,7 +58,7 @@ namespace TasteUfes.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<TEntityResource> Update([FromRoute] Guid id, [FromBody] TEntityResource resource)
+        public virtual ActionResult<TEntityResource> Update([FromRoute] Guid id, [FromBody] TEntityResource resource)
         {
             if (id != resource?.Id)
             {
@@ -74,7 +74,7 @@ namespace TasteUfes.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] Guid id)
+        public virtual IActionResult Delete([FromRoute] Guid id)
         {
             Service.Remove(id);
 

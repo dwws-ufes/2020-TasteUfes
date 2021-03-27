@@ -20,30 +20,5 @@ namespace TasteUfes.Data
                 .ThenInclude(n => n.Nutrient)
                 .FirstOrDefault(f => f.Id == id);
         }
-
-        public override void Remove(Guid id)
-        {
-            var food = _context.Set<Food>()
-                .AsNoTracking()
-                .Include(f => f.Ingredients)
-                .Include(f => f.NutritionFacts)
-                .ThenInclude(n => n.NutritionFactsNutrients)
-                .ThenInclude(n => n.Nutrient)
-                .FirstOrDefault(f => f.Id == id);
-
-            if (food.Ingredients.Any())
-            {
-                throw new DbUpdateException("Cannot delete an food with associations.");
-            }
-
-            _context.Set<NutritionFactsNutrients>()
-                .RemoveRange(food.NutritionFacts.NutritionFactsNutrients);
-
-            _context.Set<NutritionFacts>()
-                .Remove(food.NutritionFacts);
-
-            _context.Set<Food>()
-                .Remove(food);
-        }
     }
 }

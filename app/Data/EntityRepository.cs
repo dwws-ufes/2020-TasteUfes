@@ -38,6 +38,16 @@ namespace TasteUfes.Data
             _context.Set<TEntity>().Remove(new TEntity { Id = id });
         }
 
+        public virtual void Remove(TEntity entity)
+        {
+            _context.Set<TEntity>().Remove(entity);
+        }
+
+        public virtual void Remove(IEnumerable<TEntity> entities)
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
+        }
+
         public virtual IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().AsNoTracking().ToList();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TasteUfes.Data.Context;
@@ -9,28 +10,30 @@ using TasteUfes.Data.Context;
 namespace TasteUfes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210327042923_Initial")]
+    [Migration("20210327235402_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.3");
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TasteUfes.Models.Food", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<Guid?>("NutritionFactsId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -38,7 +41,8 @@ namespace TasteUfes.Migrations
                         .IsUnique();
 
                     b.HasIndex("NutritionFactsId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[NutritionFactsId] IS NOT NULL");
 
                     b.ToTable("Foods");
                 });
@@ -47,19 +51,19 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("FoodId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("QuantityUnit")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -74,18 +78,18 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("DailyRecommendation")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<double>("EnergyPerGram")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -122,16 +126,16 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("ServingEnergy")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<double>("ServingSize")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<int>("ServingSizeUnit")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -142,19 +146,19 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("AmountPerServing")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<int>("AmountPerServingUnit")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<Guid>("NutrientId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("NutritionFactsId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -169,13 +173,13 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<TimeSpan>("PreparationTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("time");
 
                     b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -189,18 +193,18 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(2048)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<Guid>("PreparationId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Step")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -213,18 +217,18 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("Servings")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -237,12 +241,12 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(16)");
 
                     b.HasKey("Id");
 
@@ -263,30 +267,30 @@ namespace TasteUfes.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(16)");
 
                     b.HasKey("Id");
 
@@ -305,7 +309,7 @@ namespace TasteUfes.Migrations
                             Email = "admin@tasteufes.es",
                             FirstName = "Zé",
                             LastName = "Gonc",
-                            Password = "AQAAAAEAACcQAAAAEF1/aKR27hLnDWXK/U1cjA5XFBibK3CiN2/7240G4TuNIHMnKsEZA8BwOWp79rV3kQ==",
+                            Password = "AQAAAAEAACcQAAAAEEZgLhAknIpAalnRETSYnSpnXFVLYBExdr5Ou6eSSF+FAR3UJLYDP0WYwAu2YkoLTQ==",
                             Username = "admin"
                         });
                 });
@@ -313,10 +317,10 @@ namespace TasteUfes.Migrations
             modelBuilder.Entity("TasteUfes.Models.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 

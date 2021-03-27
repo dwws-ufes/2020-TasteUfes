@@ -11,10 +11,10 @@ namespace TasteUfes.Migrations
                 name: "Nutrients",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
-                    EnergyPerGram = table.Column<double>(type: "REAL", nullable: false),
-                    DailyRecommendation = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    EnergyPerGram = table.Column<double>(type: "float", nullable: false),
+                    DailyRecommendation = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,10 +25,10 @@ namespace TasteUfes.Migrations
                 name: "NutritionFacts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ServingSize = table.Column<double>(type: "REAL", nullable: false),
-                    ServingSizeUnit = table.Column<int>(type: "INTEGER", nullable: false),
-                    ServingEnergy = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServingSize = table.Column<double>(type: "float", nullable: false),
+                    ServingSizeUnit = table.Column<int>(type: "int", nullable: false),
+                    ServingEnergy = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,8 +39,8 @@ namespace TasteUfes.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 16, nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,12 +51,12 @@ namespace TasteUfes.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
-                    Username = table.Column<string>(type: "TEXT", maxLength: 16, nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,9 +67,9 @@ namespace TasteUfes.Migrations
                 name: "Foods",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    NutritionFactsId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NutritionFactsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,11 +86,11 @@ namespace TasteUfes.Migrations
                 name: "NutritionFactsNutrients",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AmountPerServing = table.Column<double>(type: "REAL", nullable: false),
-                    AmountPerServingUnit = table.Column<int>(type: "INTEGER", nullable: false),
-                    NutritionFactsId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    NutrientId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountPerServing = table.Column<double>(type: "float", nullable: false),
+                    AmountPerServingUnit = table.Column<int>(type: "int", nullable: false),
+                    NutritionFactsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NutrientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,10 +113,10 @@ namespace TasteUfes.Migrations
                 name: "Recipes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    Servings = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Servings = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,8 +133,8 @@ namespace TasteUfes.Migrations
                 name: "UserRole",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,11 +157,11 @@ namespace TasteUfes.Migrations
                 name: "Ingredients",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    QuantityUnit = table.Column<int>(type: "INTEGER", nullable: false),
-                    FoodId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RecipeId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    QuantityUnit = table.Column<int>(type: "int", nullable: false),
+                    FoodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RecipeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -184,9 +184,9 @@ namespace TasteUfes.Migrations
                 name: "Preparations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PreparationTime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
-                    RecipeId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PreparationTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    RecipeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,10 +203,10 @@ namespace TasteUfes.Migrations
                 name: "PreparationSteps",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Step = table.Column<int>(type: "INTEGER", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
-                    PreparationId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Step = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
+                    PreparationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,17 +222,12 @@ namespace TasteUfes.Migrations
             migrationBuilder.InsertData(
                 table: "Nutrients",
                 columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("2b2dd419-c6b4-49cc-9be8-50992e91f36c"), 375.0, 4.0, "Carbohydrate" });
-
-            migrationBuilder.InsertData(
-                table: "Nutrients",
-                columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("829e1eb9-5eea-4856-8906-74cff3b95cb1"), 50.0, 4.0, "Protein" });
-
-            migrationBuilder.InsertData(
-                table: "Nutrients",
-                columns: new[] { "Id", "DailyRecommendation", "EnergyPerGram", "Name" },
-                values: new object[] { new Guid("db02fbba-a1bb-4bf7-8411-69412b446f50"), 80.0, 9.0, "Total Fat" });
+                values: new object[,]
+                {
+                    { new Guid("2b2dd419-c6b4-49cc-9be8-50992e91f36c"), 375.0, 4.0, "Carbohydrate" },
+                    { new Guid("829e1eb9-5eea-4856-8906-74cff3b95cb1"), 50.0, 4.0, "Protein" },
+                    { new Guid("db02fbba-a1bb-4bf7-8411-69412b446f50"), 80.0, 9.0, "Total Fat" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Roles",
@@ -242,7 +237,7 @@ namespace TasteUfes.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "Username" },
-                values: new object[] { new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"), "admin@tasteufes.es", "Zé", "Gonc", "AQAAAAEAACcQAAAAEF1/aKR27hLnDWXK/U1cjA5XFBibK3CiN2/7240G4TuNIHMnKsEZA8BwOWp79rV3kQ==", "admin" });
+                values: new object[] { new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"), "admin@tasteufes.es", "Zé", "Gonc", "AQAAAAEAACcQAAAAEEZgLhAknIpAalnRETSYnSpnXFVLYBExdr5Ou6eSSF+FAR3UJLYDP0WYwAu2YkoLTQ==", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRole",
@@ -259,7 +254,8 @@ namespace TasteUfes.Migrations
                 name: "IX_Foods_NutritionFactsId",
                 table: "Foods",
                 column: "NutritionFactsId",
-                unique: true);
+                unique: true,
+                filter: "[NutritionFactsId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_FoodId",

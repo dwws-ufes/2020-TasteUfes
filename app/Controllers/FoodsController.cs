@@ -16,5 +16,18 @@ namespace TasteUfes.Controllers
         {
 
         }
+
+        [HttpPost]
+        public override ActionResult<FoodResource> Post([FromBody] FoodResource resource)
+        {
+            var mapped = Mapper.Map<Food>(resource);
+
+            var entity = Service.Add(mapped);
+
+            if (Notificator.HasErrors())
+                return BadRequest(Errors());
+
+            return Created(string.Empty, Mapper.Map<FoodResource>(entity));
+        }
     }
 }

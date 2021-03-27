@@ -442,3 +442,5 @@ $RECYCLE.BIN/
 
 obj/*
 *.db
+*.db-shm
+*.db-wal

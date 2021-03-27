@@ -13,6 +13,8 @@ namespace TasteUfes.Data.Interfaces
         TEntity Add(TEntity entity);
         TEntity Update(TEntity entity);
         void Remove(Guid id);
+        void Remove(TEntity entity);
+        void Remove(IEnumerable<TEntity> entities);
         bool Exists(Guid id);
     }
 }

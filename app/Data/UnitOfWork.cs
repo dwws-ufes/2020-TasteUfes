@@ -13,17 +13,26 @@ namespace TasteUfes.Data
         private readonly ApplicationDbContext _context;
         private readonly Dictionary<string, dynamic> _repositories;
 
+        public IIngredientRepository Ingredients { get; }
         public IFoodRepository Foods { get; }
+        public INutritionFactsRepository NutritionFacts { get; }
+        public INutritionFactsNutrientsRepository NutritionFactsNutrients { get; }
         public IUserRepository Users { get; }
 
         public UnitOfWork(ApplicationDbContext context,
+            IIngredientRepository ingredients,
             IFoodRepository foods,
+            INutritionFactsRepository nutritionFacts,
+            INutritionFactsNutrientsRepository nutritionFactsNutrients,
             IUserRepository users)
         {
             _context = context;
             _repositories = new Dictionary<string, dynamic>();
 
+            _repositories[nameof(Ingredient)] = Ingredients = ingredients;
             _repositories[nameof(Food)] = Foods = foods;
+            _repositories[nameof(NutritionFacts)] = NutritionFacts = nutritionFacts;
+            _repositories[nameof(NutritionFactsNutrients)] = NutritionFactsNutrients = nutritionFactsNutrients;
             _repositories[nameof(User)] = Users = users;
         }
 
@@ -43,7 +52,7 @@ namespace TasteUfes.Data
             return _repositories[type];
         }
 
-        public int Commit()
+        public int SaveChanges()
         {
             return _context.SaveChanges();
         }

@@ -8,6 +8,9 @@ namespace TasteUfes.Models.Validators
         {
             RuleFor(f => f.Name)
                 .NotEmpty();
+
+            RuleFor(f => f.NutritionFacts)
+                .SetValidator(new NutritionFactsValidator());
         }
     }
 }

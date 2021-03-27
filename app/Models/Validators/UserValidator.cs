@@ -15,15 +15,12 @@ namespace TasteUfes.Models.Validators
             RuleFor(u => u.Username)
                 .NotEmpty();
 
-            RuleSet("credentials", () =>
-            {
-                RuleFor(u => u.Password)
-                    .NotEmpty();
+            RuleFor(u => u.Password)
+                .NotEmpty();
 
-                RuleFor(u => u.Email)
-                    .NotEmpty()
-                    .EmailAddress();
-            });
+            RuleFor(u => u.Email)
+                .NotEmpty()
+                .EmailAddress();
         }
     }
 }

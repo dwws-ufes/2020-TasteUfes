@@ -1,4 +1,3 @@
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TasteUfes.Data.Context.Extensions;
 using TasteUfes.Models;
