@@ -13,15 +13,18 @@ namespace TasteUfes.Data
         private readonly ApplicationDbContext _context;
         private readonly Dictionary<string, dynamic> _repositories;
 
-        private readonly IFoodRepository Foods;
+        public IFoodRepository Foods { get; }
+        public IUserRepository Users { get; }
 
         public UnitOfWork(ApplicationDbContext context,
-            IFoodRepository foods)
+            IFoodRepository foods,
+            IUserRepository users)
         {
             _context = context;
             _repositories = new Dictionary<string, dynamic>();
 
             _repositories[nameof(Food)] = Foods = foods;
+            _repositories[nameof(User)] = Users = users;
         }
 
         public IEntityRepository<TEntity> Repository<TEntity>() where TEntity : Entity

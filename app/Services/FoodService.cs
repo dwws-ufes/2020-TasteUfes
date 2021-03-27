@@ -10,9 +10,7 @@ namespace TasteUfes.Services
 {
     public class FoodService : EntityService<Food>, IFoodService
     {
-        protected override AbstractValidator<Food> DefaultValidator => new FoodValidator();
-
-        public FoodService(IUnitOfWork unitOfWork, INotificator notificator, ILogger<FoodService> logger)
-            : base(unitOfWork, notificator, logger) { }
+        public FoodService(IUnitOfWork unitOfWork, FoodValidator validator, INotificator notificator, ILogger<FoodService> logger)
+            : base(unitOfWork, validator, notificator, logger) { }
     }
 }

@@ -9,7 +9,7 @@ using TasteUfes.Data.Context;
 namespace TasteUfes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210326034833_Initial")]
+    [Migration("20210327042923_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,7 +254,7 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("39a0a3eb-54c9-491b-a57b-5478405884cc"),
+                            Id = new Guid("d6742fbb-18ab-451b-a736-713b63b7a108"),
                             Name = "Admin"
                         });
                 });
@@ -297,6 +297,17 @@ namespace TasteUfes.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"),
+                            Email = "admin@tasteufes.es",
+                            FirstName = "Zé",
+                            LastName = "Gonc",
+                            Password = "AQAAAAEAACcQAAAAEF1/aKR27hLnDWXK/U1cjA5XFBibK3CiN2/7240G4TuNIHMnKsEZA8BwOWp79rV3kQ==",
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("TasteUfes.Models.UserRole", b =>
@@ -312,6 +323,13 @@ namespace TasteUfes.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"),
+                            RoleId = new Guid("d6742fbb-18ab-451b-a736-713b63b7a108")
+                        });
                 });
 
             modelBuilder.Entity("TasteUfes.Models.Food", b =>

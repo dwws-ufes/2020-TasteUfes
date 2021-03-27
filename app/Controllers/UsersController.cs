@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +8,10 @@ using TasteUfes.Services.Notifications;
 
 namespace TasteUfes.Controllers
 {
-    public class FoodsController : EntityControllerV1<Food, FoodResource>
+    public class UserControllers : EntityControllerV1<User, UserResource>
     {
-        public FoodsController(IFoodService foodService, IMapper mapper, INotificator notificator)
-            : base(foodService, mapper, notificator)
+        public UserControllers(IUserService userService, IMapper mapper, INotificator notificator)
+            : base(userService, mapper, notificator)
         {
 
         }

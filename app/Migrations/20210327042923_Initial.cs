@@ -237,7 +237,17 @@ namespace TasteUfes.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("39a0a3eb-54c9-491b-a57b-5478405884cc"), "Admin" });
+                values: new object[] { new Guid("d6742fbb-18ab-451b-a736-713b63b7a108"), "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "Username" },
+                values: new object[] { new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"), "admin@tasteufes.es", "Zé", "Gonc", "AQAAAAEAACcQAAAAEF1/aKR27hLnDWXK/U1cjA5XFBibK3CiN2/7240G4TuNIHMnKsEZA8BwOWp79rV3kQ==", "admin" });
+
+            migrationBuilder.InsertData(
+                table: "UserRole",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { new Guid("d6742fbb-18ab-451b-a736-713b63b7a108"), new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Foods_Name",

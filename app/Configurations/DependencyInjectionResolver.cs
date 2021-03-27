@@ -3,6 +3,7 @@ using Tasteufes.Data.Interfaces;
 using TasteUfes.Data;
 using TasteUfes.Data.Context;
 using TasteUfes.Data.Interfaces;
+using TasteUfes.Models.Validators;
 using TasteUfes.Services;
 using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
@@ -17,9 +18,15 @@ namespace TasteUfes.Configurations
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<INotificator, Notificator>();
 
-            services.AddScoped<IFoodService, FoodService>();
+            // User context
+            services.AddScoped<UserValidator>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
+            // Food context
+            services.AddScoped<FoodValidator>();
             services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddScoped<IFoodService, FoodService>();
 
             return services;
         }

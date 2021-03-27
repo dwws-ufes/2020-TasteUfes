@@ -13,14 +13,14 @@ namespace TasteUfes.Services
     public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : Entity
     {
         protected readonly IUnitOfWork UnitOfWork;
+        protected readonly AbstractValidator<TEntity> DefaultValidator;
         protected readonly INotificator Notificator;
         protected readonly ILogger Logger;
 
-        protected abstract AbstractValidator<TEntity> DefaultValidator { get; }
-
-        public EntityService(IUnitOfWork unitOfWork, INotificator notificator, ILogger<EntityService<TEntity>> logger)
+        public EntityService(IUnitOfWork unitOfWork, AbstractValidator<TEntity> defaultValidator, INotificator notificator, ILogger<EntityService<TEntity>> logger)
         {
             UnitOfWork = unitOfWork;
+            DefaultValidator = defaultValidator;
             Notificator = notificator;
             Logger = logger;
         }
@@ -35,9 +35,9 @@ namespace TasteUfes.Services
             return UnitOfWork.Repository<TEntity>().GetAll();
         }
 
-        public virtual TEntity Add(TEntity entity, AbstractValidator<TEntity> validator = null)
+        public virtual TEntity Add(TEntity entity, params string[] ruleSets)
         {
-            if (!IsValid(validator ?? DefaultValidator, entity))
+            if (!IsValid(DefaultValidator, entity, ruleSets))
                 return null;
 
             try
@@ -70,9 +70,9 @@ namespace TasteUfes.Services
             }
         }
 
-        public virtual TEntity Update(TEntity entity, AbstractValidator<TEntity> validator = null)
+        public virtual TEntity Update(TEntity entity, params string[] ruleSets)
         {
-            if (!IsValid(validator ?? DefaultValidator, entity))
+            if (!IsValid(DefaultValidator, entity, ruleSets))
                 return null;
 
             try
@@ -114,7 +114,7 @@ namespace TasteUfes.Services
             }
         }
 
-        protected virtual bool IsValid<TV, TE>(TV validation, TE entity)
+        protected virtual bool IsValid<TV, TE>(TV validation, TE entity, params string[] ruleSets)
             where TV : AbstractValidator<TE>
             where TE : Entity
         {
@@ -124,7 +124,7 @@ namespace TasteUfes.Services
                 return false;
             }
 
-            var validator = validation.Validate(entity);
+            var validator = validation.Validate(entity, options => options.IncludeRuleSets(ruleSets));
 
             if (validator.IsValid)
                 return true;

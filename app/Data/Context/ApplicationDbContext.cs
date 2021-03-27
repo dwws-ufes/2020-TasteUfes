@@ -8,7 +8,11 @@ namespace TasteUfes.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +53,8 @@ namespace TasteUfes.Data.Context
 
             modelBuilder.Seed<Nutrient>();
             modelBuilder.Seed<Role>();
+            modelBuilder.Seed<User>();
+            modelBuilder.Seed<UserRole>();
 
             /**
              * Por padrão a engine do SQLite mapeia "string" para "text" sem especificar o tamanho máximo.
