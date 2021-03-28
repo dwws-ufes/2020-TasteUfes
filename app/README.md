@@ -1,8 +1,13 @@
 ## Preparação do Ambiente
 
 ### Requisitos:
-- .NET Core 3.1 SDK (ou 5.0)
+- [.NET Core 5.0 SDK (ou 3.1)](https://dotnet.microsoft.com/download/dotnet/5.0)
 - dotnet-ef (EF Core Tools)
+
+Para instalar o EF Core Tools, execute o seguinte comando:
+```bash
+dotnet tool install --global dotnet-ef
+```
 
 ### Banco de dados:
 Por fins de praticidade, foi escolhido o banco de dados SQLite, que se resume a um único arquivo, não necessitando de nenhuma engine instalada. SQLite possui algumas limitações de funcionalidades e performance se comparado a outros bancos (MySQL, PostgreSQL, OracleDB, etc.), mas atende perfeitamente às necessidades do trabalho.

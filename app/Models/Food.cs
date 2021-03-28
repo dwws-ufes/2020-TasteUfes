@@ -16,6 +16,20 @@ namespace TasteUfes.Models
 
         [ForeignKey("NutritionFactsId")]
         public NutritionFacts NutritionFacts { get; set; }
-        public Guid? NutritionFactsId { get; set; }
+        public Guid? NutritionFactsId
+        {
+            get
+            {
+                return (this._nutritionFactsId == Guid.Empty) ? null : this._nutritionFactsId;
+            }
+
+            set
+            {
+                this._nutritionFactsId = (value == Guid.Empty) ? null : value;
+            }
+        }
+
+        [NotMapped]
+        private Guid? _nutritionFactsId;
     }
 }
