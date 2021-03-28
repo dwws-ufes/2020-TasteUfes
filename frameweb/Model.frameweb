@@ -233,6 +233,9 @@
         <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back" visibility="public">
           <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
         </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="id">
+          <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Recipes/@packagedElement.6/@ownedEnd.0 //@compose.1/Components.Recipes/Edit/@ownedAttribute.0">
         <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Recipes/Edit" association="//@compose.1/Components.Recipes/@packagedElement.6"/>
@@ -439,6 +442,9 @@
         <ownedAttribute xsi:type="frameweb:UIComponentField" name="Name">
           <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-text-field"/>
         </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="id">
+          <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Foods/@packagedElement.5/@ownedEnd.0 //@compose.1/Components.Foods/Edit/@ownedAttribute.0">
         <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Foods/Edit" association="//@compose.1/Components.Foods/@packagedElement.5"/>
@@ -559,6 +565,9 @@
         <ownedAttribute xsi:type="frameweb:UIComponentField" name="Back">
           <type xsi:type="frameweb:Tag" href="aspnetcore/Razor.frameweb#//@configures.0/Vue/v-btn"/>
         </ownedAttribute>
+        <ownedAttribute xsi:type="frameweb:UIComponentField" name="id">
+          <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+        </ownedAttribute>
       </packagedElement>
       <packagedElement xsi:type="frameweb:NavigationAssociation" memberEnd="//@compose.1/Components.Users/@packagedElement.6/@ownedEnd.0 //@compose.1/Components.Users/Edit/@ownedAttribute.0">
         <ownedEnd xsi:type="frameweb:NavigationCompositionPart" type="//@compose.1/Components.Users/Edit" association="//@compose.1/Components.Users/@packagedElement.6"/>
@@ -658,6 +667,17 @@
     </packagedElement>
     <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Index" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/Delete_Food"/>
     <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Index" resultMethod="//@compose.1/Controllers/FoodsController/Delete_Food">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Components.Recipes/Recommendation">
+      <pageDependencyConstraint/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Details" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecalculateRecipePerServing"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Details" resultMethod="//@compose.1/Controllers/RecipesController/RecalculateRecipePerServing">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Details" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/CalculateAnonymousRecipe"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Details" resultMethod="//@compose.1/Controllers/RecipesController/CalculateAnonymousRecipe">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
   </compose>
