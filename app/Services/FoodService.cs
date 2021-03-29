@@ -14,6 +14,22 @@ namespace TasteUfes.Services
         public FoodService(IUnitOfWork unitOfWork, FoodValidator validator, INotificator notificator, ILogger<FoodService> logger)
             : base(unitOfWork, validator, notificator, logger) { }
 
+        private readonly double dailyEnergy = 2000;
+
+        public override Food Get(Guid id)
+        {
+            var food = base.Get(id);
+            Double totalEnergy = 0;
+            foreach(var nFactsN in food.NutritionFacts.NutritionFactsNutrients)
+            {
+                nFactsN.DailyValue = nFactsN.AmountPerServing / nFactsN.Nutrient.DailyRecommendation;
+                totalEnergy = totalEnergy + (nFactsN.AmountPerServing * nFactsN.Nutrient.EnergyPerGram);
+            }
+            food.NutritionFacts.ServingEnergy = totalEnergy;
+            food.NutritionFacts.DailyValue = totalEnergy / dailyEnergy;
+            return food;
+        }
+
         public override Food Add(Food entity, params string[] ruleSets)
         {
             if (!IsValid(DefaultValidator, entity, ruleSets))
