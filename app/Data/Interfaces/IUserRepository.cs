@@ -1,7 +1,7 @@
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Models;
 
-namespace Tasteufes.Data.Interfaces
+namespace TasteUfes.Data.Interfaces
 {
     public interface IUserRepository : IEntityRepository<User>
     {

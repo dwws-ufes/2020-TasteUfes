@@ -71,20 +71,6 @@ namespace TasteUfes.Services
             }
         }
 
-        public virtual void Remove(TEntity entity)
-        {
-            try
-            {
-                UnitOfWork.Repository<TEntity>().Remove(entity);
-                UnitOfWork.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, typeof(TEntity).Name, $"There was an error removing {typeof(TEntity).Name}.");
-            }
-        }
-
         public virtual TEntity Update(TEntity entity, params string[] ruleSets)
         {
             if (!IsValid(DefaultValidator, entity, ruleSets))

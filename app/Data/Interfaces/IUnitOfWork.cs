@@ -1,7 +1,6 @@
 ﻿using System;
 using TasteUfes.Models;
 using Microsoft.EntityFrameworkCore.Storage;
-using Tasteufes.Data.Interfaces;
 
 namespace TasteUfes.Data.Interfaces
 {

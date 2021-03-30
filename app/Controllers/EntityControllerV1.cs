@@ -60,10 +60,8 @@ namespace TasteUfes.Controllers
         [HttpPut("{id}")]
         public virtual ActionResult<TEntityResource> Update([FromRoute] Guid id, [FromBody] TEntityResource resource)
         {
-            if (id != resource?.Id)
-            {
+            if (id != resource?.Id || !Service.Exists(id))
                 return NotFound();
-            }
 
             var entity = Service.Update(Mapper.Map<TEntity>(resource));
 
@@ -76,6 +74,9 @@ namespace TasteUfes.Controllers
         [HttpDelete("{id}")]
         public virtual IActionResult Delete([FromRoute] Guid id)
         {
+            if (!Service.Exists(id))
+                return NotFound();
+
             Service.Remove(id);
 
             if (HasErrors())

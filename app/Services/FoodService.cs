@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Models;
@@ -14,42 +15,53 @@ namespace TasteUfes.Services
         public FoodService(IUnitOfWork unitOfWork, FoodValidator validator, INotificator notificator, ILogger<FoodService> logger)
             : base(unitOfWork, validator, notificator, logger) { }
 
-        private readonly double dailyEnergy = 2000;
+        private static double _dailyEnergy = 2000;
 
         public override Food Get(Guid id)
         {
             var food = base.Get(id);
-            Double totalEnergy = 0;
-            foreach(var nFactsN in food.NutritionFacts.NutritionFactsNutrients)
+
+            if (food.NutritionFacts == null)
+                return food;
+
+            var totalEnergy = 0.0;
+
+            foreach (var nfn in food.NutritionFacts.NutritionFactsNutrients)
             {
-                nFactsN.DailyValue = nFactsN.AmountPerServing / nFactsN.Nutrient.DailyRecommendation;
-                totalEnergy = totalEnergy + (nFactsN.AmountPerServing * nFactsN.Nutrient.EnergyPerGram);
+                nfn.DailyValue = nfn.AmountPerServing / nfn.Nutrient.DailyRecommendation;
+                totalEnergy = totalEnergy + (nfn.AmountPerServing * nfn.Nutrient.EnergyPerGram);
             }
+
             food.NutritionFacts.ServingEnergy = totalEnergy;
-            food.NutritionFacts.DailyValue = totalEnergy / dailyEnergy;
+            food.NutritionFacts.DailyValue = totalEnergy / _dailyEnergy;
+
             return food;
         }
 
         public override Food Add(Food entity, params string[] ruleSets)
         {
-            if (!IsValid(DefaultValidator, entity, ruleSets))
-                return null;
-
-            try
+            if (UnitOfWork.Foods.Search(f => entity.Name == f.Name).Any())
             {
-                entity = UnitOfWork.Foods.Add(entity);
-
-                UnitOfWork.SaveChanges();
-
-                return entity;
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, nameof(Food), $"There was an error adding {nameof(Food)}.");
-
+                Notify(NotificationType.ERROR, "Name", "Already exists a food with this name.");
                 return null;
             }
+
+            var food = base.Add(entity, ruleSets);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            return Get(food.Id);
+        }
+
+        public override Food Update(Food entity, params string[] ruleSets)
+        {
+            var food = base.Update(entity, ruleSets);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            return Get(food.Id);
         }
 
         public override void Remove(Guid id)

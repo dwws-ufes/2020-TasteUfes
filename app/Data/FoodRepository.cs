@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Tasteufes.Data.Interfaces;
+using TasteUfes.Data.Interfaces;
 using TasteUfes.Data.Context;
 using TasteUfes.Models;
 
