@@ -12,7 +12,7 @@ namespace TasteUfes.Models
         [Required]
         public Measures ServingSizeUnit { get; set; }
 
-        [Required]
+        [NotMapped]
         public double ServingEnergy { get; set; }
 
         [NotMapped]

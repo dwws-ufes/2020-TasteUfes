@@ -12,6 +12,6 @@ namespace TasteUfes.Resources
         public NutritionFactsResource NutritionFacts { get; set; }
 
         [JsonPropertyName("nutrition_facts_id")]
-        public Guid NutritionFactsId { get; set; }
+        public Guid? NutritionFactsId { get; set; }
     }
 }

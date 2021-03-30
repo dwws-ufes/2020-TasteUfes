@@ -1,8 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Tasteufes.Data.Interfaces;
+using TasteUfes.Data.Interfaces;
 using TasteUfes.Data;
 using TasteUfes.Data.Context;
-using TasteUfes.Data.Interfaces;
 using TasteUfes.Models.Validators;
 using TasteUfes.Services;
 using TasteUfes.Services.Interfaces;

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 using TasteUfes.Models;
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Data.Context;
-using Tasteufes.Data.Interfaces;
 
 namespace TasteUfes.Data
 {
