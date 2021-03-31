@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TasteUfes.Models;
 using TasteUfes.Resources;
@@ -9,25 +10,24 @@ using TasteUfes.Services.Notifications;
 
 namespace TasteUfes.Controllers
 {
-    public class FoodsController : EntityControllerV1<Food, FoodResource>
+    public class FoodsController : EntityApiControllerV1<Food, FoodResource>
     {
         public FoodsController(IFoodService foodService, IMapper mapper, INotificator notificator)
-            : base(foodService, mapper, notificator)
-        {
-
-        }
+            : base(foodService, mapper, notificator) { }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public override ActionResult<FoodResource> Post([FromBody] FoodResource resource)
-        {
-            var mapped = Mapper.Map<Food>(resource);
+            => base.Post(resource);
 
-            var entity = Service.Add(mapped);
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
+        public override ActionResult<FoodResource> Put([FromRoute] Guid id, [FromBody] FoodResource resource)
+            => base.Put(id, resource);
 
-            if (Notificator.HasErrors())
-                return BadRequest(Errors());
-
-            return Created(string.Empty, Mapper.Map<FoodResource>(entity));
-        }
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public override IActionResult Delete([FromRoute] Guid id)
+            => base.Delete(id);
     }
 }

@@ -8,6 +8,7 @@ namespace TasteUfes.Data.Interfaces
     {
         IIngredientRepository Ingredients { get; }
         IFoodRepository Foods { get; }
+        IRecipeRepository Recipes { get; }
         INutritionFactsRepository NutritionFacts { get; }
         INutritionFactsNutrientsRepository NutritionFactsNutrients { get; }
         IUserRepository Users { get; }

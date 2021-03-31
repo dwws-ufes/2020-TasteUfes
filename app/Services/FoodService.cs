@@ -21,7 +21,7 @@ namespace TasteUfes.Services
         {
             var food = base.Get(id);
 
-            if (food.NutritionFacts == null)
+            if (food?.NutritionFacts == null)
                 return food;
 
             var totalEnergy = 0.0;

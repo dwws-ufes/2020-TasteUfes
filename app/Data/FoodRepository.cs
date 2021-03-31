@@ -14,7 +14,7 @@ namespace TasteUfes.Data
 
         public override Food Get(Guid id)
         {
-            return _context.Set<Food>()
+            return _context.Foods
                 .Include(f => f.NutritionFacts)
                 .ThenInclude(n => n.NutritionFactsNutrients)
                 .ThenInclude(n => n.Nutrient)

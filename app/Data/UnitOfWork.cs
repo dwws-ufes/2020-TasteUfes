@@ -14,6 +14,7 @@ namespace TasteUfes.Data
 
         public IIngredientRepository Ingredients { get; }
         public IFoodRepository Foods { get; }
+        public IRecipeRepository Recipes { get; }
         public INutritionFactsRepository NutritionFacts { get; }
         public INutritionFactsNutrientsRepository NutritionFactsNutrients { get; }
         public IUserRepository Users { get; }
@@ -21,6 +22,7 @@ namespace TasteUfes.Data
         public UnitOfWork(ApplicationDbContext context,
             IIngredientRepository ingredients,
             IFoodRepository foods,
+            IRecipeRepository recipes,
             INutritionFactsRepository nutritionFacts,
             INutritionFactsNutrientsRepository nutritionFactsNutrients,
             IUserRepository users)
@@ -30,6 +32,7 @@ namespace TasteUfes.Data
 
             _repositories[nameof(Ingredient)] = Ingredients = ingredients;
             _repositories[nameof(Food)] = Foods = foods;
+            _repositories[nameof(Recipe)] = Recipes = recipes;
             _repositories[nameof(NutritionFacts)] = NutritionFacts = nutritionFacts;
             _repositories[nameof(NutritionFactsNutrients)] = NutritionFactsNutrients = nutritionFactsNutrients;
             _repositories[nameof(User)] = Users = users;

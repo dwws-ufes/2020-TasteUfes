@@ -12,7 +12,7 @@ namespace TasteUfes.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class EntityControllerV1<TEntity, TEntityResource> : ControllerBase
+    public class EntityApiControllerV1<TEntity, TEntityResource> : ControllerBase
         where TEntity : Entity, new()
         where TEntityResource : EntityResource, new()
     {
@@ -20,7 +20,7 @@ namespace TasteUfes.Controllers
         protected readonly IMapper Mapper;
         protected readonly INotificator Notificator;
 
-        public EntityControllerV1(IEntityService<TEntity> service, IMapper mapper, INotificator notificator)
+        public EntityApiControllerV1(IEntityService<TEntity> service, IMapper mapper, INotificator notificator)
         {
             Service = service;
             Mapper = mapper;
@@ -58,7 +58,7 @@ namespace TasteUfes.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult<TEntityResource> Update([FromRoute] Guid id, [FromBody] TEntityResource resource)
+        public virtual ActionResult<TEntityResource> Put([FromRoute] Guid id, [FromBody] TEntityResource resource)
         {
             if (id != resource?.Id || !Service.Exists(id))
                 return NotFound();

@@ -27,7 +27,15 @@ namespace TasteUfes.Services
 
         public virtual TEntity Get(Guid id)
         {
-            return UnitOfWork.Repository<TEntity>().Get(id);
+            var entity = UnitOfWork.Repository<TEntity>().Get(id);
+
+            if (entity == null)
+            {
+                Notify(NotificationType.ERROR, nameof(TEntity), $"{nameof(TEntity)} not found.");
+                return null;
+            }
+
+            return entity;
         }
 
         public virtual IEnumerable<TEntity> GetAll()
@@ -61,7 +69,9 @@ namespace TasteUfes.Services
         {
             try
             {
-                UnitOfWork.Repository<TEntity>().Remove(id);
+                var entity = UnitOfWork.Repository<TEntity>().Get(id);
+
+                UnitOfWork.Repository<TEntity>().Remove(entity);
                 UnitOfWork.SaveChanges();
             }
             catch (Exception e)
