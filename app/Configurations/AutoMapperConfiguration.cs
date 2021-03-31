@@ -4,9 +4,9 @@ using TasteUfes.Resources;
 
 namespace Tacaro.Configurations
 {
-    public class AutoMapperConfiguration : Profile
+    public class AutoMapperConfig : Profile
     {
-        public AutoMapperConfiguration()
+        public AutoMapperConfig()
         {
             CreateMap<Food, FoodResource>().ReverseMap();
             CreateMap<Ingredient, IngredientResource>().ReverseMap();
@@ -17,7 +17,11 @@ namespace Tacaro.Configurations
             CreateMap<PreparationStep, PreparationStepResource>().ReverseMap();
             CreateMap<Recipe, RecipeResource>().ReverseMap();
             CreateMap<Role, RoleResource>().ReverseMap();
-            CreateMap<User, UserResource>().ReverseMap();
+            CreateMap<User, UserResource>()
+                .ForMember(u => u.Password, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<Token, TokenResource>().ReverseMap();
         }
     }
 }
