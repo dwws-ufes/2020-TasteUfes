@@ -29,10 +29,11 @@ namespace TasteUfes.Controllers
         [AllowAnonymous]
         public override ActionResult<UserResource> Post([FromBody] UserResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
             if (!(User.Identity.IsAuthenticated && User.IsInRole("Admin")))
-            {
                 resource.Roles = null;
-            }
 
             return base.Post(resource);
         }
@@ -40,6 +41,11 @@ namespace TasteUfes.Controllers
         [HttpPut("{id}")]
         public override ActionResult<UserResource> Put([FromRoute] Guid id, [FromBody] UserResource resource)
         {
+            ModelState.Remove("Password");
+
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
             if (id != resource?.Id)
                 return NotFound();
 
@@ -53,7 +59,12 @@ namespace TasteUfes.Controllers
             if (user.Username != User.Identity.Name && !User.IsInRole("Admin"))
                 return Forbid();
 
-            return base.Put(id, resource);
+            var updated = Service.Update(Mapper.Map<User>(resource));
+
+            if (HasErrors())
+                return BadRequest(Errors(resource));
+
+            return Ok(Mapper.Map<UserResource>(updated));
         }
 
         [HttpDelete("{id}")]
@@ -66,6 +77,9 @@ namespace TasteUfes.Controllers
         [HttpPut("{id}/password-update")]
         public ActionResult<string> UpdatePassword([FromRoute] Guid id, [FromBody] UserPasswordResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
             return "In progress";
         }
 
@@ -73,6 +87,9 @@ namespace TasteUfes.Controllers
         [AllowAnonymous]
         public ActionResult<TokenResource> Login([FromBody] UserLoginResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
             var user = _userService.GetByCredentials(resource.Username, resource.Password);
 
             if (user == null || HasErrors())

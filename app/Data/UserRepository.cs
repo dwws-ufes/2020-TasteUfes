@@ -22,14 +22,6 @@ namespace TasteUfes.Data
             return base.Add(entity);
         }
 
-        public override User Update(User entity)
-        {
-            if (entity.Roles != null)
-                _context.AttachRange(entity.Roles);
-
-            return base.Update(entity);
-        }
-
         public override User Get(Guid id)
         {
             return _context.Users
