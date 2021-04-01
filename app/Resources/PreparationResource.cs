@@ -8,6 +8,7 @@ namespace TasteUfes.Resources
 {
     public class PreparationResource : EntityResource
     {
+        [Required]
         [JsonPropertyName("preparation_time")]
         public TimeSpan PreparationTime { get; set; }
 

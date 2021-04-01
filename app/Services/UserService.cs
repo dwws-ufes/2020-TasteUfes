@@ -56,12 +56,13 @@ namespace TasteUfes.Services
             catch (Exception e)
             {
                 Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, nameof(User), $"There was an error adding {nameof(User)}.");
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error adding {nameof(User)}.");
 
                 return null;
             }
         }
 
+        // ! FIX: Atualização de roles.
         public override User Update(User user, params string[] ruleSets)
         {
             var validator = new InlineValidator<User>();
@@ -92,7 +93,7 @@ namespace TasteUfes.Services
         {
             if (UnitOfWork.Recipes.Search(r => r.UserId == id).Any())
             {
-                Notify(NotificationType.ERROR, nameof(User), $"It's not possible to remove a {nameof(User)} with recipes");
+                Notify(NotificationType.ERROR, string.Empty, $"It's not possible to remove a {nameof(User)} with recipes");
                 return;
             }
 
@@ -108,7 +109,7 @@ namespace TasteUfes.Services
 
             var hasher = new PasswordHasher<User>();
 
-            user.Password = hasher.HashPassword(user, user.Password);
+            user.Password = hasher.HashPassword(user, newPassword);
 
             return base.Update(user, "default");
         }
@@ -119,7 +120,7 @@ namespace TasteUfes.Services
 
             if (user == null)
             {
-                Notify(NotificationType.ERROR, nameof(User), $"{nameof(User)} not found.");
+                Notify(NotificationType.ERROR, string.Empty, $"{nameof(User)} not found.");
                 return null;
             }
 

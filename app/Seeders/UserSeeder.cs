@@ -20,7 +20,7 @@ namespace TasteUfes.Seeders
                     LastName = "Gonc",
                     Username = "admin",
                     Email = "admin@tasteufes.es",
-                    Password = hasher.HashPassword(null, "dwws@2021")
+                    Password = "AQAAAAEAACcQAAAAEM4y+xpWBmcmKPIBsBOrcTJiJ5I8NyphxIhDWYNlEQRsoTwJDTWUwiDoDqecgXCKxA=="
                 }
             );
         }

@@ -39,7 +39,7 @@ namespace TasteUfes.Controllers
             var entity = Service.Get(id);
 
             if (entity == null)
-                return NotFound();
+                return NotFound(Errors());
 
             return Ok(Mapper.Map<TEntityResource>(entity));
         }
@@ -47,12 +47,15 @@ namespace TasteUfes.Controllers
         [HttpPost]
         public virtual ActionResult<TEntityResource> Post([FromBody] TEntityResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
             var mapped = Mapper.Map<TEntity>(resource);
 
             var entity = Service.Add(mapped);
 
             if (Notificator.HasErrors())
-                return BadRequest(Errors());
+                return BadRequest(Errors(resource));
 
             return Created(string.Empty, Mapper.Map<TEntityResource>(entity));
         }
@@ -60,13 +63,16 @@ namespace TasteUfes.Controllers
         [HttpPut("{id}")]
         public virtual ActionResult<TEntityResource> Put([FromRoute] Guid id, [FromBody] TEntityResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
             if (id != resource?.Id || !Service.Exists(id))
                 return NotFound();
 
             var entity = Service.Update(Mapper.Map<TEntity>(resource));
 
             if (HasErrors())
-                return BadRequest(Errors());
+                return BadRequest(Errors(resource));
 
             return Ok(Mapper.Map<TEntityResource>(entity));
         }
@@ -90,7 +96,7 @@ namespace TasteUfes.Controllers
             return !ModelState.IsValid || Notificator.HasErrors();
         }
 
-        protected dynamic Errors()
+        protected dynamic Errors(object data = null)
         {
             foreach (var values in ModelState.Values)
             {
@@ -106,7 +112,10 @@ namespace TasteUfes.Controllers
                 Message = err.Message
             });
 
-            return new { errors };
+            if (data == null)
+                return new { errors };
+
+            return new { data, errors };
         }
 
         private void AddError(string property, string message)

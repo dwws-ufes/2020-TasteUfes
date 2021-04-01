@@ -19,9 +19,15 @@ namespace TasteUfes.Services
 
         public override Food Get(Guid id)
         {
-            var food = base.Get(id);
+            var food = UnitOfWork.Foods.Get(id);
 
-            if (food?.NutritionFacts == null)
+            if (food == null)
+            {
+                Notify(NotificationType.ERROR, string.Empty, $"{nameof(Food)} not found.");
+                return null;
+            }
+
+            if (food.NutritionFacts == null)
                 return food;
 
             var totalEnergy = 0.0;
@@ -40,7 +46,7 @@ namespace TasteUfes.Services
 
         public override Food Add(Food entity, params string[] ruleSets)
         {
-            if (UnitOfWork.Foods.Search(f => entity.Name == f.Name).Any())
+            if (UnitOfWork.Foods.Search(f => f.Name == entity.Name).Any())
             {
                 Notify(NotificationType.ERROR, "Name", "Already exists a food with this name.");
                 return null;
@@ -54,8 +60,15 @@ namespace TasteUfes.Services
             return Get(food.Id);
         }
 
+        // TODO: Inverter a chave estrangeira entre Food e NutritionFacts
         public override Food Update(Food entity, params string[] ruleSets)
         {
+            if (UnitOfWork.Foods.Search(f => f.Name == entity.Name && f.Id != entity.Id).Any())
+            {
+                Notify(NotificationType.ERROR, "Name", "Already exists a food with this name.");
+                return null;
+            }
+
             var food = base.Update(entity, ruleSets);
 
             if (Notificator.HasErrors())
@@ -66,11 +79,14 @@ namespace TasteUfes.Services
 
         public override void Remove(Guid id)
         {
-            var food = UnitOfWork.Foods.Get(id);
+            var food = Get(id);
+
+            if (Notificator.HasErrors())
+                return;
 
             if (UnitOfWork.Ingredients.Search(i => i.FoodId == food.Id).Any())
             {
-                Notify(NotificationType.ERROR, nameof(Food), "It is not possible to delete foods that belong to recipes.");
+                Notify(NotificationType.ERROR, string.Empty, "It is not possible to delete foods that belong to recipes.");
                 return;
             }
 
@@ -78,7 +94,7 @@ namespace TasteUfes.Services
 
             try
             {
-                if (food.NutritionFactsId.HasValue)
+                if (food.NutritionFacts != null)
                 {
                     UnitOfWork.NutritionFactsNutrients.Remove(food.NutritionFacts.NutritionFactsNutrients);
                     UnitOfWork.NutritionFacts.Remove(food.NutritionFacts);
@@ -93,7 +109,7 @@ namespace TasteUfes.Services
             {
                 transaction.Rollback();
                 Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, nameof(Food), $"There was an error removing '{nameof(Food)}'.");
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error removing '{nameof(Food)}'.");
             }
         }
     }

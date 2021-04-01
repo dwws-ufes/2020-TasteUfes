@@ -7,9 +7,13 @@ namespace TasteUfes.Resources
 {
     public class PreparationStepResource : EntityResource
     {
+        [Required]
+        [Range(1, Int16.MaxValue)]
         [JsonPropertyName("step")]
         public int Step { get; set; }
 
+        [Required]
+        [StringLength(2048)]
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
