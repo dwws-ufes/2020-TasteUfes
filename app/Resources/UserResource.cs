@@ -30,8 +30,5 @@ namespace TasteUfes.Resources
 
         [JsonPropertyName("roles")]
         public IEnumerable<RoleResource> Roles { get; set; }
-
-        [JsonPropertyName("recipes")]
-        public IEnumerable<RecipeResource> Recipes { get; set; }
     }
 }

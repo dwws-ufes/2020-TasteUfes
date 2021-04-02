@@ -16,8 +16,5 @@ namespace TasteUfes.Resources
         [StringLength(2048)]
         [JsonPropertyName("description")]
         public string Description { get; set; }
-
-        [JsonPropertyName("preparation_id")]
-        public Guid PreparationId { get; set; }
     }
 }

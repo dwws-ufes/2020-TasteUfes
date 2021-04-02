@@ -6,6 +6,6 @@ namespace TasteUfes.Services.Interfaces
 {
     public interface IRecipeService : IEntityService<Recipe>
     {
-
+        Recipe GetDetailed(Guid id);
     }
 }
