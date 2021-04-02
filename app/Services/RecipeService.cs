@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -25,10 +26,12 @@ namespace TasteUfes.Services
                 return null;
             }
 
+            // TODO: Calcular a tabela nutricional da receita baseado nos ingredientes e seus alimentos.
+            recipe.NutritionFacts = null;
+
             return recipe;
         }
 
-        // TODO: Criar repositories para Preparation e PreparationStep.
         public override void Remove(Guid id)
         {
             var recipe = GetDetailed(id);
@@ -40,8 +43,8 @@ namespace TasteUfes.Services
 
             try
             {
-                UnitOfWork.Repository<PreparationStep>().Remove(recipe.Preparation.Steps);
-                UnitOfWork.Repository<Preparation>().Remove(recipe.Preparation);
+                UnitOfWork.PreparationSteps.Remove(recipe.Preparation.Steps);
+                UnitOfWork.Preparations.Remove(recipe.Preparation);
                 UnitOfWork.Ingredients.Remove(recipe.Ingredients);
                 UnitOfWork.Recipes.Remove(recipe);
 
@@ -54,6 +57,32 @@ namespace TasteUfes.Services
                 Logger.LogError(e.Message);
                 Notify(NotificationType.ERROR, string.Empty, $"There was an error removing {nameof(Recipe)}.");
             }
+        }
+
+        public Recipe RecalculateRecipePerService(Guid id, int servings)
+        {
+            var recipe = Get(id);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            // TODO: Balancear os ingredientes da receita e recalcular a tabela nutricional.
+
+            return recipe;
+        }
+
+        public Recipe CalculateAnonymousRecipe(Recipe recipe)
+        {
+            // TODO: Dado uma receita qualquer, calcular a tabela nutricional dela.
+            // Obs: Será necessário consultar o banco para resgatar os alimentos, visto que
+            // serão recebidos apenas os ids dos alimentos.
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable<Ingredient> ingredients)
+        {
+            // TODO: Dado um conjunto de ingredientes e seus alimentos, buscar receitas que os contenham.
+            throw new NotImplementedException();
         }
     }
 }

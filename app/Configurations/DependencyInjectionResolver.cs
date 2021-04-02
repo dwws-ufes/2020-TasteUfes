@@ -39,6 +39,12 @@ namespace TasteUfes.Configurations
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
 
+            // Preparation context
+            services.AddScoped<IPreparationRepository, PreparationRepository>();
+
+            // PreparationStep context
+            services.AddScoped<IPreparationStepRepository, PreparationStepRepository>();
+
             // NutritionFacts context
             services.AddScoped<INutritionFactsRepository, NutritionFactsRepository>();
 
