@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <v-app-bar dark color="green accent-5">
+    <v-app-bar dark color="primary">
       <v-toolbar-title class="text-no-wrap">
         <router-link
           class="text-decoration-none title-link"
@@ -14,7 +14,7 @@
 
       <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
 
-      <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-dialog v-model="dialog" persistent max-width="400px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="white" light v-bind="attrs" v-on="on"> Login </v-btn>
         </template>
@@ -29,7 +29,7 @@
             <Login />
             <v-card-actions>
               <v-row justify="end">
-                <v-btn elevation="2" color="green accent-5" dark>Login</v-btn>
+                <v-btn elevation="2" color="primary" dark>Login</v-btn>
               </v-row>
             </v-card-actions>
           </v-container>
@@ -106,9 +106,45 @@ export default {
   .theme--light.v-btn--active::before {
     opacity: 0 !important;
   }
-  
+
   .v-list-item--active::before{
     opacity: 0 !important;
+  }
+  .container-main {
+    .row-main {
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+
+      .list {
+        h1 {
+          margin-bottom: 0.8em;
+        }
+        .v-btn {
+          margin: 0 0 2em;
+        }
+      }
+
+      // Cards of forms
+      .card-form {
+        padding: 2em;
+        display: flex;
+        justify-content: center;
+        min-width: 400px;
+        .v-form {
+          width: 100%;
+        }
+        .v-input {
+          margin: 0.8em 0em;
+        }
+        .v-btn {
+          margin: 0.8em;
+        }
+      }
+   }
+  }
+  .primary {
+    color: white !important;
   }
 </style>
 

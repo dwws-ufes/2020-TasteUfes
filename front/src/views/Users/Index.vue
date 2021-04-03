@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <h1>Users</h1>
-    <v-btn elevation="2" :to="{ name: 'CreateUser' }">Create</v-btn>
+    <v-btn elevation="2" :to="{ name: 'CreateUser' }" color="primary" dark>Create User</v-btn>
     <v-data-table 
       :headers="headers"
       :items="users"
@@ -23,22 +23,27 @@ export default {
           align: "start",
           sortable: false,
           value: "id",
+          class: "primary",
         },
         {
           text: "First Name",
-          value: 'first_name'
+          value: 'first_name',
+          class: "primary",
         },
         {
           text: "Last Name",
-          value: 'last_name'
+          value: 'last_name',
+          class: "primary",
         },
         {
           text: "Username",
-          value: 'username'
+          value: 'username',
+          class: "primary",
         },
         {
           text: "Email",
-          value: 'email'
+          value: 'email',
+          class: "primary",
         },
       ],
       users: [

@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <h1>Foods</h1>
-    <v-btn elevation="2" :to="{ name: 'CreateFood' }">Create</v-btn>
+    <v-btn elevation="2" :to="{ name: 'CreateFood' }" color="primary" dark>Create Food</v-btn>
     <v-data-table
       :headers="headers"
       :items="foods"
@@ -23,14 +23,17 @@ export default {
           align: "start",
           sortable: false,
           value: "id",
+          class: "primary",
         },
         {
           text: "Name",
-          value: 'name'
+          value: 'name',
+          class: "primary",
         },
         {
           text: "Nutrition Facts ID",
-          value: 'nutrition_facts_id'
+          value: 'nutrition_facts_id',
+          class: "primary",
         },
       ],
       foods: [
