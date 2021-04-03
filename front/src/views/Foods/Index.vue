@@ -1,5 +1,6 @@
 <template>
   <div class="list">
+    <h1>Foods</h1>
     <v-btn elevation="2" :to="{ name: 'CreateFood' }">Create</v-btn>
     <v-data-table
       :headers="headers"
@@ -12,6 +13,7 @@
 
 <script>
 import food from "@/assets/json/food.json";
+
 export default {
   data() {
     return {

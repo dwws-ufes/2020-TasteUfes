@@ -1,5 +1,6 @@
 <template>
   <v-form ref="form">
+    <h1>Create Food</h1>
     <div class="form-group">
       <v-text-field
         label="Name"
@@ -10,7 +11,7 @@
 
       <v-btn elevation="2">Create</v-btn>
 
-      <v-btn elevation="2" :to="{ name: 'Foods' }">Back</v-btn>
+      <v-btn elevation="2" :to="{ name: 'ListFood' }">Back</v-btn>
     </div>
   </v-form>
 </template>

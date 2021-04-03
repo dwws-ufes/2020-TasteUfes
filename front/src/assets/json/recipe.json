@@ -1,0 +1,108 @@
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "name",
+  "servings": 0,
+  "preparation": {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "preparation_time": {
+      "ticks": 0,
+      "days": 0,
+      "hours": 0,
+      "milliseconds": 0,
+      "minutes": 0,
+      "seconds": 0,
+      "totalDays": 0,
+      "totalHours": 0,
+      "totalMilliseconds": 0,
+      "totalMinutes": 0,
+      "totalSeconds": 0
+    },
+    "recipe_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "steps": [
+      {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "step": 0,
+        "description": "string",
+        "preparation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+      }
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "quantity": 0,
+      "quantity_unit": 1,
+      "food": {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string",
+        "nutrition_facts": {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "serving_size": 0,
+          "serving_size_unit": 1,
+          "serving_energy": 0,
+          "daily_value": 0,
+          "nutrition_facts_nutrients": [
+            {
+              "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              "amount_per_serving": 0,
+              "amount_per_serving_unit": 1,
+              "daily_value": 0,
+              "nutrition_facts_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              "nutrient": {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "name": "string",
+                "energy_per_gram": 0,
+                "daily_recommendation": 0
+              },
+              "nutrient_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            }
+          ],
+          "food_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        }
+      },
+      "food_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  ],
+  "user": {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "first_name": "string",
+    "last_name": "string",
+    "username": "string",
+    "password": "string",
+    "email": "string",
+    "roles": [
+      {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "name": "string"
+      }
+    ],
+    "recipes": [
+      null
+    ]
+  },
+  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "nutrition_facts": {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "serving_size": 0,
+    "serving_size_unit": 1,
+    "serving_energy": 0,
+    "daily_value": 0,
+    "nutrition_facts_nutrients": [
+      {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "amount_per_serving": 0,
+        "amount_per_serving_unit": 1,
+        "daily_value": 0,
+        "nutrition_facts_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "nutrient": {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "name": "string",
+          "energy_per_gram": 0,
+          "daily_recommendation": 0
+        },
+        "nutrient_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+      }
+    ],
+    "food_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  }
+}
