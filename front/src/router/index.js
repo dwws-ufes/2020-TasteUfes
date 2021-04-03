@@ -13,7 +13,7 @@ const routes = [
   },
   {
     path: '/recipes',
-    name: 'Recipes',
+    name: 'ListRecipe',
     component: function () {
       return import(/* webpackChunkName: "recipes" */ '../views/Recipes/Index.vue')
     }
@@ -28,16 +28,31 @@ const routes = [
 
   {
     path: '/foods',
-    name: 'Foods',
+    name: 'ListFood',
     component: function () {
       return import(/* webpackChunkName: "foods" */ '../views/Foods/Index.vue')
     }
   },
   {
-    path: '/Foods/create',
+    path: '/foods/create',
     name: 'CreateFood',
     component: function () {
       return import(/* webpackChunkName: "createFood" */ '../views/Foods/Create.vue')
+    }
+  },
+
+  {
+    path: '/users',
+    name: 'ListUser',
+    component: function () {
+      return import(/* webpackChunkName: "users" */ '../views/Users/Index.vue')
+    }
+  },
+  {
+    path: '/users/create',
+    name: 'CreateUser',
+    component: function () {
+      return import(/* webpackChunkName: "createUser" */ '../views/Users/Create.vue')
     }
   }
 ]

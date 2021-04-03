@@ -1,41 +1,20 @@
 <template>
   <div class="nav">
-    <v-app-bar dark color="green accent-5">
-      <v-toolbar-title>
-        TasteUfes
+    <v-app-bar dark color="primary">
+      <v-toolbar-title class="text-no-wrap">
+        <router-link
+          class="text-decoration-none title-link"
+          :to="{ name: 'Home' }"
+        >
+          TasteUfes
+        </router-link>
       </v-toolbar-title>
+
       <v-spacer />
-      <v-menu
-        v-for="menu in menuList"
-        :key="menu.slug"
-        open-on-hover
-        bottom
-        offset-y
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            text
-            tile
-            x-large
-            dark
-            v-bind="attrs"
-            v-on="on"
-          >
-            {{ menu.name }}
-          </v-btn>
-        </template>
 
-        <v-list>
-          <v-list-item link :to="{ name: menu.createName }">
-            <v-list-item-title>Create</v-list-item-title>
-          </v-list-item>
-          <v-list-item link :to="{ name: menu.listName }">
-            <v-list-item-title>List</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
 
-      <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-dialog v-model="dialog" persistent max-width="400px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="white" light v-bind="attrs" v-on="on"> Login </v-btn>
         </template>
@@ -50,7 +29,7 @@
             <Login />
             <v-card-actions>
               <v-row justify="end">
-                <v-btn elevation="2" color="green accent-5" dark>Login</v-btn>
+                <v-btn elevation="2" color="primary" dark>Login</v-btn>
               </v-row>
             </v-card-actions>
           </v-container>
@@ -62,33 +41,121 @@
 
 <script>
 import Login from "@/components/Login.vue";
+import MenuOption from "@/components/MenuOption.vue";
+
 export default {
   name: "Toolbar",
   data() {
     return {
+      dialog: false,
       menuList: [
         {
           name: "Recipe",
-          createName: "CreateRecipe",
-          listName: "Recipes",
+          options: [
+            {
+              name: "Create Recipe",
+              routeName: "CreateRecipe",
+            },
+            {
+              name: "List Recipe",
+              routeName: "ListRecipe",
+            },
+          ],
         },
         {
           name: "Food",
-          createName: "CreateFood",
-          listName: "Foods",
+          options: [
+            {
+              name: "Create Food",
+              routeName: "CreateFood",
+            },
+            {
+              name: "List Food",
+              routeName: "ListFood",
+            },
+          ],
+        },
+        {
+          name: "User",
+          options: [
+            {
+              name: "Create User",
+              routeName: "CreateUser",
+            },
+            {
+              name: "List User",
+              routeName: "ListUser",
+            },
+            {
+              name: "Logout",
+              routeName: "Logout",
+            },
+          ],
         },
       ],
-      dialog: false,
     };
   },
   components: {
     Login,
+    MenuOption,
   },
 };
 </script>
 
+<style lang="scss" >
+  .theme--light.v-btn--active::before {
+    opacity: 0 !important;
+  }
+
+  .v-list-item--active::before{
+    opacity: 0 !important;
+  }
+  .container-main {
+    .row-main {
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+
+      .list {
+        h1 {
+          margin-bottom: 0.8em;
+        }
+        .v-btn {
+          margin: 0 0 2em;
+        }
+      }
+
+      // Cards of forms
+      .card-form {
+        padding: 2em;
+        display: flex;
+        justify-content: center;
+        min-width: 400px;
+        .v-form {
+          width: 100%;
+        }
+        .v-input {
+          margin: 0.8em 0em;
+        }
+        .v-btn {
+          margin: 0.8em;
+        }
+      }
+   }
+  }
+  .primary {
+    color: white !important;
+  }
+</style>
+
 <style lang="scss" scoped>
-.nav {
-  color: #ffffff;
-}
+  .nav {
+    color: #ffffff;
+  }
+
+  .title {
+    &-link {
+      color: #ffffff;
+    }
+  }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <v-form ref="form">
     <div class="form-group">
+      <h1>Edit Recipe</h1>
       <v-text-field
         label="Name"
         hide-details="auto"

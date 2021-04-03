@@ -2,8 +2,10 @@
   <v-app>
     <Toolbar />
     <v-main>
-      <v-container>
-        <router-view></router-view>
+      <v-container class="container-main">
+        <v-row class="row-main">
+          <router-view></router-view>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
