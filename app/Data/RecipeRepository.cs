@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Data.Context;
 using TasteUfes.Models;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace TasteUfes.Data
 {
@@ -11,6 +13,21 @@ namespace TasteUfes.Data
     {
         public RecipeRepository(ApplicationDbContext context)
             : base(context) { }
+
+        public override IEnumerable<Recipe> Search(Expression<Func<Recipe, bool>> predicate)
+        {
+            return _context.Set<Recipe>().AsNoTracking()
+                .Include(r => r.Preparation)
+                    .ThenInclude(r => r.Steps)
+                .Include(r => r.Ingredients)
+                    .ThenInclude(r => r.Food)
+                        .ThenInclude(r => r.NutritionFacts)
+                            .ThenInclude(r => r.NutritionFactsNutrients)
+                                .ThenInclude(r => r.Nutrient)
+                .Include(r => r.User)
+                    .ThenInclude(r => r.Roles)
+                .Where(predicate);
+        }
 
         public Recipe GetDetailed(Guid id)
         {

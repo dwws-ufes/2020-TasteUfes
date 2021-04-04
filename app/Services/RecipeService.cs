@@ -27,7 +27,7 @@ namespace TasteUfes.Services
             }
 
             // TODO: Calcular a tabela nutricional da receita baseado nos ingredientes e seus alimentos.
-            recipe.NutritionFacts = null;
+            recipe.NutritionFacts = new NutritionFacts();
 
             return recipe;
         }
@@ -59,21 +59,21 @@ namespace TasteUfes.Services
             }
         }
 
-        public Recipe RecalculateRecipePerService(Guid id, int servings)
+        public Recipe RecalculateRecipePerServings(Guid id, int servings)
         {
             var recipe = Get(id);
 
             if (Notificator.HasErrors())
                 return null;
 
-            // TODO: Balancear os ingredientes da receita e recalcular a tabela nutricional.
+            // TODO: Balancear os ingredientes da receita e recalcular a tabela nutricional (não é pra salvar no banco).
 
             return recipe;
         }
 
         public Recipe CalculateAnonymousRecipe(Recipe recipe)
         {
-            // TODO: Dado uma receita qualquer, calcular a tabela nutricional dela.
+            // TODO: Dado uma receita qualquer com seus ingredientes, calcular a tabela nutricional dela.
             // Obs: Será necessário consultar o banco para resgatar os alimentos, visto que
             // serão recebidos apenas os ids dos alimentos.
             throw new NotImplementedException();
@@ -82,6 +82,8 @@ namespace TasteUfes.Services
         public IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable<Ingredient> ingredients)
         {
             // TODO: Dado um conjunto de ingredientes e seus alimentos, buscar receitas que os contenham.
+            // Obs: Sobrescrevi o método "Search" do RecipeRepository para fazer buscas já com as associações
+            // Recomendo que o use para facilitar a vida.
             throw new NotImplementedException();
         }
     }
