@@ -16,6 +16,7 @@ namespace Tacaro.Configurations
             CreateMap<Preparation, PreparationResource>().ReverseMap();
             CreateMap<PreparationStep, PreparationStepResource>().ReverseMap();
             CreateMap<Recipe, RecipeResource>().ReverseMap();
+            CreateMap<Recipe, AnonymousRecipeResource>().ReverseMap();
             CreateMap<Role, RoleResource>().ReverseMap();
             CreateMap<User, UserResource>()
                 .ForMember(u => u.Password, opt => opt.Ignore())

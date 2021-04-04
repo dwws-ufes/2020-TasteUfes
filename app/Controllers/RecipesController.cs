@@ -58,5 +58,50 @@ namespace TasteUfes.Controllers
 
             return base.Delete(id);
         }
+
+        [HttpGet("{id}/recalculate-per-servings/{servings}")]
+        [AllowAnonymous]
+        public ActionResult<RecipeResource> RecalculateRecipePerServing(Guid id, int servings)
+        {
+            if (!_recipeService.Exists(id))
+                return NotFound();
+
+            var recipe = _recipeService.RecalculateRecipePerServings(id, servings);
+
+            if (HasErrors())
+                return NotFound(Errors(recipe));
+
+            return Ok(Mapper.Map<RecipeResource>(recipe));
+        }
+
+        [HttpPost("calculate-anonymous")]
+        [AllowAnonymous]
+        public ActionResult<AnonymousRecipeResource> CalculateAnonymousRecipe(AnonymousRecipeResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
+            var anonymous = _recipeService.CalculateAnonymousRecipe(Mapper.Map<Recipe>(resource));
+
+            if (HasErrors())
+                return BadRequest(resource);
+
+            return Ok(Mapper.Map<AnonymousRecipeResource>(anonymous));
+        }
+
+        [HttpPost("recommend-by-ingredients")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<RecipeResource>> RecommendRecipesByIngredients(IEnumerable<IngredientResource> resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
+            var recipes = _recipeService.RecommendRecipesByIngredients(Mapper.Map<IEnumerable<Ingredient>>(resource));
+
+            if (HasErrors())
+                return BadRequest(Errors(resource));
+
+            return Ok(recipes);
+        }
     }
 }
