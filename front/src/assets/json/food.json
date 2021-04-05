@@ -1,28 +1,31 @@
-{
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "name": "string",
-    "nutrition_facts": {
+[
+  {
       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "serving_size": 0,
-      "serving_size_unit": 1,
-      "serving_energy": 0,
-      "daily_value": 0,
-      "nutrition_facts_nutrients": [
-        {
-          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "amount_per_serving": 0,
-          "amount_per_serving_unit": 1,
-          "daily_value": 0,
-          "nutrition_facts_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "nutrient": {
+      "name": "Azeitona",
+      "nutrition_facts": {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "serving_size": 0,
+        "serving_size_unit": 1,
+        "serving_energy": 0,
+        "daily_value": 0,
+        "nutrition_facts_nutrients": [
+          {
             "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "name": "string",
-            "energy_per_gram": 0,
-            "daily_recommendation": 0
-          },
-          "nutrient_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-        }
-      ]
-    },
-    "nutrition_facts_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-  }
+            "amount_per_serving": 0,
+            "amount_per_serving_unit": 1,
+            "daily_value": 0,
+            "nutrition_facts_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "nutrient": {
+              "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              "name": "string",
+              "energy_per_gram": 0,
+              "daily_recommendation": 0
+            },
+            "nutrient_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          }
+        ]
+      },
+      "nutrition_facts_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+
+]

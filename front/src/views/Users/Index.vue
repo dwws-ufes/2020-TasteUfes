@@ -1,18 +1,31 @@
 <template>
   <div class="list">
     <h1>Users</h1>
-    <v-btn elevation="2" :to="{ name: 'CreateUser' }" color="primary" dark>Create User</v-btn>
-    <v-data-table 
+    <v-btn elevation="2" :to="{ name: 'CreateUser' }" color="primary" dark
+      >Create User</v-btn
+    >
+    <v-data-table
       :headers="headers"
-      :items="users"
+      :items="userList"
       :items-per-page="10"
       class="elevation-1"
-    ></v-data-table>
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-row>
+          <DetailsButton :id="item.id" name="DetailsUser" />
+          <EditButton :id="item.id" name="EditUser" />
+          <DeleteButton :id="item.id" :name="item.first_name" />
+        </v-row>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
-import user from "@/assets/json/user.json";
+import users from "@/assets/json/user.json";
+import EditButton from "@/components/buttons/EditButton.vue";
+import DetailsButton from "@/components/buttons/DetailsButton.vue";
+import DeleteButton from "@/components/buttons/DeleteButton.vue";
 
 export default {
   data() {
@@ -27,42 +40,56 @@ export default {
         },
         {
           text: "First Name",
-          value: 'first_name',
+          value: "first_name",
           class: "primary",
         },
         {
           text: "Last Name",
-          value: 'last_name',
+          value: "last_name",
           class: "primary",
         },
         {
           text: "Username",
-          value: 'username',
+          value: "username",
           class: "primary",
         },
         {
           text: "Email",
-          value: 'email',
+          value: "email",
+          class: "primary",
+        },
+        {
+          text: "Actions",
+          value: "actions",
           class: "primary",
         },
       ],
-      users: [
-        {
-          id: user[0].id,
-          first_name: user[0].first_name,
-          last_name: user[0].last_name,
-          username: user[0].username,
-          email: user[0].email,
-        },
-        {
-          id: user[1].id,
-          first_name: user[1].first_name,
-          last_name: user[1].last_name,
-          username: user[1].username,
-          email: user[1].email,
-        },
-      ],
+      userList: [],
     };
+  },
+
+  components: {
+    EditButton,
+    DetailsButton,
+    DeleteButton,
+  },
+
+  created: function () {
+    this.getUsers();
+  },
+
+  methods: {
+    getUsers: function () {
+      users.forEach((user) => {
+        this.userList.push({
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          username: user.username,
+          email: user.email,
+        });
+      });
+    },
   },
 };
 </script>

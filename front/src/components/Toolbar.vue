@@ -102,52 +102,6 @@ export default {
 };
 </script>
 
-<style lang="scss" >
-  .theme--light.v-btn--active::before {
-    opacity: 0 !important;
-  }
-
-  .v-list-item--active::before{
-    opacity: 0 !important;
-  }
-  .container-main {
-    .row-main {
-      padding: 2em;
-      display: flex;
-      justify-content: center;
-
-      .list {
-        h1 {
-          margin-bottom: 0.8em;
-        }
-        .v-btn {
-          margin: 0 0 2em;
-        }
-      }
-
-      // Cards of forms
-      .card-form {
-        padding: 2em;
-        display: flex;
-        justify-content: center;
-        min-width: 400px;
-        .v-form {
-          width: 100%;
-        }
-        .v-input {
-          margin: 0.8em 0em;
-        }
-        .v-btn {
-          margin: 0.8em;
-        }
-      }
-   }
-  }
-  .primary {
-    color: white !important;
-  }
-</style>
-
 <style lang="scss" scoped>
   .nav {
     color: #ffffff;
