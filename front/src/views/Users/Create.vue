@@ -56,7 +56,7 @@
           <v-row justify="center">
             <v-btn elevation="2" color="primary" dark>Create</v-btn>
 
-            <v-btn elevation="2" :to="{ name: 'ListUser' }">Back</v-btn>
+            <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
           </v-row>
         </v-card-actions>
         
