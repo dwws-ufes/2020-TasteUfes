@@ -1,3 +1,5 @@
+using System;
+
 namespace TasteUfes.Configurations
 {
     public class JwtSettings
@@ -6,6 +8,8 @@ namespace TasteUfes.Configurations
 
         public string TokenType { get; set; }
 
-        public int ExpiresIn { get; set; }
+        public TimeSpan TokenLifeTime { get; set; }
+
+        public TimeSpan RefreshLifeTime { get; set; }
     }
 }
