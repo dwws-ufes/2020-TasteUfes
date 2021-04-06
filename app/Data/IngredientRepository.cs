@@ -6,9 +6,7 @@ namespace TasteUfes.Data
 {
     public class IngredientRepository : EntityRepository<Ingredient>, IIngredientRepository
     {
-        public IngredientRepository(ApplicationDbContext context) : base(context)
-        {
-
-        }
+        public IngredientRepository(ApplicationDbContext context)
+            : base(context) { }
     }
 }

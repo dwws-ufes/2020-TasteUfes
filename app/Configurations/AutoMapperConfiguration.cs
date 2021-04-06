@@ -21,8 +21,6 @@ namespace Tacaro.Configurations
             CreateMap<User, UserResource>()
                 .ForMember(u => u.Password, opt => opt.Ignore())
                 .ReverseMap();
-
-            CreateMap<Token, TokenResource>().ReverseMap();
         }
     }
 }

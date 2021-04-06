@@ -97,7 +97,37 @@ namespace TasteUfes.Controllers
 
             var token = _tokenService.GenerateAccessToken(user);
 
-            return Mapper.Map<TokenResource>(token);
+            if (HasErrors())
+                return BadRequest(Errors(resource));
+
+            return new TokenResource
+            {
+                TokenType = token.TokenType,
+                AccessToken = token.AccessToken,
+                ExpiresIn = token.AccessTokenLifetime,
+                RefreshToken = token.RefreshToken
+            };
+        }
+
+        [HttpPost("refresh-token")]
+        [AllowAnonymous]
+        public ActionResult<TokenResource> RefreshToken([FromBody] RefreshTokenResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
+            var token = _tokenService.RefreshToken(resource.AccessToken, resource.RefreshToken);
+
+            if (HasErrors())
+                return BadRequest(Errors(resource));
+
+            return new TokenResource
+            {
+                TokenType = token.TokenType,
+                AccessToken = token.AccessToken,
+                ExpiresIn = token.AccessTokenLifetime,
+                RefreshToken = token.RefreshToken
+            };
         }
     }
 }

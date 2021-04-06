@@ -50,6 +50,11 @@ namespace TasteUfes.Data.Context
                 .ToTable("UserRole")
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
+            modelBuilder.Entity<Token>()
+                .HasOne(t => t.User)
+                .WithMany()
+                .HasForeignKey(t => t.UserId);
+
             modelBuilder.Seed<Nutrient>();
             modelBuilder.Seed<Role>();
             modelBuilder.Seed<User>();
@@ -79,5 +84,6 @@ namespace TasteUfes.Data.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }
