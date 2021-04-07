@@ -22,6 +22,11 @@ namespace TasteUfes.Data
             return base.Add(entity);
         }
 
+        public override IEnumerable<User> GetAll()
+        {
+            return _context.Users.Include(u => u.Roles);
+        }
+
         public override User Get(Guid id)
         {
             return _context.Users

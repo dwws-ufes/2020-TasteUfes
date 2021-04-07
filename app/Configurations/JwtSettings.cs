@@ -8,8 +8,8 @@ namespace TasteUfes.Configurations
 
         public string TokenType { get; set; }
 
-        public TimeSpan TokenLifeTime { get; set; }
+        public TimeSpan TokenLifetime { get; set; }
 
-        public TimeSpan RefreshLifeTime { get; set; }
+        public TimeSpan RefreshLifetime { get; set; }
     }
 }
