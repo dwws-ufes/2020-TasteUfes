@@ -32,11 +32,11 @@ namespace TasteUfes.Services
             _logger = logger;
         }
 
-        public Token GenerateAccessToken(User user, bool updateRefreshToken = true)
+        public Token GenerateAccessToken(User user, bool resetRefreshTokenExpiresIn = true)
         {
             var now = DateTime.UtcNow;
 
-            var tokenExpiresIn = now.Add(_jwt.TokenLifeTime);
+            var tokenExpiresIn = now.Add(_jwt.TokenLifetime);
             var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwt.SecretKey));
 
             var claims = new List<Claim>
@@ -73,12 +73,12 @@ namespace TasteUfes.Services
                 {
                     userToken.AccessToken = accessToken;
                     userToken.TokenType = _jwt.TokenType;
-                    userToken.AccessTokenLifetime = (int)_jwt.TokenLifeTime.TotalSeconds;
+                    userToken.AccessTokenLifetime = (int)_jwt.TokenLifetime.TotalSeconds;
+                    userToken.RefreshToken = refreshToken;
 
-                    if (updateRefreshToken)
+                    if (resetRefreshTokenExpiresIn)
                     {
-                        userToken.RefreshToken = refreshToken;
-                        userToken.RefreshTokenExpiresIn = now.Add(_jwt.RefreshLifeTime);
+                        userToken.RefreshTokenExpiresIn = now.Add(_jwt.RefreshLifetime);
                     }
 
                     token = _context.Tokens.Update(userToken);
@@ -90,9 +90,9 @@ namespace TasteUfes.Services
                         UserId = user.Id,
                         TokenType = _jwt.TokenType,
                         AccessToken = accessToken,
-                        AccessTokenLifetime = (int)_jwt.TokenLifeTime.TotalSeconds,
+                        AccessTokenLifetime = (int)_jwt.TokenLifetime.TotalSeconds,
                         RefreshToken = refreshToken,
-                        RefreshTokenExpiresIn = now.Add(_jwt.RefreshLifeTime)
+                        RefreshTokenExpiresIn = now.Add(_jwt.RefreshLifetime)
                     });
                 }
 
@@ -129,7 +129,7 @@ namespace TasteUfes.Services
                 return null;
             }
 
-            return GenerateAccessToken(token.User, updateRefreshToken: false);
+            return GenerateAccessToken(token.User, resetRefreshTokenExpiresIn: false);
         }
     }
 }
