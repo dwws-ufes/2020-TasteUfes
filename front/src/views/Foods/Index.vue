@@ -5,6 +5,8 @@
       >Create Food</v-btn
     >
     <v-data-table
+      :loading="load"
+      loading-text="Loading... Please wait"
       :headers="headers"
       :items="foodList"
       :items-per-page="10"
@@ -22,7 +24,7 @@
 </template>
 
 <script>
-import foods from "@/assets/json/food.json";
+import { getFoods } from "@/api/data";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -30,6 +32,7 @@ import DeleteButton from "@/components/buttons/DeleteButton.vue";
 export default {
   data() {
     return {
+      load: true,
       headers: [
         {
           text: "ID",
@@ -58,25 +61,26 @@ export default {
     };
   },
 
-  created: function () {
-    this.getFoods();
-  },
-
   components: {
     EditButton,
     DetailsButton,
     DeleteButton,
   },
 
+  created: function () {
+    this.getData();
+  },
+
   methods: {
-    getFoods: function () {
-      foods.forEach((food) => {
-        this.foodList.push({
-          id: food.id,
-          name: food.name,
-          nutrition_facts_id: food.nutrition_facts_id,
+    getData: function () {
+      getFoods()
+        .then((result) => {
+          this.load = false;
+          this.foodList = result.data;
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      });
     },
   },
 };

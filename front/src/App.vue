@@ -26,9 +26,19 @@ export default {
   data: () => ({
     //
   }),
+
+  updated: function () {
+    this.$nextTick(function () {
+      let expiresIn = sessionStorage.getItem("expires_in");
+      let totalTime = sessionStorage.getItem("timeout");
+      if (totalTime && new Date().getTime() - totalTime > expiresIn * 1000) {
+        sessionStorage.clear();
+      }
+    });
+  },
 };
 </script>
 
 <style lang="scss">
-  @import "@/assets/scss/_style.scss";
+@import "@/assets/scss/_style.scss";
 </style>

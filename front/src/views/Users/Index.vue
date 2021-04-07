@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import users from "@/assets/json/user.json";
+import { getUsers } from "@/api/data";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -75,19 +75,14 @@ export default {
   },
 
   created: function () {
-    this.getUsers();
+    this.getData();
   },
 
   methods: {
-    getUsers: function () {
-      users.forEach((user) => {
-        this.userList.push({
-          id: user.id,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          username: user.username,
-          email: user.email,
-        });
+    getData: function () {
+      const response = getUsers();
+      response.then((result) => {
+        this.userList = result.data;
       });
     },
   },
