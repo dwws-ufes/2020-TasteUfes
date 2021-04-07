@@ -34,61 +34,8 @@ namespace TasteUfes.Services
                 Notify(NotificationType.ERROR, string.Empty, $"{nameof(Recipe)} not found.");
                 return null;
             }
-
-            NutritionFacts recipeNutritionFacts = new NutritionFacts();
-            List<NutritionFactsNutrients> recipeNftList = new List<NutritionFactsNutrients>();
-            foreach(var ingred in recipe.Ingredients)
-            {
-                Food detailedFood = _foodService.Get(ingred.Food.Id);
-
-                //Calculate food proportion based on ingredient quantity.
-                double quantity = 0;
-                double ingredientProportion = 0;
-                switch(ingred.QuantityUnit)
-                {
-                            case Measures.G:
-                            case Measures.MG:
-                            case Measures.KG:
-                                quantity = UnitConverter.ConvertByAbbreviation(Convert.ToDouble(ingred.Quantity), "Mass", Enum.GetName(typeof(Measures), ingred.QuantityUnit), "g");
-                                ingredientProportion = quantity / detailedFood.NutritionFacts.ServingSize;
-                                break;
-                            case Measures.L:
-                            case Measures.ML:
-                                quantity = UnitConverter.ConvertByAbbreviation(Convert.ToDouble(ingred.Quantity), "Volume", Enum.GetName(typeof(Measures), ingred.QuantityUnit), "L");
-                                ingredientProportion = quantity / detailedFood.NutritionFacts.ServingSize;
-                                break;
-                            case Measures.UN:
-                                quantity = ingred.Quantity;
-                                ingredientProportion = quantity;
-                                break;
-                }
-
-                recipeNutritionFacts.DailyValue += detailedFood.NutritionFacts.DailyValue * ingredientProportion;
-                recipeNutritionFacts.ServingEnergy += detailedFood.NutritionFacts.ServingEnergy * ingredientProportion;
-
-                foreach(var nfn in detailedFood.NutritionFacts.NutritionFactsNutrients)
-                {
-                    NutritionFactsNutrients recipeNfn = recipeNftList.FirstOrDefault(x => x.Nutrient.Id == nfn.Nutrient.Id);
-                    if(recipeNfn != null)
-                    {
-                        recipeNfn.AmountPerServing += nfn.AmountPerServing * ingredientProportion;
-                        recipeNfn.DailyValue += nfn.DailyValue * ingredientProportion;
-                    }else
-                    {
-                        recipeNfn = new NutritionFactsNutrients();
-                        recipeNfn.AmountPerServing = nfn.AmountPerServing * ingredientProportion;
-                        recipeNfn.DailyValue = nfn.DailyValue * ingredientProportion;
-                        recipeNfn.AmountPerServingUnit = nfn.AmountPerServingUnit;
-                        recipeNfn.Nutrient = nfn.Nutrient;
-
-                        recipeNftList.Add(recipeNfn);
-                    }
-                }
-            }
-            recipeNutritionFacts.NutritionFactsNutrients = recipeNftList;
-            recipe.NutritionFacts = recipeNutritionFacts;
-
-            return recipe;
+            
+            return CalculateAnonymousRecipe(recipe);
         }
 
         public override void Remove(Guid id)
@@ -120,22 +67,94 @@ namespace TasteUfes.Services
 
         public Recipe RecalculateRecipePerServings(Guid id, int servings)
         {
-            var recipe = Get(id);
+            var recipe = GetDetailed(id);
 
             if (Notificator.HasErrors())
                 return null;
 
-            // TODO: Balancear os ingredientes da receita e recalcular a tabela nutricional (não é pra salvar no banco).
+            double proportion = Convert.ToDouble(servings) / Convert.ToDouble(recipe.Servings);
+
+            foreach(var ingred in recipe.Ingredients)
+            {
+                ingred.Quantity *= Convert.ToInt32(proportion);
+            }
+
+            recipe.NutritionFacts.ServingEnergy *= proportion;
+            recipe.NutritionFacts.DailyValue *= proportion;
+            recipe.NutritionFacts.ServingSize = servings;
+            foreach(var nfn in recipe.NutritionFacts.NutritionFactsNutrients)
+            {
+                nfn.AmountPerServing *= proportion;
+                nfn.DailyValue *= proportion;
+            }
 
             return recipe;
         }
 
         public Recipe CalculateAnonymousRecipe(Recipe recipe)
         {
-            // TODO: Dado uma receita qualquer com seus ingredientes, calcular a tabela nutricional dela.
-            // Obs: Será necessário consultar o banco para resgatar os alimentos, visto que
-            // serão recebidos apenas os ids dos alimentos.
-            throw new NotImplementedException();
+            NutritionFacts recipeNutritionFacts = new NutritionFacts();
+            List<NutritionFactsNutrients> recipeNftList = new List<NutritionFactsNutrients>();
+            foreach(var ingred in recipe.Ingredients)
+            {
+                Food detailedFood = _foodService.Get(ingred.FoodId);
+
+                //Calculate food proportion based on ingredient quantity.
+                //DOESNT WORK IF 'QUANTITY' IS OF TYPE 'VOLUME' AND 'FOOD SERVING' SIZE IS OF TYPE 'MASS' (Same for the opposite)
+                //DOESNT WORK IF 'QUANTITY' IS OF TYPE 'VOLUME' OR 'MASS' AND SERVING SIZE IS 'UNITY', BUT WORKS WITH THE OPPOSITE
+                double quantity = 0;
+                double foodServingSize = detailedFood.NutritionFacts.ServingSize;
+                Measures foodServingSizeUnit = detailedFood.NutritionFacts.ServingSizeUnit;
+                double ingredientProportion = 0;
+                switch(ingred.QuantityUnit)
+                {
+                    case Measures.G:
+                    case Measures.MG:
+                    case Measures.KG:
+                        quantity = UnitConverter.ConvertByAbbreviation(Convert.ToDouble(ingred.Quantity), "Mass", Enum.GetName(typeof(Measures), ingred.QuantityUnit), "g");
+                        foodServingSize = UnitConverter.ConvertByAbbreviation(foodServingSize, "Mass", Enum.GetName(typeof(Measures), foodServingSizeUnit), "g");
+                        ingredientProportion = quantity / foodServingSize;
+                        break;
+                    case Measures.L:
+                    case Measures.ML:
+                        quantity = UnitConverter.ConvertByAbbreviation(Convert.ToDouble(ingred.Quantity), "Volume", Enum.GetName(typeof(Measures), ingred.QuantityUnit), "L");
+                        foodServingSize = UnitConverter.ConvertByAbbreviation(foodServingSize, "Volume", Enum.GetName(typeof(Measures), foodServingSizeUnit), "L");
+                        ingredientProportion = quantity / foodServingSize;
+                        break;
+                    case Measures.UN:
+                        quantity = ingred.Quantity;
+                        ingredientProportion = quantity;
+                        break;
+                }
+                ingredientProportion /= recipe.Servings;
+
+                recipeNutritionFacts.DailyValue += detailedFood.NutritionFacts.DailyValue * ingredientProportion;
+                recipeNutritionFacts.ServingEnergy += detailedFood.NutritionFacts.ServingEnergy * ingredientProportion;
+
+                foreach(var nfn in detailedFood.NutritionFacts.NutritionFactsNutrients)
+                {
+                    NutritionFactsNutrients recipeNfn = recipeNftList.FirstOrDefault(x => x.Nutrient.Id == nfn.Nutrient.Id);
+                    if(recipeNfn != null)
+                    {
+                        recipeNfn.AmountPerServing += nfn.AmountPerServing * ingredientProportion;
+                        recipeNfn.DailyValue += nfn.DailyValue * ingredientProportion;
+                    }else
+                    {
+                        recipeNfn = new NutritionFactsNutrients();
+                        recipeNfn.AmountPerServing = nfn.AmountPerServing * ingredientProportion;
+                        recipeNfn.DailyValue = nfn.DailyValue * ingredientProportion;
+                        recipeNfn.AmountPerServingUnit = nfn.AmountPerServingUnit;
+                        recipeNfn.Nutrient = nfn.Nutrient;
+
+                        recipeNftList.Add(recipeNfn);
+                    }
+                }
+                ingred.Food = detailedFood;
+            }
+            recipeNutritionFacts.NutritionFactsNutrients = recipeNftList;
+            recipe.NutritionFacts = recipeNutritionFacts;
+
+            return recipe;
         }
 
         public IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable<Ingredient> ingredients)

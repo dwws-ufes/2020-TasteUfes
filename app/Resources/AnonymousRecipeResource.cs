@@ -10,5 +10,8 @@ namespace TasteUfes.Resources
 
         [JsonPropertyName("nutrition_facts")]
         public NutritionFactsResource NutritionFacts { get; set; }
+
+        [JsonPropertyName("servings")]
+        public int Servings { get; set; }
     }
 }
