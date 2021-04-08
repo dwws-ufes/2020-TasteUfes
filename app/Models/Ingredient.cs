@@ -7,6 +7,7 @@ namespace TasteUfes.Models
     public class Ingredient : Entity
     {
 
+        // TODO: Ajustar para double.
         [Required]
         public int Quantity { get; set; }
 
