@@ -9,32 +9,12 @@
           TasteUfes
         </router-link>
       </v-toolbar-title>
-
       <v-spacer />
+      <div v-if="this.$store.state.auth" class="menu">
+        <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
+      </div>
 
-      <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
-
-      <v-dialog v-model="dialog" persistent max-width="400px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="white" light v-bind="attrs" v-on="on"> Login </v-btn>
-        </template>
-        <v-card>
-          <v-container>
-            <v-row>
-              <v-spacer />
-              <v-btn elevation="0" color="white" @click="dialog = false"
-                ><v-icon>mdi-close</v-icon></v-btn
-              >
-            </v-row>
-            <Login />
-            <v-card-actions>
-              <v-row justify="end">
-                <v-btn elevation="2" color="primary" dark>Login</v-btn>
-              </v-row>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </v-dialog>
+      <Login />
     </v-app-bar>
   </div>
 </template>
@@ -47,7 +27,6 @@ export default {
   name: "Toolbar",
   data() {
     return {
-      dialog: false,
       menuList: [
         {
           name: "Recipe",
@@ -103,13 +82,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .nav {
+.nav {
+  color: #ffffff;
+}
+
+.title {
+  &-link {
     color: #ffffff;
   }
-
-  .title {
-    &-link {
-      color: #ffffff;
-    }
-  }
+}
 </style>

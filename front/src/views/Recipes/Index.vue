@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import recipes from "@/assets/json/recipe.json";
+import { getRecipes } from "@/api/data";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -125,25 +125,14 @@ export default {
   },
 
   created: function () {
-    this.getRecipes();
+    this.getData();
   },
 
   methods: {
-    getRecipes: function () {
-      recipes.forEach((recipe) => {
-        let preparation = recipe.preparation;
-        let time =
-          preparation.preparation_time.hours +
-          "h " +
-          preparation.preparation_time.minutes +
-          "m";
-        this.recipeList.push({
-          id: recipe.id,
-          name: recipe.name,
-          servings: recipe.servings,
-          steps: preparation.steps.length,
-          time: time,
-        });
+    getData: function () {
+      const response = getRecipes();
+      response.then((result) => {
+        this.recipeList = result.data;
       });
     },
   },

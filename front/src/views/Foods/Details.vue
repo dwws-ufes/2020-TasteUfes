@@ -3,7 +3,9 @@
     <v-row justify="center">
       <v-col cols="12" sm="6" d-flex justify-center>
         <div class="d-flex">
-          <span class="back-btn" @click="$router.go(-1)"><v-icon>mdi-chevron-left</v-icon> Back</span>
+          <span class="back-btn" @click="$router.go(-1)"
+            ><v-icon>mdi-chevron-left</v-icon> Back</span
+          >
         </div>
         <v-card>
           <v-card-title>{{ food.name }}</v-card-title>
@@ -20,7 +22,7 @@
 </template>
 
 <script>
-import foods from "@/assets/json/food.json";
+import { getFood } from "@/api/data";
 
 export default {
   name: "DetailsFood",
@@ -28,18 +30,23 @@ export default {
   data() {
     return {
       foodId: this.$route.params.id,
+      food: {},
     };
   },
 
-  computed: {
-    food() {
-      let fd = foods.find((food) => food.id === this.foodId);
-      return {
-        id: fd.id,
-        name: fd.name,
-        nutrition_facts_id: fd.nutrition_facts_id,
-      };
+  methods: {
+    getData: function () {
+      getFood(this.foodId)
+        .then((result) => {
+          this.food = result.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>
