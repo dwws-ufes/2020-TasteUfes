@@ -37,11 +37,14 @@ export default {
 
   updated: function () {
     this.$nextTick(function () {
+      this.access_token = localStorage.getItem("access_token");
       let expiresIn = localStorage.getItem("expires_in");
       let now = localStorage.getItem("now");
       if (now && new Date().getTime() - now > expiresIn * 1000) {
         localStorage.clear();
       }
+      if(this.access_token == null)
+        this.loadSession(this.access_token);
     });
   },
 };
