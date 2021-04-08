@@ -12,27 +12,35 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import Toolbar from "@/components/Toolbar.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
     Toolbar,
   },
 
   data: () => ({
-    //
+    access_token: localStorage.getItem("access_token"),
   }),
+
+  created() {
+    if(this.access_token != null)
+      this.loadSession(this.access_token);
+  },
+
+  methods: {
+    ...mapActions(["loadSession"]),
+  },
 
   updated: function () {
     this.$nextTick(function () {
-      let expiresIn = sessionStorage.getItem("expires_in");
-      let totalTime = sessionStorage.getItem("timeout");
-      if (totalTime && new Date().getTime() - totalTime > expiresIn * 1000) {
-        sessionStorage.clear();
+      let expiresIn = localStorage.getItem("expires_in");
+      let now = localStorage.getItem("now");
+      if (now && new Date().getTime() - now > expiresIn * 1000) {
+        localStorage.clear();
       }
     });
   },

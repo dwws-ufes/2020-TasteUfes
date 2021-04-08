@@ -49,15 +49,14 @@
 </template>
 
 <script>
-import { AUTH } from "@/api/data"
 import { login } from "@/api/data";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   data() {
     return {
       dialog: false,
       valid: false,
-      auth: AUTH,
       user: {
         username: "",
         password: "",
@@ -68,24 +67,28 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters([
+      'auth',
+    ]),
+  },
+
   methods: {
+    ...mapActions([
+      'doLogin',
+      'doLogout'
+    ]),
     onSubmit: function () {
       login(this.user)
         .then((result) => {
-          console.log("Sucesso: ", result);
           let now = new Date().getTime();
-          let access_token = result.data.access_token;
-          sessionStorage.setItem("access_token", access_token);
-          sessionStorage.setItem("expires_in", result.data.expires_in);
-          sessionStorage.setItem("timeout", now);
-          // axios.interceptors.response.use(function (config) {
-          //   config.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
-          //   return config;
-          // });
-          // axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
-
-          // console.log(axios.defaults.headers.common['Authorization']);
-          window.location.reload();
+          let access = {
+            'access_token': result.data.access_token,
+            'expires_in': result.data.expires_in,
+            'now': now
+          }
+          this.doLogin(access);
+          this.dialog = false;
         })
         .catch((error) => {
           console.log("Erro: ", error);
@@ -93,9 +96,7 @@ export default {
     },
 
     logout: function(){
-      console.log("Logout")
-      sessionStorage.clear();
-      window.location.reload();
+      this.doLogout();
     }
   },
 };

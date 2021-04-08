@@ -72,8 +72,8 @@ export default {
   },
 
   methods: {
-    getData: function () {
-      getFoods()
+    async getData() {
+      await getFoods()
         .then((result) => {
           this.load = false;
           this.foodList = result.data;

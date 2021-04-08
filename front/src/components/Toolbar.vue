@@ -9,10 +9,10 @@
           TasteUfes
         </router-link>
       </v-toolbar-title>
-
       <v-spacer />
-
-      <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
+      <div v-if="this.$store.state.auth" class="menu">
+        <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
+      </div>
 
       <Login />
     </v-app-bar>
@@ -82,13 +82,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .nav {
+.nav {
+  color: #ffffff;
+}
+
+.title {
+  &-link {
     color: #ffffff;
   }
-
-  .title {
-    &-link {
-      color: #ffffff;
-    }
-  }
+}
 </style>

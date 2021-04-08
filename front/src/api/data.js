@@ -1,9 +1,11 @@
-import { tasteUfesAPI } from '@/config/axios/index';
-import { AUTH } from '@/config/axios/index';
+import { authAPI } from '@/config/axios/index';
+import { notAuthAPI } from '@/config/axios/index';
+import { createAuthAPI } from '@/config/axios/index';
+import { deleteAuthAPI } from '@/config/axios/index';
 
 // Functions
 function login(data) {
-  return tasteUfesAPI({
+  return notAuthAPI({
     method: 'POST',
     url: `/users/login`,
     data: data,
@@ -11,14 +13,14 @@ function login(data) {
 }
 
 function getUsers() {
-  return tasteUfesAPI({
+  return authAPI({
     method: 'GET',
     url: `/users`,
   });
 }
 
 function getRecipes() {
-  return tasteUfesAPI({
+  return notAuthAPI({
     method: 'GET',
     url: `/recipes`,
   });
@@ -26,7 +28,7 @@ function getRecipes() {
 
 // --- Foods ---
 function createFood(food) {
-  return tasteUfesAPI({
+  return authAPI({
     method: 'POST',
     url: `/foods`,
     data: food,
@@ -34,25 +36,26 @@ function createFood(food) {
 }
 
 function getFoods() {
-  return tasteUfesAPI({
+  return authAPI({
     method: 'GET',
     url: `/foods`,
   });
 }
 
 function getFood(id) {
-  return tasteUfesAPI({
+  return authAPI({
     method: 'GET',
     url: `/foods/${id}`,
   });
 }
 
 export {
-  AUTH,
-
   login,
 
   getUsers,
+
+  createAuthAPI,
+  deleteAuthAPI,
   
   getRecipes,
 
