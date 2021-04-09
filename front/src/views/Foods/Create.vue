@@ -70,16 +70,12 @@ export default {
       this.submit = true;
       createFood(this.food)
         .then(() => {
-          this.reset();
+          this.$router.push({ name: "ListFood" });
         })
         .catch((error) => {
           this.submit = false;
           console.log(error);
         });
-    },
-
-    reset: function () {
-      this.$router.push({ name: "ListFood" });
     },
   },
 };

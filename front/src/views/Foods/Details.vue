@@ -34,6 +34,10 @@ export default {
     };
   },
 
+  created: function () {
+    this.getData();
+  },
+
   methods: {
     getData: function () {
       getFood(this.foodId)
@@ -44,9 +48,6 @@ export default {
           console.log(error);
         });
     },
-  },
-  created() {
-    this.getData();
   },
 };
 </script>
