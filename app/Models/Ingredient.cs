@@ -6,10 +6,8 @@ namespace TasteUfes.Models
 {
     public class Ingredient : Entity
     {
-
-        // TODO: Ajustar para double.
         [Required]
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [Required]
         public Measures QuantityUnit { get; set; }
@@ -17,7 +15,7 @@ namespace TasteUfes.Models
         [ForeignKey("FoodId")]
         public Food Food { get; set; }
         public Guid FoodId { get; set; }
-
+        
         [ForeignKey("RecipeId")]
         public Recipe Recipe { get; set; }
         public Guid RecipeId { get; set; }

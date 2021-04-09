@@ -38,6 +38,24 @@ namespace TasteUfes.Controllers
             return base.Get();
         }
 
+        [HttpPost]
+        public override ActionResult<RecipeResource> Post([FromBody] RecipeResource resource)
+        {
+            ModelState.Remove("UserId");
+
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
+            var user = _userService.GetByUsername(User.Identity.Name);
+
+            if (user == null)
+                return Forbid();
+
+            resource.UserId = user.Id;
+
+            return base.Post(resource);
+        }
+
         [HttpDelete("{id}")]
         public override IActionResult Delete([FromRoute] Guid id)
         {
@@ -101,7 +119,7 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Ok(recipes);
+            return Ok(Mapper.Map<IEnumerable<RecipeResource>>(recipes));
         }
     }
 }
