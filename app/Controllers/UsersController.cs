@@ -102,6 +102,7 @@ namespace TasteUfes.Controllers
 
             return new TokenResource
             {
+                UserId = token.UserId,
                 TokenType = token.TokenType,
                 AccessToken = token.AccessToken,
                 ExpiresIn = token.AccessTokenLifetime,
@@ -123,6 +124,7 @@ namespace TasteUfes.Controllers
 
             return new TokenResource
             {
+                UserId = token.UserId,
                 TokenType = token.TokenType,
                 AccessToken = token.AccessToken,
                 ExpiresIn = token.AccessTokenLifetime,

@@ -8,6 +8,9 @@ namespace TasteUfes.Resources
 {
     public class TokenResource
     {
+        [JsonPropertyName("user_id")]
+        public Guid UserId { get; set; }
+
         [JsonPropertyName("token_type")]
         public string TokenType { get; set; }
 
