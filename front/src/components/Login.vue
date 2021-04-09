@@ -44,13 +44,13 @@
         </v-container>
       </v-card>
     </v-dialog>
-    <v-btn v-else @click="logout" > Logout </v-btn>
+    <v-btn v-else @click="logout"> Logout </v-btn>
   </div>
 </template>
 
 <script>
 import { login } from "@/api/data";
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -68,26 +68,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'auth',
-    ]),
+    ...mapGetters(["auth"]),
   },
 
   methods: {
-    ...mapActions([
-      'doLogin',
-      'doLogout'
-    ]),
+    ...mapActions(["doLogin", "doLogout"]),
     onSubmit: function () {
       login(this.user)
         .then((result) => {
-          let now = new Date().getTime();
-          let access = {
-            'access_token': result.data.access_token,
-            'expires_in': result.data.expires_in,
-            'now': now
-          }
-          this.doLogin(access);
+          this.doLogin(result.data);
           this.dialog = false;
         })
         .catch((error) => {
@@ -95,9 +84,9 @@ export default {
         });
     },
 
-    logout: function(){
+    logout: function () {
       this.doLogout();
-    }
+    },
   },
 };
 </script>

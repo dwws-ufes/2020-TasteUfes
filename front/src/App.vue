@@ -14,6 +14,7 @@
 <script>
 import Toolbar from "@/components/Toolbar.vue";
 import { mapActions } from "vuex";
+import { refreshAuthentication } from "@/api/data";
 
 export default {
   name: "App",
@@ -27,24 +28,31 @@ export default {
   }),
 
   created() {
-    if(this.access_token != null)
-      this.loadSession(this.access_token);
+    if (this.access_token != null) this.loadSession(this.access_token);
   },
 
   methods: {
-    ...mapActions(["loadSession"]),
+    ...mapActions(["loadSession", "doLogin", 'doLogout']),
   },
 
   updated: function () {
     this.$nextTick(function () {
-      this.access_token = localStorage.getItem("access_token");
+      this.accessToken = localStorage.getItem("access_token");
       let expiresIn = localStorage.getItem("expires_in");
       let now = localStorage.getItem("now");
       if (now && new Date().getTime() - now > expiresIn * 1000) {
-        localStorage.clear();
+        let refreshToken = localStorage.getItem("refresh_token");
+        refreshAuthentication({
+          access_token: this.accessToken,
+          refresh_token: refreshToken,
+        })
+          .then((result) => {
+            this.doLogin(result.data);
+          })
+          .catch(() => {
+            this.doLogout();
+          });
       }
-      if(this.access_token == null)
-        this.loadSession(this.access_token);
     });
   },
 };

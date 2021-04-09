@@ -19,6 +19,14 @@ function getUsers() {
   });
 }
 
+function refreshAuthentication(data) {
+  return notAuthAPI({
+    method: 'POST',
+    url: `/users/refresh-token`,
+    data: data,
+  });
+}
+
 function getRecipes() {
   return notAuthAPI({
     method: 'GET',
@@ -53,6 +61,7 @@ export {
   login,
 
   getUsers,
+  refreshAuthentication,
 
   createAuthAPI,
   deleteAuthAPI,
