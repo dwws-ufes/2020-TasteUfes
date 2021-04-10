@@ -9,6 +9,6 @@ namespace TasteUfes.Services.Interfaces
         Recipe GetDetailed(Guid id);
         Recipe RecalculateRecipePerServings(Guid id, int servings);
         Recipe CalculateAnonymousRecipe(Recipe recipe);
-        IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable<Ingredient> ingredients);
+        IEnumerable<Recipe> RecommendRecipesByFoods(IEnumerable<Food> foods);
     }
 }

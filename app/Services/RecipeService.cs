@@ -43,7 +43,12 @@ namespace TasteUfes.Services
             ruleSets.Append("MassVolumeConflict");
             ruleSets.Append("default");
 
-            return base.Add(entity, ruleSets);
+            var add = base.Add(entity, ruleSets);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            return GetDetailed(add.Id);
         }
 
         public override Recipe Update(Recipe entity, params string[] ruleSets)
@@ -51,7 +56,19 @@ namespace TasteUfes.Services
             ruleSets.Append("MassVolumeConflict");
             ruleSets.Append("default");
 
-            return base.Update(entity, ruleSets);
+            var recipe = Get(entity.Id);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            entity.UserId = recipe.UserId;
+
+            var update = base.Update(entity, ruleSets);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            return GetDetailed(update.Id);
         }
 
         public override void Remove(Guid id)
@@ -194,28 +211,14 @@ namespace TasteUfes.Services
             return recipe;
         }
 
-        // TODO
-        public IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable<Ingredient> ingredients)
+        public IEnumerable<Recipe> RecommendRecipesByFoods(IEnumerable<Food> foods)
         {
-            var recipes = UnitOfWork.Recipes.Search(r => true);
+            var foodsId = foods.Select(f => f.Id);
+
+            var recipes = UnitOfWork.Recipes
+                .Search(r => r.Ingredients.All(i => foodsId.Contains(i.FoodId)));
 
             return recipes;
-        }
-
-        private bool IsRecommended(Recipe recipe, IEnumerable<Ingredient> desired)
-        {
-            if (recipe.Ingredients.Any(r => !desired.Select(d => d.FoodId).Contains(r.FoodId)))
-            {
-                return false;
-            }
-
-            // TODO: Comparar e converter a unidade de medida.
-            if (recipe.Ingredients.Any(r => desired.Any(d => d.FoodId == r.FoodId && d.Quantity < r.Quantity)))
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }
