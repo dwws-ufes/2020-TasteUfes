@@ -8,9 +8,9 @@ namespace TasteUfes.Resources
     public class IngredientResource : EntityResource
     {
         [Required]
-        [Range(1, Int16.MaxValue)]
+        [Range(0.01, Int16.MaxValue)]
         [JsonPropertyName("quantity")]
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [Required]
         [JsonPropertyName("quantity_unit")]

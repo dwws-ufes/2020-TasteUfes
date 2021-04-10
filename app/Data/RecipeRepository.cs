@@ -16,7 +16,7 @@ namespace TasteUfes.Data
 
         public override IEnumerable<Recipe> Search(Expression<Func<Recipe, bool>> predicate)
         {
-            return _context.Set<Recipe>().AsNoTracking()
+            return _context.Set<Recipe>()
                 .Include(r => r.Preparation)
                     .ThenInclude(r => r.Steps)
                 .Include(r => r.Ingredients)
@@ -26,7 +26,9 @@ namespace TasteUfes.Data
                                 .ThenInclude(r => r.Nutrient)
                 .Include(r => r.User)
                     .ThenInclude(r => r.Roles)
-                .Where(predicate);
+                .Where(predicate)
+                .AsNoTracking()
+                .ToList();
         }
 
         public Recipe GetDetailed(Guid id)

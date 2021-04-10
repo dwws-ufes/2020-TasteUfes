@@ -60,7 +60,6 @@ namespace TasteUfes.Services
             return Get(food.Id);
         }
 
-        // TODO: Inverter a chave estrangeira entre Food e NutritionFacts
         public override Food Update(Food entity, params string[] ruleSets)
         {
             if (UnitOfWork.Foods.Search(f => f.Name == entity.Name && f.Id != entity.Id).Any())

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,57 @@ namespace TasteUfes.Controllers
         public override ActionResult<IEnumerable<RecipeResource>> Get()
         {
             return base.Get();
+        }
+
+        [HttpPost]
+        public override ActionResult<RecipeResource> Post([FromBody] RecipeResource resource)
+        {
+            ModelState.Remove("UserId");
+
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
+            var user = _userService.GetByUsername(User.Identity.Name);
+
+            if (user == null)
+                return Forbid();
+
+            resource.UserId = user.Id;
+
+            return base.Post(resource);
+        }
+
+        [HttpPut("{id}")]
+        public override ActionResult<RecipeResource> Put([FromRoute] Guid id, [FromBody] RecipeResource resource)
+        {
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+            ModelState.Remove("NutritionFacts");
+
+            if (!ModelState.IsValid)
+                return BadRequest(Errors(resource));
+
+            if (id != resource?.Id)
+                return NotFound(Errors(resource));
+
+            var recipe = _recipeService.Get(id);
+
+            if (HasErrors() || recipe == null)
+                return NotFound(Errors(resource));
+
+            var user = _userService.GetByUsername(User.Identity.Name);
+
+            if (recipe.UserId != user.Id && !User.IsInRole("Admin"))
+                return Forbid();
+
+            /**
+             * Prevenção de atualização aninhada.
+             */
+            resource.User = null;
+            resource.NutritionFacts = null;
+            resource.Ingredients = resource.Ingredients.Select(i => { i.Food = null; return i; });
+
+            return base.Put(id, resource);
         }
 
         [HttpDelete("{id}")]
@@ -91,17 +143,22 @@ namespace TasteUfes.Controllers
 
         [HttpPost("recommend-by-ingredients")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RecipeResource>> RecommendRecipesByIngredients(IEnumerable<IngredientResource> resource)
+        public ActionResult<IEnumerable<RecipeResource>> RecommendRecipesByIngredients(IEnumerable<FoodResource> resource)
         {
+            foreach (var name in ModelState.Keys.Where(k => k.EndsWith("Name")))
+            {
+                ModelState.Remove(name);
+            }
+
             if (!ModelState.IsValid)
                 return BadRequest(Errors(resource));
 
-            var recipes = _recipeService.RecommendRecipesByIngredients(Mapper.Map<IEnumerable<Ingredient>>(resource));
+            var recipes = _recipeService.RecommendRecipesByFoods(Mapper.Map<IEnumerable<Food>>(resource));
 
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Ok(recipes);
+            return Ok(Mapper.Map<IEnumerable<RecipeResource>>(recipes));
         }
     }
 }
