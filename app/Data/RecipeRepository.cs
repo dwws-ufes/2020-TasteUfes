@@ -14,6 +14,17 @@ namespace TasteUfes.Data
         public RecipeRepository(ApplicationDbContext context)
             : base(context) { }
 
+        public override IEnumerable<Recipe> GetAll()
+        {
+            return _context.Set<Recipe>()
+                .AsNoTracking()
+                .Include(r => r.Preparation)
+                .ThenInclude(p => p.Steps)
+                .Include(r => r.User)
+                .ThenInclude(r => r.Roles)
+                .ToList();
+        }
+
         public override IEnumerable<Recipe> Search(Expression<Func<Recipe, bool>> predicate)
         {
             return _context.Set<Recipe>()
