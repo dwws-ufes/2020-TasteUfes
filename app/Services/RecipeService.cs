@@ -84,6 +84,9 @@ namespace TasteUfes.Services
                     }
                 }
 
+                recipe.Name = entity.Name;
+                recipe.Servings = entity.Servings;
+
                 // Valida e atualiza
                 recipe = base.Update(recipe, ruleSets);
 
