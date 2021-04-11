@@ -1,7 +1,4 @@
-import { authAPI } from '@/config/axios/index';
-import { notAuthAPI } from '@/config/axios/index';
-import { createAuthAPI } from '@/config/axios/index';
-import { deleteAuthAPI } from '@/config/axios/index';
+import { authAPI, notAuthAPI, createAuthAPI, deleteAuthAPI } from '@/config/axios/index';
 
 // Functions
 
@@ -33,6 +30,14 @@ function getUser(id) {
   return authAPI({
     method: 'GET',
     url: `/users/${id}`,
+  });
+}
+
+function updateUser(id, user) {
+  return authAPI({
+    method: 'PUT',
+    url: `/users/${id}`,
+    data: user,
   });
 }
 
@@ -74,6 +79,14 @@ function getRecipe(id) {
   });
 }
 
+function updateRecipe(id, recipe) {
+  return authAPI({
+    method: 'PUT',
+    url: `/recipes/${id}`,
+    data: recipe,
+  });
+}
+
 function deleteRecipe(id) {
   return authAPI({
     method: 'DELETE',
@@ -104,6 +117,14 @@ function getFood(id) {
   });
 }
 
+function updateFood(id, food) {
+  return authAPI({
+    method: 'PUT',
+    url: `/foods/${id}`,
+    data: food,
+  });
+}
+
 function deleteFood(id) {
   return authAPI({
     method: 'DELETE',
@@ -126,6 +147,7 @@ export {
   createUser,
   getUsers,
   getUser,
+  updateUser,
   deleteUser,
   refreshAuthentication,
 
@@ -135,11 +157,13 @@ export {
   createRecipe,
   getRecipes,
   getRecipe,
+  updateRecipe,
   deleteRecipe,
 
   createFood,
   getFoods,
   getFood,
+  updateFood,
   deleteFood,
 
   getNutrients,

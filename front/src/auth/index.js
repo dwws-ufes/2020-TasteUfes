@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { createAuthAPI } from '@/api';
-import { deleteAuthAPI } from '@/api';
-import { getUser } from '@/api';
+import { createAuthAPI, deleteAuthAPI, getUser } from '@/api';
 
 Vue.use(Vuex)
 

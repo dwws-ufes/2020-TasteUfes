@@ -81,8 +81,7 @@
 </template>
 
 <script>
-import { getRecipes } from "@/api";
-import { deleteRecipe } from "@/api";
+import { getRecipes, deleteRecipe } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";

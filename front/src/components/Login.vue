@@ -49,9 +49,7 @@
 </template>
 
 <script>
-import { login } from "@/api";
-import { getUser } from "@/api";
-import { createAuthAPI } from "@/api";
+import { login, getUser, createAuthAPI } from "@/api";
 import { mapActions } from "vuex";
 
 export default {
@@ -74,13 +72,11 @@ export default {
     onSubmit() {
       login(this.user)
         .then((result) => {
-          console.log(result);
           createAuthAPI(result.data.token_type, result.data.access_token);
           getUser(result.data.user_id).then((user) => {
             Promise.all([
               this.$store.dispatch("ActionSetUser", user.data),
             ]).finally(() => {
-              console.log(result.data);
               this.doLogin(result.data);
               this.dialog = false;
             });
