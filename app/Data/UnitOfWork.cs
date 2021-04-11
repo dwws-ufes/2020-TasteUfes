@@ -20,6 +20,7 @@ namespace TasteUfes.Data
         public INutritionFactsRepository NutritionFacts { get; }
         public INutritionFactsNutrientsRepository NutritionFactsNutrients { get; }
         public IUserRepository Users { get; }
+        public IRoleRepository Roles { get; }
 
         public UnitOfWork(ApplicationDbContext context,
             IIngredientRepository ingredients,
@@ -29,7 +30,8 @@ namespace TasteUfes.Data
             IPreparationStepRepository preparationSteps,
             INutritionFactsRepository nutritionFacts,
             INutritionFactsNutrientsRepository nutritionFactsNutrients,
-            IUserRepository users)
+            IUserRepository users,
+            IRoleRepository roles)
         {
             _context = context;
             _repositories = new Dictionary<string, dynamic>();
@@ -42,6 +44,7 @@ namespace TasteUfes.Data
             _repositories[nameof(NutritionFacts)] = NutritionFacts = nutritionFacts;
             _repositories[nameof(NutritionFactsNutrients)] = NutritionFactsNutrients = nutritionFactsNutrients;
             _repositories[nameof(User)] = Users = users;
+            _repositories[nameof(Role)] = Roles = roles;
         }
 
         public IEntityRepository<TEntity> Repository<TEntity>() where TEntity : Entity

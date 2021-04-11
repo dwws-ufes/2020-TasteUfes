@@ -45,6 +45,7 @@ namespace TasteUfes.Configurations
 
             // Role context
             services.AddScoped<RoleValidator>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleService, RoleService>();
 
             // Preparation context

@@ -14,6 +14,7 @@ namespace TasteUfes.Data.Interfaces
         INutritionFactsRepository NutritionFacts { get; }
         INutritionFactsNutrientsRepository NutritionFactsNutrients { get; }
         IUserRepository Users { get; }
+        IRoleRepository Roles { get; }
 
         int SaveChanges();
         IDbContextTransaction BeginTransaction();
