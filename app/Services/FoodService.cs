@@ -93,6 +93,8 @@ namespace TasteUfes.Services
                     food.NutritionFacts = UnitOfWork.NutritionFacts.Add(entity.NutritionFacts);
                 }
 
+                food.Name = entity.Name;
+
                 food = base.Update(food, ruleSets);
 
                 if (Notificator.HasErrors())
