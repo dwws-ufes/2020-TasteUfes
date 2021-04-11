@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Data.Context;
 using TasteUfes.Models;
+using System.Collections.Generic;
 
 namespace TasteUfes.Data
 {
@@ -11,6 +12,14 @@ namespace TasteUfes.Data
     {
         public FoodRepository(ApplicationDbContext context)
             : base(context) { }
+
+        public override IEnumerable<Food> GetAll()
+        {
+            return _context.Foods
+                .AsNoTracking()
+                .Include(f => f.NutritionFacts)
+                .ToList();
+        }
 
         public override Food Get(Guid id)
         {
