@@ -43,6 +43,10 @@ namespace TasteUfes.Configurations
             services.AddScoped<NutrientValidator>();
             services.AddScoped<INutrientService, NutrientService>();
 
+            // Role context
+            services.AddScoped<RoleValidator>();
+            services.AddScoped<IRoleService, RoleService>();
+
             // Preparation context
             services.AddScoped<IPreparationRepository, PreparationRepository>();
 
