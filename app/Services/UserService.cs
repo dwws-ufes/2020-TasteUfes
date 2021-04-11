@@ -78,15 +78,20 @@ namespace TasteUfes.Services
             if (!IsValid(validator, user))
                 return null;
 
-            var persisted = base.Get(user.Id);
+            var persisted = Get(user.Id);
 
             if (Notificator.HasErrors())
                 return null;
 
-            // Não permite atualizar a senha.
-            user.Password = persisted.Password;
+            persisted.Email = user.Email;
+            persisted.FirstName = user.FirstName;
+            persisted.LastName = user.LastName;
+            persisted.Username = user.Username;
+            persisted.Roles = user.Roles
+                .Select(r => UnitOfWork.Repository<Role>().Get(r.Id))
+                .ToList();
 
-            return base.Update(user, ruleSets);
+            return base.Update(persisted, ruleSets);
         }
 
         public override void Remove(Guid id)
@@ -100,14 +105,21 @@ namespace TasteUfes.Services
             base.Remove(id);
         }
 
-        public User UpdatePassword(Guid id, string newPassword)
+        public User UpdatePassword(Guid id, string oldPassword, string newPassword)
         {
-            var user = base.Get(id);
+            var user = UnitOfWork.Users.Get(id);
 
             if (Notificator.HasErrors())
                 return null;
 
             var hasher = new PasswordHasher<User>();
+            var verify = hasher.VerifyHashedPassword(user, user.Password, oldPassword);
+
+            if (PasswordVerificationResult.Failed == verify)
+            {
+                Notify(NotificationType.ERROR, string.Empty, "Old password is invalid.");
+                return null;
+            }
 
             user.Password = hasher.HashPassword(user, newPassword);
 

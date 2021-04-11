@@ -68,10 +68,50 @@ namespace TasteUfes.Services
                 return null;
             }
 
-            var food = base.Update(entity, ruleSets);
+            var food = UnitOfWork.Foods.Get(entity.Id);
 
-            if (Notificator.HasErrors())
+            if (food == null)
+            {
+                Notify(NotificationType.ERROR, string.Empty, $"{nameof(Food)} not found.");
                 return null;
+            }
+
+            using var transaction = UnitOfWork.BeginTransaction();
+
+            try
+            {
+                if (food.NutritionFacts != null)
+                {
+                    UnitOfWork.NutritionFactsNutrients.Remove(food.NutritionFacts.NutritionFactsNutrients);
+                    UnitOfWork.NutritionFacts.Remove(food.NutritionFacts);
+                }
+
+                UnitOfWork.SaveChanges();
+
+                if (entity.NutritionFacts != null)
+                {
+                    food.NutritionFacts = UnitOfWork.NutritionFacts.Add(entity.NutritionFacts);
+                }
+
+                food = base.Update(food, ruleSets);
+
+                if (Notificator.HasErrors())
+                {
+                    transaction.Rollback();
+                    return null;
+                }
+
+                UnitOfWork.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                Logger.LogError(e.Message);
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error updating {nameof(Food)}.");
+
+                return null;
+            }
 
             return Get(food.Id);
         }

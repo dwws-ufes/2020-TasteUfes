@@ -12,7 +12,7 @@ namespace TasteUfes.Models
         public string Name { get; set; }
 
         [InverseProperty("Food")]
-        public IEnumerable<Ingredient> Ingredients { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; }
 
         public NutritionFacts NutritionFacts { get; set; }
     }

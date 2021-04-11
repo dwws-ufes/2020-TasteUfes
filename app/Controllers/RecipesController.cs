@@ -29,15 +29,17 @@ namespace TasteUfes.Controllers
         [AllowAnonymous]
         public override ActionResult<RecipeResource> Get([FromRoute] Guid id)
         {
-            return Mapper.Map<RecipeResource>(_recipeService.GetDetailed(id));
+            var recipe = _recipeService.GetDetailed(id);
+
+            if (recipe == null || HasErrors())
+                return NotFound();
+
+            return Mapper.Map<RecipeResource>(recipe);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public override ActionResult<IEnumerable<RecipeResource>> Get()
-        {
-            return base.Get();
-        }
+        public override ActionResult<IEnumerable<RecipeResource>> Get() => base.Get();
 
         [HttpPost]
         public override ActionResult<RecipeResource> Post([FromBody] RecipeResource resource)
@@ -68,12 +70,12 @@ namespace TasteUfes.Controllers
                 return BadRequest(Errors(resource));
 
             if (id != resource?.Id)
-                return NotFound(Errors(resource));
+                return NotFound();
 
             var recipe = _recipeService.Get(id);
 
             if (HasErrors() || recipe == null)
-                return NotFound(Errors(resource));
+                return NotFound();
 
             var user = _userService.GetByUsername(User.Identity.Name);
 
@@ -121,7 +123,7 @@ namespace TasteUfes.Controllers
             var recipe = _recipeService.RecalculateRecipePerServings(id, servings);
 
             if (HasErrors())
-                return NotFound(Errors(recipe));
+                return NotFound(Errors());
 
             return Ok(Mapper.Map<RecipeResource>(recipe));
         }
@@ -136,7 +138,7 @@ namespace TasteUfes.Controllers
             var anonymous = _recipeService.CalculateAnonymousRecipe(Mapper.Map<Recipe>(resource));
 
             if (HasErrors())
-                return BadRequest(resource);
+                return BadRequest(Errors(resource));
 
             return Ok(Mapper.Map<AnonymousRecipeResource>(anonymous));
         }

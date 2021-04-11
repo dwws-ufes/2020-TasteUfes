@@ -56,19 +56,56 @@ namespace TasteUfes.Services
             ruleSets.Append("MassVolumeConflict");
             ruleSets.Append("default");
 
-            var recipe = Get(entity.Id);
+            var recipe = GetDetailed(entity.Id);
 
-            if (Notificator.HasErrors())
+            using var transaction = UnitOfWork.BeginTransaction();
+
+            try
+            {
+                // Remove modo de preparo e ingredientes
+                if (recipe.Preparation != null)
+                {
+                    UnitOfWork.PreparationSteps.Remove(recipe.Preparation.Steps);
+                    UnitOfWork.Preparations.Remove(recipe.Preparation);
+                }
+
+                UnitOfWork.Ingredients.Remove(recipe.Ingredients);
+                UnitOfWork.SaveChanges();
+
+                // Cria novo modo de preparo e ingredientes
+                if (entity.Preparation != null)
+                    recipe.Preparation = UnitOfWork.Preparations.Add(entity.Preparation);
+
+                if (entity.Ingredients != null)
+                {
+                    foreach (var ingredient in entity.Ingredients)
+                    {
+                        recipe.Ingredients.Add(UnitOfWork.Ingredients.Add(ingredient));
+                    }
+                }
+
+                // Valida e atualiza
+                recipe = base.Update(recipe, ruleSets);
+
+                if (Notificator.HasErrors())
+                {
+                    transaction.Rollback();
+                    return null;
+                }
+
+                UnitOfWork.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                Logger.LogError(e.Message);
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error removing {nameof(Recipe)}.");
+
                 return null;
+            }
 
-            entity.UserId = recipe.UserId;
-
-            var update = base.Update(entity, ruleSets);
-
-            if (Notificator.HasErrors())
-                return null;
-
-            return GetDetailed(update.Id);
+            return recipe;
         }
 
         public override void Remove(Guid id)
@@ -82,8 +119,12 @@ namespace TasteUfes.Services
 
             try
             {
-                UnitOfWork.PreparationSteps.Remove(recipe.Preparation.Steps);
-                UnitOfWork.Preparations.Remove(recipe.Preparation);
+                if (recipe.Preparation != null)
+                {
+                    UnitOfWork.PreparationSteps.Remove(recipe.Preparation.Steps);
+                    UnitOfWork.Preparations.Remove(recipe.Preparation);
+                }
+
                 UnitOfWork.Ingredients.Remove(recipe.Ingredients);
                 UnitOfWork.Recipes.Remove(recipe);
 
@@ -199,7 +240,8 @@ namespace TasteUfes.Services
                             AmountPerServing = nfn.AmountPerServing * ingredientProportion,
                             DailyValue = nfn.DailyValue * ingredientProportion,
                             AmountPerServingUnit = nfn.AmountPerServingUnit,
-                            Nutrient = nfn.Nutrient
+                            Nutrient = nfn.Nutrient,
+                            NutrientId = nfn.NutrientId
                         });
                     }
                 }

@@ -15,6 +15,6 @@ namespace TasteUfes.Models
         public Guid RecipeId { get; set; }
 
         [InverseProperty("Preparation")]
-        public IEnumerable<PreparationStep> Steps { get; set; }
+        public ICollection<PreparationStep> Steps { get; set; }
     }
 }

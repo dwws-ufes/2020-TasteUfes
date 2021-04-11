@@ -19,9 +19,7 @@ namespace TasteUfes.Data
             return _context.Set<Recipe>()
                 .AsNoTracking()
                 .Include(r => r.Preparation)
-                .ThenInclude(p => p.Steps)
                 .Include(r => r.User)
-                .ThenInclude(r => r.Roles)
                 .ToList();
         }
 

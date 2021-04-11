@@ -6,7 +6,7 @@ namespace TasteUfes.Services.Interfaces
 {
     public interface IUserService : IEntityService<User>
     {
-        User UpdatePassword(Guid id, string newPassword);
+        User UpdatePassword(Guid id, string oldPassword, string newPassword);
 
         User GetByUsername(string username);
 
