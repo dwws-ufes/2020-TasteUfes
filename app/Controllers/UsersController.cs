@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,10 @@ namespace TasteUfes.Controllers
                 return BadRequest(Errors(resource));
             }
 
-            if (!(User.Identity.IsAuthenticated && User.IsInRole("Admin")))
+            if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                return Forbid();
+
+            if (!User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
                 resource.Roles = new List<RoleResource>();
 
             return base.Post(resource);

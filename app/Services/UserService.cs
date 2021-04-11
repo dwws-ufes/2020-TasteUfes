@@ -41,7 +41,7 @@ namespace TasteUfes.Services
             try
             {
                 user.Roles = user.Roles
-                    .Select(r => UnitOfWork.Repository<Role>().Get(r.Id))
+                    .Select(r => UnitOfWork.Roles.Get(r.Id))
                     .ToList();
 
                 user = UnitOfWork.Users.Add(user);
@@ -84,7 +84,7 @@ namespace TasteUfes.Services
             persisted.LastName = user.LastName;
             persisted.Username = user.Username;
             persisted.Roles = user.Roles
-                .Select(r => UnitOfWork.Repository<Role>().Get(r.Id))
+                .Select(r => UnitOfWork.Roles.Get(r.Id))
                 .ToList();
 
             return base.Update(persisted, ruleSets);

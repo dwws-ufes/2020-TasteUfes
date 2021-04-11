@@ -96,6 +96,9 @@ namespace TasteUfes.Controllers
             return !ModelState.IsValid || Notificator.HasErrors();
         }
 
+        private string ToSnake(string str)
+            => string.Concat(str.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
+
         protected dynamic Errors(object data = null)
         {
             foreach (var values in ModelState.Values)
@@ -108,7 +111,7 @@ namespace TasteUfes.Controllers
 
             var errors = Notificator.GetErrors().Select(err => new ErrorResource
             {
-                Property = err.Property,
+                Property = ToSnake(err.Property),
                 Message = err.Message
             });
 
