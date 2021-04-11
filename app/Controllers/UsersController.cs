@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TasteUfes.Models;
 using TasteUfes.Resources;
-using TasteUfes.Services;
 using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
 
@@ -160,6 +157,13 @@ namespace TasteUfes.Controllers
                 ExpiresIn = token.AccessTokenLifetime,
                 RefreshToken = token.RefreshToken
             };
+        }
+
+        [HttpGet("~/api/v1/roles")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<RoleResource>> GetRoles([FromServices] IRoleService roleService)
+        {
+            return Ok(Mapper.Map<IEnumerable<RoleResource>>(roleService.GetAll()));
         }
     }
 }

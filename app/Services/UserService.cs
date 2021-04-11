@@ -1,15 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using TasteUfes.Configurations;
 using TasteUfes.Data.Interfaces;
 using TasteUfes.Models;
 using TasteUfes.Models.Validators;
