@@ -1,18 +1,19 @@
 <template>
   <div class="delete">
-    <v-icon small @click="deleteItem(id, name)" secondary> mdi-delete </v-icon>
     <v-dialog v-model="dialogDelete" max-width="500px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-icon small v-bind="attrs" v-on="on" secondary> mdi-delete </v-icon>
+      </template>
       <v-card>
-        <v-card-title class="headline"
-          >Delete</v-card-title
+        <v-card-title class="headline">Delete</v-card-title>
+        <v-card-text
+          >Are you sure you want to delete <b>{{ name }}</b
+          >?</v-card-text
         >
-        <v-card-text>Are you sure you want to delete <b>{{ name }}</b>?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="closeDelete">Cancel</v-btn>
-          <v-btn color="red" text @click="deleteItem(id)"
-            >OK</v-btn
-          >
+          <v-btn color="red" text @click="deleteItem(id)">OK</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -32,18 +33,18 @@ export default {
   },
   methods: {
     deleteItem: function (id) {
-      // Chamar API delete.
-      this.dialogDelete = true;
+      this.$emit("delete", id);
+      this.closeDelete();
     },
-    closeDelete: function() {
+    closeDelete: function () {
       this.dialogDelete = false;
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .v-icon {
-    color: red;
-  }
+.v-icon {
+  color: red;
+}
 </style>

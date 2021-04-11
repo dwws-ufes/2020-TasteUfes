@@ -5,9 +5,10 @@ import axios from 'axios';
 // Common
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common.Accept = 'application/json';
+let token_type = localStorage.getItem('token_type');
 let access_token = localStorage.getItem("access_token");
-if (access_token != null) {
-  createAuthAPI(access_token);
+if (access_token != null && token_type != null) {
+  createAuthAPI(token_type, access_token);
 }
 
 // --- Instances
@@ -20,11 +21,11 @@ const notAuthAPI = axios.create({
   baseURL: 'https://localhost:5001/api/v1/',
 });
 
-function createAuthAPI(access_token) {
+function createAuthAPI(token_type, access_token) {
   authAPI = axios.create({
     baseURL: 'https://localhost:5001/api/v1/',
     headers: {
-      Authorization: 'Bearer ' + access_token
+      Authorization: token_type + ' ' + access_token
     }
   });
 }

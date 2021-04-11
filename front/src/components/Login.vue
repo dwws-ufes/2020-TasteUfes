@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-if="!auth" v-model="dialog" persistent max-width="400px">
+    <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="white" light v-bind="attrs" v-on="on"> Login </v-btn>
       </template>
@@ -44,13 +44,15 @@
         </v-container>
       </v-card>
     </v-dialog>
-    <v-btn v-else @click="logout"> Logout </v-btn>
+    <!-- <v-btn v-else @click="logout"> Logout </v-btn> -->
   </div>
 </template>
 
 <script>
-import { login } from "@/api/data";
-import { mapActions, mapGetters } from "vuex";
+import { login } from "@/api";
+import { getUser } from "@/api";
+import { createAuthAPI } from "@/api";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -67,25 +69,26 @@ export default {
     };
   },
 
-  computed: {
-    ...mapGetters(["auth"]),
-  },
-
   methods: {
-    ...mapActions(["doLogin", "doLogout"]),
-    onSubmit: function () {
+    ...mapActions(["doLogin"]),
+    onSubmit() {
       login(this.user)
         .then((result) => {
-          this.doLogin(result.data);
-          this.dialog = false;
+          console.log(result);
+          createAuthAPI(result.data.token_type, result.data.access_token);
+          getUser(result.data.user_id).then((user) => {
+            Promise.all([
+              this.$store.dispatch("ActionSetUser", user.data),
+            ]).finally(() => {
+              console.log(result.data);
+              this.doLogin(result.data);
+              this.dialog = false;
+            });
+          });
         })
         .catch((error) => {
           console.log("Erro: ", error);
         });
-    },
-
-    logout: function () {
-      this.doLogout();
     },
   },
 };

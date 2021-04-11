@@ -14,7 +14,11 @@
         <v-row>
           <DetailsButton :id="item.id" name="DetailsUser" />
           <EditButton :id="item.id" name="EditUser" />
-          <DeleteButton :id="item.id" :name="item.first_name" />
+          <DeleteButton
+            :id="item.id"
+            :name="item.first_name"
+            @delete="deleteUser(item.id)"
+          />
         </v-row>
       </template>
     </v-data-table>
@@ -22,7 +26,8 @@
 </template>
 
 <script>
-import { getUsers } from "@/api/data";
+import { getUsers } from "@/api";
+import { deleteUser } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -30,6 +35,7 @@ import DeleteButton from "@/components/buttons/DeleteButton.vue";
 export default {
   data() {
     return {
+      load: true,
       headers: [
         {
           text: "ID",
@@ -83,7 +89,26 @@ export default {
       const response = getUsers();
       response.then((result) => {
         this.userList = result.data;
+        this.changeLoading();
       });
+    },
+
+    deleteUser(id) {
+      this.changeLoading();
+      deleteUser(id)
+        .then((result) => {
+          console.log(result);
+          let userId = this.userList.findIndex((user) => user.id === id);
+          this.userList.splice(userId, 1);
+          this.changeLoading();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    changeLoading() {
+      this.load = !this.load;
     },
   },
 };

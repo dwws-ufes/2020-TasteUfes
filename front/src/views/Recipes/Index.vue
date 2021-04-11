@@ -12,6 +12,8 @@
           Create Recipe
         </v-btn>
         <v-data-table
+          :loading="load"
+          loading-text="Loading... Please wait"
           :headers="headers"
           :items="recipeList"
           :items-per-page="10"
@@ -21,7 +23,11 @@
             <v-row>
               <DetailsButton :id="item.id" name="DetailsRecipe" />
               <EditButton :id="item.id" name="EditRecipe" />
-              <DeleteButton :id="item.id" :name="item.name" />
+              <DeleteButton
+                :id="item.id"
+                :name="item.name"
+                @delete="deleteRecipe(item.id)"
+              />
             </v-row>
           </template>
         </v-data-table>
@@ -52,10 +58,17 @@
                     <div class="my-2">
                       <b>Servings:</b> {{ recipe.servings }}
                     </div>
-                    <div class="my-2">
-                      <b>Total steps:</b> {{ recipe.steps }}
+                    <div class="my-2" v-if="recipe.preparation != null">
+                      <b>Total steps:</b> {{ recipe.preparation.steps.length }}
                     </div>
-                    <div class="my-2"><b>Total time:</b> {{ recipe.time }}</div>
+                    <div class="my-2" v-if="recipe.preparation != null">
+                      <b>Total time:</b>
+                      {{ recipe.preparation.preparation_time }}
+                    </div>
+                    <div class="my-2">
+                      <b>Author:</b> {{ recipe.user.first_name }}
+                      {{ recipe.user.last_name }}
+                    </div>
                   </v-card-text>
                 </v-card>
               </router-link>
@@ -68,7 +81,8 @@
 </template>
 
 <script>
-import { getRecipes } from "@/api/data";
+import { getRecipes } from "@/api";
+import { deleteRecipe } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -76,6 +90,7 @@ import DeleteButton from "@/components/buttons/DeleteButton.vue";
 export default {
   data() {
     return {
+      load: true,
       headers: [
         {
           text: "ID",
@@ -96,12 +111,17 @@ export default {
         },
         {
           text: "Steps",
-          value: "steps",
+          value: "preparation.steps.length",
           class: "primary",
         },
         {
           text: "Time",
-          value: "time",
+          value: "preparation.preparation_time",
+          class: "primary",
+        },
+        {
+          text: "User",
+          value: "user.first_name",
           class: "primary",
         },
         {
@@ -129,11 +149,46 @@ export default {
   },
 
   methods: {
-    getData: function () {
-      const response = getRecipes();
-      response.then((result) => {
-        this.recipeList = result.data;
-      });
+    deleteRecipe(id) {
+      this.changeLoading();
+      deleteRecipe(id)
+        .then((result) => {
+          console.log(result);
+          let recipeId = this.recipeList.findIndex(
+            (recipe) => recipe.id === id
+          );
+          this.recipeList.splice(recipeId, 1);
+          this.changeLoading();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    changeLoading() {
+      this.load = !this.load;
+    },
+
+    getData() {
+      if (this.$store.state.auth) {
+        getRecipes()
+          .then((recipes) => {
+            this.recipeList = recipes.data;
+            this.changeLoading();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        getRecipes()
+          .then((result) => {
+            this.recipeList = result.data;
+            this.changeLoading();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
