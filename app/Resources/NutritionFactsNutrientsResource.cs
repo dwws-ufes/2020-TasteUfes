@@ -20,9 +20,6 @@ namespace TasteUfes.Resources
         [JsonPropertyName("daily_value")]
         public double DailyValue { get; set; }
 
-        [JsonPropertyName("nutrition_facts_id")]
-        public Guid NutritionFactsId { get; set; }
-
         [JsonPropertyName("nutrient")]
         public NutrientResource Nutrient { get; set; }
 

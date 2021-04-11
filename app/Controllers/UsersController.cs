@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -30,10 +31,13 @@ namespace TasteUfes.Controllers
         public override ActionResult<UserResource> Post([FromBody] UserResource resource)
         {
             if (!ModelState.IsValid)
+            {
+                resource.Password = null;
                 return BadRequest(Errors(resource));
+            }
 
             if (!(User.Identity.IsAuthenticated && User.IsInRole("Admin")))
-                resource.Roles = null;
+                resource.Roles = new List<RoleResource>();
 
             return base.Post(resource);
         }
@@ -44,7 +48,10 @@ namespace TasteUfes.Controllers
             ModelState.Remove("Password");
 
             if (!ModelState.IsValid)
+            {
+                resource.Password = null;
                 return BadRequest(Errors(resource));
+            }
 
             if (id != resource?.Id)
                 return NotFound();
@@ -59,7 +66,12 @@ namespace TasteUfes.Controllers
             if (user.Username != User.Identity.Name && !User.IsInRole("Admin"))
                 return Forbid();
 
-            var updated = Service.Update(Mapper.Map<User>(resource));
+            // Caso o usuário não seja admin, ele não tem permissão para
+            // atualizar as roles.
+            if (!User.IsInRole("Admin"))
+                resource.Roles = Mapper.Map<IEnumerable<RoleResource>>(user.Roles);
+
+            var updated = _userService.Update(Mapper.Map<User>(resource));
 
             if (HasErrors())
                 return BadRequest(Errors(resource));
@@ -69,18 +81,33 @@ namespace TasteUfes.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public override IActionResult Delete([FromRoute] Guid id)
-        {
-            return base.Delete(id);
-        }
+        public override IActionResult Delete([FromRoute] Guid id) => base.Delete(id);
 
-        [HttpPut("{id}/password-update")]
-        public ActionResult<string> UpdatePassword([FromRoute] Guid id, [FromBody] UserPasswordResource resource)
+        [HttpPut("{id}/update-password")]
+        public ActionResult<UserResource> UpdatePassword([FromRoute] Guid id, [FromBody] UserPasswordResource resource)
         {
             if (!ModelState.IsValid)
+            {
+                resource.OldPassword = null;
+                resource.NewPassword = null;
                 return BadRequest(Errors(resource));
+            }
 
-            return "In progress";
+            var user = _userService.GetByUsername(User.Identity.Name);
+
+            if (user.Id != id)
+                return Forbid();
+
+            _userService.UpdatePassword(id, resource.OldPassword, resource.NewPassword);
+
+            if (HasErrors())
+            {
+                resource.OldPassword = null;
+                resource.NewPassword = null;
+                return BadRequest(Errors(resource));
+            }
+
+            return Mapper.Map<UserResource>(user);
         }
 
         [HttpPost("login")]
@@ -88,7 +115,10 @@ namespace TasteUfes.Controllers
         public ActionResult<TokenResource> Login([FromBody] UserLoginResource resource)
         {
             if (!ModelState.IsValid)
+            {
+                resource.Password = null;
                 return BadRequest(Errors(resource));
+            }
 
             var user = _userService.GetByCredentials(resource.Username, resource.Password);
 

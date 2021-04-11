@@ -9,8 +9,8 @@ namespace TasteUfes.Data.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            ChangeTracker.AutoDetectChangesEnabled = false;
+            // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            // ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

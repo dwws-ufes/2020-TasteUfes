@@ -17,6 +17,7 @@ namespace TasteUfes.Data.Interfaces
 
         int SaveChanges();
         IDbContextTransaction BeginTransaction();
+        void DetachEntity<TEntity>(TEntity entity) where TEntity : Entity;
         IEntityRepository<TEntity> Repository<TEntity>() where TEntity : Entity;
     }
 }

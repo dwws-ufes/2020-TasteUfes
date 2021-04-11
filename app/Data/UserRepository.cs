@@ -22,6 +22,14 @@ namespace TasteUfes.Data
             return base.Add(entity);
         }
 
+        public override User Update(User entity)
+        {
+            // if (entity.Roles != null)
+            //     _context.AttachRange(entity.Roles);
+
+            return base.Update(entity);
+        }
+
         public override IEnumerable<User> GetAll()
         {
             return _context.Users.Include(u => u.Roles);

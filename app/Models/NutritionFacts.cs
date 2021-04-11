@@ -20,7 +20,7 @@ namespace TasteUfes.Models
         public double DailyValue { get; set; }
 
         [InverseProperty("NutritionFacts")]
-        public IEnumerable<NutritionFactsNutrients> NutritionFactsNutrients { get; set; }
+        public ICollection<NutritionFactsNutrients> NutritionFactsNutrients { get; set; }
 
         [ForeignKey("FoodId")]
         public Food Food { get; set; }

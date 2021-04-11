@@ -9,18 +9,12 @@ namespace TasteUfes.Resources
     public class UserPasswordResource
     {
         [Required]
-        [JsonPropertyName("id")]
-        public Guid Id { get; set; }
-
-        [Required]
-        [JsonPropertyName("username")]
-        public string Username { get; set; }
-
-        [Required]
+        [StringLength(32, MinimumLength = 6)]
         [JsonPropertyName("old_password")]
         public string OldPassword { get; set; }
 
         [Required]
+        [StringLength(32, MinimumLength = 6)]
         [JsonPropertyName("new_password")]
         public string NewPassword { get; set; }
     }

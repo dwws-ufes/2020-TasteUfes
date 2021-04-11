@@ -39,7 +39,7 @@ namespace TasteUfes.Controllers
             var entity = Service.Get(id);
 
             if (entity == null)
-                return NotFound(Errors());
+                return NotFound(id);
 
             return Ok(Mapper.Map<TEntityResource>(entity));
         }

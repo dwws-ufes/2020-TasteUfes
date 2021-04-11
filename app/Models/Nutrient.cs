@@ -17,6 +17,6 @@ namespace TasteUfes.Models
         public double DailyRecommendation { get; set; }
 
         [InverseProperty("Nutrient")]
-        public IEnumerable<NutritionFactsNutrients> NutritionFactsNutrients { get; set; }
+        public ICollection<NutritionFactsNutrients> NutritionFactsNutrients { get; set; }
     }
 }

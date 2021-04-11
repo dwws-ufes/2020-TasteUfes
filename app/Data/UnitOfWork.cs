@@ -70,6 +70,11 @@ namespace TasteUfes.Data
             return _context.Database.BeginTransaction();
         }
 
+        public void DetachEntity<TEntity>(TEntity entity) where TEntity : Entity
+        {
+            _context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

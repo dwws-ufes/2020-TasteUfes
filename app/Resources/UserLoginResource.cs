@@ -13,6 +13,7 @@ namespace TasteUfes.Resources
         public string Username { get; set; }
 
         [Required]
+        [StringLength(32, MinimumLength = 6)]
         [JsonPropertyName("password")]
         public string Password { get; set; }
     }

@@ -787,6 +787,9 @@
           <ownedParameter name="newPassword">
             <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
           </ownedParameter>
+          <ownedParameter name="oldPassword">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
+          </ownedParameter>
         </ownedOperation>
         <ownedOperation xsi:type="frameweb:ServiceMethod" name="GetByUsername" methodType="//@compose.0/Models/User">
           <ownedParameter name="username">
