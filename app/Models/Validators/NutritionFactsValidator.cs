@@ -14,10 +14,6 @@ namespace TasteUfes.Models.Validators
                 .NotEmpty()
                 .IsInEnum();
 
-            RuleFor(n => n.ServingEnergy)
-                .NotEmpty()
-                .GreaterThanOrEqualTo(0);
-
             RuleForEach(n => n.NutritionFactsNutrients)
                 .SetValidator(new NutritionFactsNutrientsValidator());
         }
