@@ -107,9 +107,7 @@
 </template>
 
 <script>
-import { createRecipe } from "@/api";
-import { mapActions } from "vuex";
-import { getFoods } from "../../api";
+import { createRecipe, getFoods } from "@/api";
 import { store } from "@/auth";
 // import Alert from '@/components/Alert.vue';
 
@@ -119,7 +117,6 @@ export default {
     return {
       valid: false,
       submit: false,
-      quantity_food: null,
       prepTime: null,
       recipe: {
         name: "",
@@ -145,7 +142,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(["ActionSetUserId"]),
     addFoodField: function () {
       this.recipe.ingredients.push({});
     },

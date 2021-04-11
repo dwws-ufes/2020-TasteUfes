@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { getUsers } from "@/api";
-import { deleteUser } from "@/api";
+import { getUsers, deleteUser } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";

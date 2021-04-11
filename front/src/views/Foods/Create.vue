@@ -60,6 +60,7 @@
             hide-details="auto"
             class="form-control"
           />
+          <v-btn @click="removeNutrientField(i)">-</v-btn>
         </div>
         <v-btn @click="addNutrientField">+ Nutrient</v-btn>
         <v-card-actions>
@@ -88,8 +89,7 @@
 </template>
 
 <script>
-import { createFood } from "@/api";
-import { getNutrients } from "@/api";
+import { createFood, getNutrients } from "@/api";
 import { store } from "@/auth";
 // import Alert from "@/components/Alert.vue";
 
@@ -128,7 +128,7 @@ export default {
 
     onSubmit: function () {
       this.submit = true;
-      this.food.nutrition_facts.nutrition_facts_nutrients.map((nut, i) => {
+      this.food.nutrition_facts.nutrition_facts_nutrients.map((nut) => {
         nut.amount_per_serving_unit = 1;
       });
       createFood(this.food)

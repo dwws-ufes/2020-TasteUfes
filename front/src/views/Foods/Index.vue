@@ -28,8 +28,7 @@
 </template>
 
 <script>
-import { getFoods } from "@/api";
-import { deleteFood } from "@/api";
+import { getFoods, deleteFood } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
