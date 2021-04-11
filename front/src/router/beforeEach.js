@@ -1,14 +1,14 @@
-import { store } from "@/auth";
+import { store } from '@/auth';
 
 export default async (to, from, next) => {
-    document.title = `${to.name} - TasteUfes`;
-    if (store.state.token != null) {
-        next();
+  document.title = `${to.name} - TasteUfes`;
+  if (localStorage.getItem('access_token') != '') {
+    next();
+  } else {
+    if (to.name !== 'Home') {
+      next({ name: 'Home' });
     } else {
-        if (to.name !== "Home") {
-            next({ name: "Home" });
-        } else {
-            next();
-        }
+      next();
     }
+  }
 }

@@ -1,37 +1,39 @@
 <template>
   <v-card elevation="2" class="card-form">
-    <v-form ref="form">
+    <v-form
+      ref="form"
+      lazy-validation
+      @submit.prevent="onSubmit"
+      v-model="valid"
+    >
       <h1>Create User</h1>
       <div class="form-group">
         <v-text-field
-          v-model="firstName"
+          v-model="user.first_name"
           :rules="[rules.required]"
           label="FirstName"
           hide-details="auto"
           class="form-control"
-          required
         />
 
         <v-text-field
-          v-model="lastName"
+          v-model="user.last_name"
           :rules="[rules.required]"
           label="LastName"
           hide-details="auto"
           class="form-control"
-          required
         />
 
         <v-text-field
-          v-model="username"
+          v-model="user.username"
           :rules="[rules.required]"
           label="Username"
           hide-details="auto"
           class="form-control"
-          required
         />
 
         <v-text-field
-          v-model="email"
+          v-model="user.email"
           :rules="[rules.required, rules.email]"
           label="Email"
           hide-details="auto"
@@ -39,41 +41,60 @@
         />
 
         <v-text-field
-          v-model="password"
+          v-model="user.password"
           :rules="[rules.required]"
           label="Password"
           :type="'password'"
+          class="form-control"
         />
 
         <v-text-field
           v-model="repeatPassword"
-          :rules="[rules.required]"
+          :rules="[rules.required, passwordConfirmationRule]"
           label="RepeatPassword"
           :type="'password'"
+          class="form-control"
         />
 
         <v-card-actions>
           <v-row justify="center">
-            <v-btn elevation="2" color="primary" dark>Create</v-btn>
+            <v-btn
+              class="submit"
+              type="submit"
+              elevation="2"
+              color="primary"
+              :disabled="!valid"
+            >
+              <span v-if="!submit"> Create </span>
+              <v-progress-circular
+                v-else
+                indeterminate
+                color="white"
+              ></v-progress-circular>
+            </v-btn>
 
             <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
           </v-row>
         </v-card-actions>
-        
       </div>
     </v-form>
   </v-card>
 </template>
 
 <script>
+import { createUser } from "@/api";
 export default {
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: "",
+      valid: false,
+      submit: false,
+      user: {
+        username: "",
+        email: "",
+        first_name: "",
+        last_name: "",
+        password: "",
+      },
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
@@ -83,6 +104,32 @@ export default {
         },
       },
     };
+  },
+
+  methods: {
+    onSubmit: function () {
+      this.submit = true;
+      this.user.roles = [
+        {
+          id: "D6742FBB-18AB-451B-A736-713B63B7A108",
+        },
+      ];
+      createUser(this.user)
+        .then((result) => {
+          console.log(result);
+          this.$router.push({ name: "ListUser" });
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+  },
+
+  computed: {
+    passwordConfirmationRule() {
+      return () =>
+        this.user.password === this.repeatPassword || "Password must match";
+    },
   },
 };
 </script>

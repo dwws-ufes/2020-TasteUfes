@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { getFood } from "@/api/data";
+import { getFood } from "@/api";
 
 export default {
   name: "DetailsFood",

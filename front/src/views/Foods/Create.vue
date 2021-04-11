@@ -17,6 +17,51 @@
           class="form-control"
         />
 
+        <v-text-field
+          v-model.number="food.nutrition_facts.serving_size"
+          :rules="[this.rules.required]"
+          type="number"
+          label="Serving Size"
+          hide-details="auto"
+          class="form-control"
+        />
+
+        <v-select
+          v-model="food.nutrition_facts.serving_size_unit"
+          :items="nutrition_facts_measures"
+          item-text="name"
+          item-value="id"
+          label="Select a Measure"
+          :rules="[(value) => !!value || 'Required.']"
+          return-value
+          single-line
+        />
+        <div
+          v-for="(nut_facts_nut, i) in this.food.nutrition_facts
+            .nutrition_facts_nutrients"
+          :key="i"
+          class="nutrition_facts_nutrients"
+        >
+          <v-select
+            v-model="nut_facts_nut.nutrient_id"
+            :items="nutrients"
+            item-text="name"
+            item-value="id"
+            label="Select a Nutrient"
+            :rules="[(value) => !!value || 'Required.']"
+            return-value
+            single-line
+          />
+          <v-text-field
+            v-model.number="nut_facts_nut.amount_per_serving"
+            :rules="[(value) => !!value || 'Required.']"
+            type="number"
+            label="Amount per serving (g)"
+            hide-details="auto"
+            class="form-control"
+          />
+        </div>
+        <v-btn @click="addNutrientField">+ Nutrient</v-btn>
         <v-card-actions>
           <v-row justify="center">
             <v-btn
@@ -43,7 +88,9 @@
 </template>
 
 <script>
-import { createFood } from "@/api/data";
+import { createFood } from "@/api";
+import { getNutrients } from "@/api";
+import { store } from "@/auth";
 // import Alert from "@/components/Alert.vue";
 
 export default {
@@ -54,7 +101,12 @@ export default {
       submit: false,
       food: {
         name: "",
+        nutrition_facts: {
+          nutrition_facts_nutrients: [],
+        },
       },
+      nutrition_facts_measures: [],
+      nutrients: [],
       rules: {
         required: (value) => !!value || "Required.",
       },
@@ -66,10 +118,22 @@ export default {
   },
 
   methods: {
+    addNutrientField: function () {
+      this.food.nutrition_facts.nutrition_facts_nutrients.push({});
+    },
+
+    removeNutrientField: function (index) {
+      this.food.nutrition_facts.nutrition_facts_nutrients.splice(index, 1);
+    },
+
     onSubmit: function () {
       this.submit = true;
+      this.food.nutrition_facts.nutrition_facts_nutrients.map((nut, i) => {
+        nut.amount_per_serving_unit = 1;
+      });
       createFood(this.food)
-        .then(() => {
+        .then((result) => {
+          console.log(result);
           this.$router.push({ name: "ListFood" });
         })
         .catch((error) => {
@@ -77,6 +141,20 @@ export default {
           console.log(error);
         });
     },
+
+    getNutrients() {
+      getNutrients()
+        .then((nutrients) => {
+          this.nutrients = nutrients.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+  },
+  created() {
+    this.nutrition_facts_measures = store.state.nutrition_facts_measures;
+    this.getNutrients();
   },
 };
 </script>

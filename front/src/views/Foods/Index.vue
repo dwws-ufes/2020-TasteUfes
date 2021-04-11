@@ -16,7 +16,11 @@
         <v-row>
           <DetailsButton :id="item.id" name="DetailsFood" />
           <EditButton :id="item.id" name="EditFood" />
-          <DeleteButton :id="item.id" :name="item.name" />
+          <DeleteButton
+            :id="item.id"
+            :name="item.name"
+            @delete="deleteFood(item.id)"
+          />
         </v-row>
       </template>
     </v-data-table>
@@ -24,7 +28,8 @@
 </template>
 
 <script>
-import { getFoods } from "@/api/data";
+import { getFoods } from "@/api";
+import { deleteFood } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -75,12 +80,30 @@ export default {
     getData: function () {
       getFoods()
         .then((result) => {
-          this.load = false;
           this.foodList = result.data;
+          this.changeLoading();
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    deleteFood(id) {
+      this.changeLoading();
+      deleteFood(id)
+        .then((result) => {
+          console.log(result);
+          let foodId = this.foodList.findIndex((food) => food.id === id);
+          this.foodList.splice(foodId, 1);
+          this.changeLoading();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    changeLoading() {
+      this.load = !this.load;
     },
   },
 };

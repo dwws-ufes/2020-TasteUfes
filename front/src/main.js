@@ -6,9 +6,23 @@ import { store } from '@/auth';
 
 Vue.config.productionTip = false
 
-window._Vue = new Vue({
-  store,
-  vuetify,
-  router,
-  render: function (h) { return h(App) }
-}).$mount('#app')
+if (localStorage.getItem('access_token') != '') {
+  Promise.all([
+    store.dispatch('loadApplication'),
+  ]).finally(() => {
+    window._Vue = new Vue({
+      store,
+      vuetify,
+      router,
+      render: function (h) { return h(App) }
+    }).$mount('#app')
+
+  });
+} else {
+  window._Vue = new Vue({
+    store,
+    vuetify,
+    router,
+    render: function (h) { return h(App) }
+  }).$mount('#app')
+}
