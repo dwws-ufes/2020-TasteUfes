@@ -47,6 +47,10 @@ namespace TasteUfes.Services
 
             try
             {
+                user.Roles = user.Roles
+                    .Select(r => UnitOfWork.Repository<Role>().Get(r.Id))
+                    .ToList();
+
                 user = UnitOfWork.Users.Add(user);
 
                 UnitOfWork.SaveChanges();
@@ -62,7 +66,6 @@ namespace TasteUfes.Services
             }
         }
 
-        // ! FIX: Atualização de roles.
         public override User Update(User user, params string[] ruleSets)
         {
             var validator = new InlineValidator<User>();
@@ -102,7 +105,29 @@ namespace TasteUfes.Services
                 return;
             }
 
-            base.Remove(id);
+            var user = Get(id);
+
+            if (Notificator.HasErrors())
+                return;
+
+            using var transaction = UnitOfWork.BeginTransaction();
+
+            try
+            {
+                user.Roles.Clear();
+                UnitOfWork.SaveChanges();
+
+                UnitOfWork.Users.Remove(user);
+                UnitOfWork.SaveChanges();
+
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                Logger.LogError(e.Message);
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error removing {nameof(User)}.");
+            }
         }
 
         public User UpdatePassword(Guid id, string oldPassword, string newPassword)

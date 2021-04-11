@@ -30,5 +30,7 @@ namespace TasteUfes.Models
 
         [InverseProperty("User")]
         public ICollection<Recipe> Recipes { get; set; }
+
+        public ICollection<Token> Tokens { get; set; }
     }
 }

@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using TasteUfes.Data.Context.Extensions;
 using TasteUfes.Models;
 using TasteUfes.Seeders;
@@ -50,11 +53,6 @@ namespace TasteUfes.Data.Context
                 .ToTable("UserRole")
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
-            modelBuilder.Entity<Token>()
-                .HasOne(t => t.User)
-                .WithMany()
-                .HasForeignKey(t => t.UserId);
-
             modelBuilder.Seed<Nutrient>();
             modelBuilder.Seed<Role>();
             modelBuilder.Seed<User>();
@@ -69,6 +67,13 @@ namespace TasteUfes.Data.Context
              */
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             modelBuilder.OnDeleteClientSetNull();
+
+            // Evita a modificação de OnDeleteClientSetNull
+            modelBuilder.Entity<Token>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Tokens)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
