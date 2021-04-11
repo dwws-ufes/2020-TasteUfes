@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,17 @@ namespace TasteUfes.Controllers
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public override ActionResult<FoodResource> Put([FromRoute] Guid id, [FromBody] FoodResource resource)
-            => base.Put(id, resource);
+        {
+            if (resource.NutritionFacts != null)
+            {
+                foreach (var nfn in resource.NutritionFacts.NutritionFactsNutrients)
+                {
+                    nfn.Nutrient = null;
+                }
+            }
+
+            return base.Put(id, resource);
+        }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
