@@ -44,8 +44,7 @@
             <v-col
               v-for="recipe in recipeList"
               :key="recipe.name"
-              cols="12"
-              sm="4"
+              justify="space-around"
             >
               <router-link
                 class="text-decoration-none title-link"

@@ -200,11 +200,16 @@ export default {
           delete this.recipe.user;
           delete this.recipe.user_id;
           delete this.recipe.nutrition_facts;
-          if(this.recipe.ingredients.length > 0){
-            this.recipe.ingredients.map(ingredient => {
-              this.showFields(ingredient)
+          if (this.recipe.preparation.steps.length > 0)
+            this.recipe.preparation.steps.sort((step1, step2) => {
+              if (step1.step < step2.step) return -1;
+              else return 1;
+            });
+          if (this.recipe.ingredients.length > 0) {
+            this.recipe.ingredients.map((ingredient) => {
+              this.showFields(ingredient);
               ingredient.nutrition_facts_fields = true;
-            })
+            });
           }
           this.prepTime = this.convertTimestampInMinutes(
             this.recipe.preparation.preparation_time
