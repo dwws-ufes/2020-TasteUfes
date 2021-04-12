@@ -18,12 +18,12 @@ if (access_token != null && token_type != null) {
 var authAPI;
 
 const notAuthAPI = axios.create({
-  baseURL: 'https://localhost:5001/api/v1/',
+  baseURL: process.env.VUE_APP_API_URL,
 });
 
 function createAuthAPI(token_type, access_token) {
   authAPI = axios.create({
-    baseURL: 'https://localhost:5001/api/v1/',
+    baseURL: process.env.VUE_APP_API_URL,
     headers: {
       Authorization: token_type + ' ' + access_token
     }
