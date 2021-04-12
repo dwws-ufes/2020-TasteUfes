@@ -85,7 +85,7 @@ export default {
               name: "List User",
               routeName: "ListUser",
               action: false,
-              show: true,
+              show: this.showMenu,
             },
             {
               name: "Logout",
