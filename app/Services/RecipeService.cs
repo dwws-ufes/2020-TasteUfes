@@ -14,7 +14,7 @@ namespace TasteUfes.Services
 {
     public class RecipeService : EntityService<Recipe>, IRecipeService
     {
-        private readonly static string G = Enum.GetName(typeof(Measures), Measures.G);
+        private readonly static string G = Enum.GetName(typeof(Measures), Measures.g);
         private readonly static string L = Enum.GetName(typeof(Measures), Measures.L);
         private readonly IFoodService _foodService;
 
@@ -197,22 +197,22 @@ namespace TasteUfes.Services
 
                 switch (ingredient.QuantityUnit)
                 {
-                    case Measures.G:
-                    case Measures.MG:
-                    case Measures.KG:
+                    case Measures.g:
+                    case Measures.mg:
+                    case Measures.kg:
                         quantity = UnitConverter.ConvertByAbbreviation(ingredient.Quantity, "Mass", Enum.GetName(typeof(Measures), ingredient.QuantityUnit), G);
                         foodServingSize = UnitConverter.ConvertByAbbreviation(foodServingSize, "Mass", Enum.GetName(typeof(Measures), foodServingSizeUnit), G);
                         ingredientProportion = quantity / foodServingSize;
                         break;
 
                     case Measures.L:
-                    case Measures.ML:
+                    case Measures.ml:
                         quantity = UnitConverter.ConvertByAbbreviation(ingredient.Quantity, "Volume", Enum.GetName(typeof(Measures), ingredient.QuantityUnit), L);
                         foodServingSize = UnitConverter.ConvertByAbbreviation(foodServingSize, "Volume", Enum.GetName(typeof(Measures), foodServingSizeUnit), L);
                         ingredientProportion = quantity / foodServingSize;
                         break;
 
-                    case Measures.UN:
+                    case Measures.un:
                         quantity = ingredient.Quantity;
                         ingredientProportion = quantity;
                         break;

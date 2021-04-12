@@ -7,8 +7,8 @@ namespace TasteUfes.Models.Validators
 {
     public class IngredientValidator : AbstractValidator<Ingredient>
     {
-        private static readonly Measures[] MASS = new[] { Measures.MG, Measures.G, Measures.KG, Measures.UN };
-        private static readonly Measures[] VOLUME = new[] { Measures.L, Measures.ML, Measures.UN };
+        private static readonly Measures[] MASS = new[] { Measures.mg, Measures.g, Measures.kg, Measures.un };
+        private static readonly Measures[] VOLUME = new[] { Measures.L, Measures.ml, Measures.un };
 
         public IngredientValidator()
         {
@@ -19,7 +19,7 @@ namespace TasteUfes.Models.Validators
             RuleFor(i => i.QuantityUnit)
                 .NotEmpty()
                 .IsInEnum()
-                .NotEqual(Measures.KCAL);
+                .NotEqual(Measures.kcal);
 
             RuleFor(i => i.FoodId)
                 .NotEmpty();
