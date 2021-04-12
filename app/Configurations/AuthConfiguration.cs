@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Tacaro.Configurations
+namespace TasteUfes.Configurations
 {
     public static class AuthConfiguration
     {
