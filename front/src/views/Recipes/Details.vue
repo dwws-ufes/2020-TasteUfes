@@ -17,7 +17,17 @@
           <v-list-item>
             <v-list-item-content>
               <div class="my-2">
-                <span><b>Servings:</b> {{ recipe.servings }}</span>
+                <v-row>
+                  <v-col justify="space-around">
+                    <v-text-field
+                      v-model.number="serv"
+                      label="Servings"
+                      type="number"
+                      :rules="this.limitRule"
+                      @change="recalculate()"
+                    />
+                  </v-col>
+                </v-row>
               </div>
               <div class="my-2">
                 <b>Preparation Time:</b>
@@ -37,8 +47,8 @@
                 <span>
                   <b>{{ ingredient.food.name }}:</b>
                   {{ ingredient.quantity
-                  }}{{ getMeasureName(ingredient.quantity_unit) }}</span
-                >
+                  }}{{ getMeasureName(ingredient.quantity_unit) }}
+                </span>
               </v-list-item-content>
             </v-list-item-content>
           </v-list-item>
@@ -78,8 +88,8 @@
 </template>
 
 <script>
-import { getRecipe } from "@/api";
-import NutritionFactsTable from "@/components/NutritionFactsTable.vue";
+import { getRecipe, recalculatePerServing } from "@/api";
+import NutritionFactsTable from "@/components/details/NutritionFactsTable.vue";
 import UserCard from "@/components/UserCard.vue";
 
 export default {
@@ -88,6 +98,11 @@ export default {
   data() {
     return {
       recipeId: this.$route.params.id,
+      serv: null,
+      limitRule: [
+        (value) => value < 10000 || "Value too big",
+        (value) => value > 0 || "Value must not be negative or 0",
+      ],
       recipe: {
         name: "",
         servings: null,
@@ -116,6 +131,7 @@ export default {
             if (step1.step < step2.step) return -1;
             else return 1;
           });
+          this.serv = this.recipe.servings;
         })
         .catch((error) => {
           console.log(error.response);
@@ -128,6 +144,18 @@ export default {
     },
     getDailyValue(daily_value) {
       return (daily_value * 100).toFixed(2);
+    },
+
+    recalculate() {
+      if (this.serv > 0 && this.serv < 10000) {
+        recalculatePerServing(this.recipe.id, this.serv)
+          .then((result) => {
+            this.recipe = result.data;
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      }
     },
   },
 

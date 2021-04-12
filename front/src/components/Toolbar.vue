@@ -49,6 +49,18 @@ export default {
               action: false,
               show: true,
             },
+            {
+              name: "Create Anonymous Recipe",
+              routeName: "AnonymousRecipe",
+              action: false,
+              show: true,
+            },
+            {
+              name: "Recommendation Recipe",
+              routeName: "RecommendationRecipe",
+              action: false,
+              show: true,
+            },
           ],
         },
         {

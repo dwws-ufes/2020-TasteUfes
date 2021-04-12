@@ -148,6 +148,31 @@ function getNutrients() {
 }
 
 
+// --- Services --- 
+function recalculatePerServing(recipeId, serving) {
+  return notAuthAPI({
+    method: 'GET',
+    url: `/recipes/${recipeId}/recalculate-per-servings/${serving}`,
+  });
+}
+
+
+function calculateAnonymous(recipe) {
+  return notAuthAPI({
+    method: 'POST',
+    url: `/recipes/calculate-anonymous`,
+    data: recipe,
+  });
+}
+
+function recommendationByFoods(foods) {
+  return notAuthAPI({
+    method: 'POST',
+    url: `/recipes/recommend-by-foods`,
+    data: foods,
+  });
+}
+
 export {
   login,
 
@@ -175,4 +200,7 @@ export {
   deleteFood,
 
   getNutrients,
+  recalculatePerServing,
+  calculateAnonymous,
+  recommendationByFoods,
 };

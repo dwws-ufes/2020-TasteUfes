@@ -21,7 +21,7 @@
 
 <script>
 import { getFood } from "@/api";
-import NutritionFactsTable from "@/components/NutritionFactsTable.vue";
+import NutritionFactsTable from "@/components/details/NutritionFactsTable.vue";
 
 export default {
   name: "DetailsFood",

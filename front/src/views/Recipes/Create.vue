@@ -10,7 +10,6 @@
           hide-details="auto"
           class="form-control"
         />
-
         <v-text-field
           v-model.number="recipe.servings"
           :rules="[this.rules.required]"
@@ -108,7 +107,7 @@
 </template>
 
 <script>
-import { createRecipe, getFoods, getFood } from "@/api";
+import { createRecipe, getFoods } from "@/api";
 import { store } from "@/auth";
 // import Alert from '@/components/Alert.vue';
 
@@ -219,7 +218,6 @@ export default {
           this.submit = false;
           console.log(error.response);
         });
-      console.log(this.recipe.preparation.steps);
     },
   },
 
