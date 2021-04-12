@@ -28,14 +28,6 @@
           class="form-control"
         />
         <div v-for="(ingredient, i) in this.recipe.ingredients" class="foods">
-          <v-text-field
-            v-model.number="ingredient.quantity"
-            :rules="[(value) => !!value || 'Required.']"
-            type="number"
-            label="Quantity Food"
-            hide-details="auto"
-            class="form-control"
-          />
           <v-select
             v-model="ingredient.food_id"
             :items="foods"
@@ -44,17 +36,26 @@
             label="Select a food"
             :rules="[(value) => !!value || 'Required.']"
             return-value
-            single-line
+            @change="showFields(ingredient)"
+          />
+          <v-text-field
+            v-model.number="ingredient.quantity"
+            :rules="[(value) => !!value || 'Required.']"
+            type="number"
+            label="Quantity Food"
+            hide-details="auto"
+            class="form-control"
+            v-if="ingredient.nutrition_facts_fields"
           />
           <v-select
             v-model="ingredient.quantity_unit"
-            :items="measures"
+            :items="ingredient.measures"
             item-text="name"
             item-value="id"
             label="Select a Measure"
             :rules="[(value) => !!value || 'Required.']"
             return-value
-            single-line
+            v-if="ingredient.nutrition_facts_fields"
           />
 
           <v-btn @click="removeFoodField(i)">-</v-btn>
@@ -107,7 +108,7 @@
 </template>
 
 <script>
-import { createRecipe, getFoods } from "@/api";
+import { createRecipe, getFoods, getFood } from "@/api";
 import { store } from "@/auth";
 // import Alert from '@/components/Alert.vue';
 
@@ -118,6 +119,7 @@ export default {
       valid: false,
       submit: false,
       prepTime: null,
+      nutrition_facts_fields: false,
       recipe: {
         name: "",
         servings: null,
@@ -158,6 +160,29 @@ export default {
       this.recipe.preparation.steps.splice(index, 1);
     },
 
+    showFields(ingredient) {
+      let foodId = ingredient.food_id;
+      let nutrition_facts = this.foods.find((food) => food.id == foodId)
+        .nutrition_facts;
+      ingredient.measures = [];
+      if (
+        this.$store.state.mass_measures_keys.includes(
+          nutrition_facts.serving_size_unit
+        )
+      ) {
+        ingredient.measures = this.$store.state.mass_measures;
+      } else if (
+        this.$store.state.weight_measures_keys.includes(
+          nutrition_facts.serving_size_unit
+        )
+      ) {
+        ingredient.measures = this.$store.state.weight_measures;
+      } else {
+        ingredient.measures = this.$store.state.ingredients_measures;
+      }
+      ingredient.nutrition_facts_fields = true;
+    },
+
     convertMinutesInTimestamp: function (totalMinutes) {
       var hours = Math.floor(totalMinutes / 60);
       var minutes = totalMinutes % 60;
@@ -170,7 +195,7 @@ export default {
           this.foods = foods.data;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
     onSubmit: function () {
@@ -188,14 +213,14 @@ export default {
         })
         .catch((error) => {
           this.submit = false;
-          console.log(error);
+          console.log(error.response);
         });
     },
   },
 
   created() {
-    this.measures = store.state.ingredients_measures;
     this.getAllFoods();
+    this.measures = store.state.ingredients_measures;
   },
 };
 </script>

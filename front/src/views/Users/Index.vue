@@ -64,6 +64,11 @@ export default {
           class: "primary",
         },
         {
+          text: "Role",
+          value: "roles",
+          class: "primary",
+        },
+        {
           text: "Actions",
           value: "actions",
           class: "primary",
@@ -88,6 +93,11 @@ export default {
       const response = getUsers();
       response.then((result) => {
         this.userList = result.data;
+        this.userList.map((user) => {
+          user.roles.length > 0
+            ? (user.roles = user.roles[0].name)
+            : (user.roles = "User");
+        });
         this.changeLoading();
       });
     },
@@ -102,7 +112,7 @@ export default {
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
 

@@ -48,6 +48,13 @@ function deleteUser(id) {
   });
 }
 
+function getRoles(id) {
+  return authAPI({
+    method: 'GET',
+    url: `/roles`,
+  });
+}
+
 function refreshAuthentication(data) {
   return notAuthAPI({
     method: 'POST',
@@ -149,6 +156,7 @@ export {
   getUser,
   updateUser,
   deleteUser,
+  getRoles,
   refreshAuthentication,
 
   createAuthAPI,

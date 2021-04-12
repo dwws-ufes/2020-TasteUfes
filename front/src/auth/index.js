@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     token: '',
     tokenType: '',
     userId: '',
-    user: { first_name: '' },
+    user: { first_name: '', roles: [] },
     ingredients_measures: [
       {
         'name': 'G',
@@ -36,10 +36,6 @@ const store = new Vuex.Store({
         'name': 'UN',
         'id': 6
       },
-      {
-        'name': 'KCAL',
-        'id': 7
-      },
     ],
     nutrition_facts_measures: [
       {
@@ -63,6 +59,40 @@ const store = new Vuex.Store({
         'id': 5
       },
     ],
+    mass_measures: [
+      {
+        'name': 'G',
+        'id': 1
+      },
+      {
+        'name': 'MG',
+        'id': 2
+      },
+      {
+        'name': 'KG',
+        'id': 3
+      },
+      {
+        'name': 'UN',
+        'id': 6
+      },
+    ],
+    weight_measures: [
+      {
+        'name': 'L',
+        'id': 4
+      },
+      {
+        'name': 'ML',
+        'id': 5
+      },
+      {
+        'name': 'UN',
+        'id': 6
+      },
+    ],
+    mass_measures_keys: [1, 2, 3],
+    weight_measures_keys: [4, 5],
   },
 
   mutations: {
@@ -76,10 +106,13 @@ const store = new Vuex.Store({
 
   getters: {
     auth: state => state.auth,
+    isAdmin: state => state.user.roles.length > 0,
+    getUserId: state => state.userId,
+    getUser: state => state.user,
   },
 
   actions: {
-    async loadApplication({ dispatch }) {
+    async loadApplication({ dispatch, getters }) {
       let accessToken = localStorage.getItem('access_token');
       let userId = localStorage.getItem('user_id');
 
@@ -88,9 +121,8 @@ const store = new Vuex.Store({
           Promise.all([
             dispatch('ActionSetToken', accessToken),
             dispatch('ActionSetUser', user.data),
-          ]).finally(() => {
-            // resolve();
-          });
+            dispatch('ActionSetUserId', user.data.id),
+          ]).finally(() => { });
 
         })
       }

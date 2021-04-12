@@ -15,7 +15,7 @@
           :loading="load"
           loading-text="Loading... Please wait"
           :headers="headers"
-          :items="recipeList"
+          :items="recipeListTable"
           :items-per-page="10"
           class="elevation-1"
         >
@@ -82,6 +82,7 @@
 
 <script>
 import { getRecipes, deleteRecipe } from "@/api";
+import { mapGetters } from "vuex";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -130,6 +131,7 @@ export default {
         },
       ],
       recipeList: [],
+      recipeListTable: [],
     };
   },
 
@@ -147,20 +149,24 @@ export default {
     this.getData();
   },
 
+  computed: {
+    ...mapGetters(["isAdmin", "getUserId"]),
+  },
+
   methods: {
     deleteRecipe(id) {
       this.changeLoading();
       deleteRecipe(id)
         .then((result) => {
           console.log(result);
-          let recipeId = this.recipeList.findIndex(
+          let recipeId = this.recipeListTable.findIndex(
             (recipe) => recipe.id === id
           );
-          this.recipeList.splice(recipeId, 1);
+          this.recipeListTable.splice(recipeId, 1);
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
 
@@ -173,10 +179,20 @@ export default {
         getRecipes()
           .then((recipes) => {
             this.recipeList = recipes.data;
+            let auxList = recipes.data;
+            if (!this.isAdmin) {
+              auxList.map((recipe) => {
+                recipe.user_id == this.getUserId
+                  ? this.recipeListTable.push(recipe)
+                  : "";
+              });
+            } else {
+              this.recipeListTable = auxList;
+            }
             this.changeLoading();
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response);
           });
       } else {
         getRecipes()
@@ -185,7 +201,7 @@ export default {
             this.changeLoading();
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response);
           });
       }
     },

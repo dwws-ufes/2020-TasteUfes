@@ -83,7 +83,7 @@ export default {
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
 
@@ -97,7 +97,7 @@ export default {
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
 

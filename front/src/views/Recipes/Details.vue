@@ -49,7 +49,7 @@ export default {
           this.recipe = result.data;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
   },
