@@ -5,54 +5,95 @@
       <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
         <h1>Anonymous Recipe</h1>
         <div class="form-group">
-          <v-text-field
-            v-model="recipe.name"
-            :rules="[this.rules.required]"
-            label="Name"
-            hide-details="auto"
-            class="form-control"
-          />
-          <v-text-field
-            v-model.number="recipe.servings"
-            :rules="[this.rules.required]"
-            type="number"
-            label="Servings"
-            hide-details="auto"
-            class="form-control"
-          />
-          <div v-for="(ingredient, i) in this.recipe.ingredients" class="foods">
-            <v-select
-              v-model="ingredient.food_id"
-              :items="foods"
-              item-text="name"
-              item-value="id"
-              label="Select a food"
-              :rules="[(value) => !!value || 'Required.']"
-              return-value
-              @change="showFields(ingredient)"
-            />
+          <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
             <v-text-field
-              v-model.number="ingredient.quantity"
-              :rules="[(value) => !!value || 'Required.']"
-              type="number"
-              label="Quantity Food"
+              v-model="recipe.name"
+              :rules="[this.rules.required]"
+              label="Name"
               hide-details="auto"
               class="form-control"
-              v-if="ingredient.nutrition_facts_fields"
             />
-            <v-select
-              v-model="ingredient.quantity_unit"
-              :items="ingredient.measures"
-              item-text="name"
-              item-value="id"
-              label="Select a Measure"
-              :rules="[(value) => !!value || 'Required.']"
-              return-value
-              v-if="ingredient.nutrition_facts_fields"
+            <v-text-field
+              v-model.number="recipe.servings"
+              :rules="[this.rules.required]"
+              type="number"
+              label="Servings"
+              hide-details="auto"
+              class="form-control"
             />
-            <v-btn @click="removeFoodField(i)">-</v-btn>
-          </div>
-          <v-btn @click="addFoodField">+ Ingredient</v-btn>
+          </v-container>
+        </v-card>
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-col class="d-flex justify-content-between">
+              <h2>Food</h2>
+              <v-btn
+                class="mx-1 my-0"
+                fab
+                x-small
+                color="primary"
+                @click="addFoodField"
+              >
+                <v-icon dark> mdi-plus </v-icon>
+              </v-btn>
+            </v-col>
+            <div
+              v-for="(ingredient, i) in this.recipe.ingredients"
+              class="foods"
+            >
+              <v-row>
+                <v-col cols="12" sm="10">
+                  <v-card outlined shaped>
+                    <v-container>
+                      <v-select
+                        v-model="ingredient.food_id"
+                        :items="foods"
+                        item-text="name"
+                        item-value="id"
+                        label="Select a food"
+                        :rules="[(value) => !!value || 'Required.']"
+                        return-value
+                        @change="showFields(ingredient)"
+                      />
+                      <v-text-field
+                        v-model.number="ingredient.quantity"
+                        :rules="[(value) => !!value || 'Required.']"
+                        type="number"
+                        label="Quantity Food"
+                        hide-details="auto"
+                        class="form-control"
+                        v-if="ingredient.nutrition_facts_fields"
+                      />
+                      <v-select
+                        v-model="ingredient.quantity_unit"
+                        :items="ingredient.measures"
+                        item-text="name"
+                        item-value="id"
+                        label="Select a Measure"
+                        :rules="[(value) => !!value || 'Required.']"
+                        return-value
+                        v-if="ingredient.nutrition_facts_fields"
+                      />
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="2">
+                  <v-btn
+                    fab
+                    x-small
+                    dark
+                    color="red"
+                    class="mx-0"
+                    @click="removeFoodField(i)"
+                  >
+                    <v-icon dark>mdi-minus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </div>
+          </v-container>
+        </v-card>
 
           <v-card-actions>
             <v-row justify="center">
@@ -113,7 +154,9 @@
                   :key="ingredient.id"
                 >
                   <span>
-                    <b>{{ ingredient.food.name }}:</b>
+                    <router-link target="_blank" class="text-decoration-none" :to="{ name: 'DetailsFood', params: {id: ingredient.food.id} }"">
+                  <b>{{ ingredient.food.name }}:</b>
+              </router-link>
                     {{ ingredient.quantity
                     }}{{ getMeasureName(ingredient.quantity_unit) }}
                   </span>
@@ -155,7 +198,7 @@ export default {
         name: "",
         servings: null,
         preparation: {},
-        ingredients: [{ }],
+        ingredients: [{}],
       },
 
       anonymous: {

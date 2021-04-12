@@ -1,32 +1,35 @@
 <template>
   <v-card elevation="2" class="card-form">
-    <v-form ref="form"  @submit.prevent="onSubmit" v-model="valid">
+    <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
       <h1>Edit User</h1>
       <div class="form-group">
-        <v-text-field
-          v-model="user.first_name"
-          :rules="[rules.required]"
-          label="FirstName"
-          hide-details="auto"
-          class="form-control"
-        />
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-text-field
+              v-model="user.first_name"
+              :rules="[rules.required]"
+              label="FirstName"
+              hide-details="auto"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="user.last_name"
-          :rules="[rules.required]"
-          label="LastName"
-          hide-details="auto"
-          class="form-control"
-        />
+            <v-text-field
+              v-model="user.last_name"
+              :rules="[rules.required]"
+              label="LastName"
+              hide-details="auto"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="user.username"
-          :rules="[rules.required]"
-          label="Username"
-          hide-details="auto"
-          class="form-control"
-        />
-
+            <v-text-field
+              v-model="user.username"
+              :rules="[rules.required]"
+              label="Username"
+              hide-details="auto"
+              class="form-control"
+            />
+          </v-container>
+        </v-card>
         <v-card-actions>
           <v-row justify="center">
             <v-btn
@@ -111,8 +114,8 @@ export default {
         });
     },
   },
-    created() {
-      this.getUser();
-    },
+  created() {
+    this.getUser();
+  },
 };
 </script>

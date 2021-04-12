@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col col="12" sm="4">
-        <v-card>
+        <v-card class="card-list">
           <v-container>
             <v-card-title>
               <h2>Recommendation Recipe</h2>
@@ -175,3 +175,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.card-list {
+  padding: 1em;
+}
+</style>
