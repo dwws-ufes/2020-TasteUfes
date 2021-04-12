@@ -14,7 +14,6 @@
           </v-container>
           <NutritionFactsTable :data="this.food.nutrition_facts" :servings="this.food.nutrition_facts.serving_size" />
         </v-card>
-
       </v-col>
     </v-row>
   </v-container>

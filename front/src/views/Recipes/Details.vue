@@ -9,60 +9,63 @@
         </div>
       </v-col>
       <v-col cols="12" sm="8" d-flex justify-center>
-          <v-card>
-            <v-card-title
-              ><h1>{{ recipe.name }}</h1></v-card-title
-            >
-            <v-divider class="mx-4" />
-            <v-list-item>
-              <v-list-item-content>
-                <div class="my-2">
-                  <span><b>Servings:</b> {{ recipe.servings }}</span>
-                </div>
-                <div class="my-2">
-                  <b>Preparation Time:</b>
-                  {{ this.recipe.preparation.preparation_time }}
-                </div>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item v-if="this.recipe.ingredients.length > 0">
-              <v-list-item-content>
-                <h3>Ingredients</h3>
-                <v-divider class="px-1 pb-3" />
+        <v-card>
+          <v-card-title
+            ><h1>{{ recipe.name }}</h1></v-card-title
+          >
+          <v-divider class="mx-4" />
+          <v-list-item>
+            <v-list-item-content>
+              <div class="my-2">
+                <span><b>Servings:</b> {{ recipe.servings }}</span>
+              </div>
+              <div class="my-2">
+                <b>Preparation Time:</b>
+                {{ this.recipe.preparation.preparation_time }}
+              </div>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="this.recipe.ingredients.length > 0">
+            <v-list-item-content>
+              <h3>Ingredients</h3>
+              <v-divider class="px-1 pb-3" />
 
-                <v-list-item-content
-                  v-for="ingredient in this.recipe.ingredients"
-                  :key="ingredient.id"
+              <v-list-item-content
+                v-for="ingredient in this.recipe.ingredients"
+                :key="ingredient.id"
+              >
+                <span>
+                  <b>{{ ingredient.food.name }}:</b>
+                  {{ ingredient.quantity
+                  }}{{ getMeasureName(ingredient.quantity_unit) }}</span
                 >
-                  <span>
-                    <b>{{ ingredient.food.name }}:</b>
-                    {{ ingredient.quantity }}
-                    {{ getMeasureName(ingredient.quantity_unit) }}</span
-                  >
-                </v-list-item-content>
               </v-list-item-content>
-            </v-list-item>
-            <v-list-item v-if="this.recipe.preparation.steps.length > 0">
-              <v-list-item-content>
-                <h3>Steps</h3>
-                <v-divider class="px-1 pb-3" />
-                <v-list-item-content
-                  v-for="(step, i) in this.recipe.preparation.steps"
-                  :key="i"
-                >
-                  <ul>
-                    <li>
-                      <span>
-                        <b>Step {{ i + 1 }}:</b> {{ step.description }}
-                      </span>
-                    </li>
-                  </ul>
-                </v-list-item-content>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="this.recipe.preparation.steps.length > 0">
+            <v-list-item-content>
+              <h3>Steps</h3>
+              <v-divider class="px-1 pb-3" />
+              <v-list-item-content
+                v-for="(step, i) in this.recipe.preparation.steps"
+                :key="i"
+              >
+                <ul>
+                  <li>
+                    <span>
+                      <b>Step {{ i + 1 }}:</b> {{ step.description }}
+                    </span>
+                  </li>
+                </ul>
               </v-list-item-content>
-            </v-list-item>
-          </v-card>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
       </v-col>
       <v-col cols="12" sm="4">
+        <v-card class="mb-5">
+          <UserCard :user="this.recipe.user" :username="null"/>
+        </v-card>
         <v-card>
           <NutritionFactsTable
             :data="this.recipe.nutrition_facts"
@@ -77,16 +80,13 @@
 <script>
 import { getRecipe } from "@/api";
 import NutritionFactsTable from "@/components/NutritionFactsTable.vue";
+import UserCard from "@/components/UserCard.vue";
 
 export default {
   name: "DetailsRecipe",
 
   data() {
     return {
-      attrs: {
-        boilerplate: true,
-        elevation: 2,
-      },
       recipeId: this.$route.params.id,
       recipe: {
         name: "",
@@ -96,6 +96,9 @@ export default {
         },
         ingredients: [],
         nutrition_facts: {},
+        user: {
+          roles:[],
+        },
       },
     };
   },
@@ -126,6 +129,7 @@ export default {
 
   components: {
     NutritionFactsTable,
+    UserCard,
   },
 };
 </script>

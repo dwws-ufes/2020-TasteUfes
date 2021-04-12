@@ -25,7 +25,7 @@ const store = new Vuex.Store({
         'id': 3
       },
       {
-        'name': 'l',
+        'name': 'L',
         'id': 4
       },
       {
@@ -51,7 +51,7 @@ const store = new Vuex.Store({
         'id': 3
       },
       {
-        'name': 'l',
+        'name': 'L',
         'id': 4
       },
       {
@@ -79,7 +79,7 @@ const store = new Vuex.Store({
     ],
     weight_measures: [
       {
-        'name': 'l',
+        'name': 'L',
         'id': 4
       },
       {
