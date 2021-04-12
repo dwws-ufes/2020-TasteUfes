@@ -1,5 +1,5 @@
 <template>
-  <v-menu transition="scroll-y-transition" open-on-hover bottom offset-y>
+  <v-menu v-if="menu.show" transition="scroll-y-transition" open-on-hover bottom offset-y>
     <template v-slot:activator="{ on, attrs }">
       <v-btn text tile x-large dark v-bind="attrs" v-on="on">
         <v-list-item-icon v-if="menu.icon">
@@ -10,12 +10,15 @@
     </template>
 
     <v-list v-for="option in menu.options" :key="option.routeName">
-      <v-list-item link v-if="!option.action" :to="{ name: option.routeName }">
-        <v-list-item-title>{{ option.name }}</v-list-item-title>
-      </v-list-item>
-      <v-list-item link v-else @click="logout">
-        <v-list-item-title>{{ option.name }}</v-list-item-title>
-      </v-list-item>
+      <div v-if="option.show">
+        <v-list-item link v-if="!option.action" :to="{ name: option.routeName }">
+          <v-list-item-title>{{ option.name }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item link v-else @click="logout">
+          <v-list-item-title>{{ option.name }}</v-list-item-title>
+        </v-list-item>
+
+      </div>
     </v-list>
   </v-menu>
 </template>

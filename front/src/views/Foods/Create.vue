@@ -16,10 +16,10 @@
           hide-details="auto"
           class="form-control"
         />
-
+        <v-divider class="my-4"></v-divider>
+        <h2>Nutrition Facts</h2> 
         <v-text-field
           v-model.number="food.nutrition_facts.serving_size"
-          :rules="[this.rules.required]"
           type="number"
           label="Serving Size"
           hide-details="auto"
@@ -34,7 +34,6 @@
           label="Select a Measure"
           :rules="[(value) => !!value || 'Required.']"
           return-value
-          single-line
         />
         <div
           v-for="(nut_facts_nut, i) in this.food.nutrition_facts
@@ -50,7 +49,6 @@
             label="Select a Nutrient"
             :rules="[(value) => !!value || 'Required.']"
             return-value
-            single-line
           />
           <v-text-field
             v-model.number="nut_facts_nut.amount_per_serving"
@@ -138,7 +136,7 @@ export default {
         })
         .catch((error) => {
           this.submit = false;
-          console.log(error);
+          console.log(error.response);
         });
     },
 

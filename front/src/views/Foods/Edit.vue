@@ -33,7 +33,6 @@
           label="Select a Measure"
           :rules="[(value) => !!value || 'Required.']"
           return-value
-          single-line
         />
         <div
           v-for="(nut_facts_nut, i) in this.food.nutrition_facts
@@ -49,7 +48,6 @@
             label="Select a Nutrient"
             :rules="[(value) => !!value || 'Required.']"
             return-value
-            single-line
           />
           <v-text-field
             v-model.number="nut_facts_nut.amount_per_serving"

@@ -107,7 +107,7 @@ export default {
           delete this.user.password;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
   },

@@ -29,14 +29,6 @@
         />
         <div v-if="this.recipe.ingredients">
           <div v-for="(ingredient, i) in this.recipe.ingredients" class="foods">
-            <v-text-field
-              v-model.number="ingredient.quantity"
-              :rules="[(value) => !!value || 'Required.']"
-              type="number"
-              label="Quantity Food"
-              hide-details="auto"
-              class="form-control"
-            />
             <v-select
               v-model="ingredient.food_id"
               :items="foods"
@@ -45,17 +37,26 @@
               label="Select a food"
               :rules="[(value) => !!value || 'Required.']"
               return-value
-              single-line
+              @change="showFields(ingredient)"
+            />
+            <v-text-field
+              v-model.number="ingredient.quantity"
+              :rules="[(value) => !!value || 'Required.']"
+              type="number"
+              label="Quantity Food"
+              hide-details="auto"
+              class="form-control"
+              v-if="ingredient.nutrition_facts_fields"
             />
             <v-select
               v-model="ingredient.quantity_unit"
-              :items="measures"
+              :items="ingredient.measures"
               item-text="name"
               item-value="id"
               label="Select a Measure"
               :rules="[(value) => !!value || 'Required.']"
               return-value
-              single-line
+              v-if="ingredient.nutrition_facts_fields"
             />
 
             <v-btn @click="removeFoodField(i)">-</v-btn>
@@ -159,13 +160,37 @@ export default {
     removeStepField: function (index) {
       this.recipe.preparation.steps.splice(index, 1);
     },
+
+    showFields(ingredient) {
+      let foodId = ingredient.food_id;
+      let nutrition_facts = this.foods.find((food) => food.id == foodId)
+        .nutrition_facts;
+      ingredient.measures = [];
+      if (
+        this.$store.state.mass_measures_keys.includes(
+          nutrition_facts.serving_size_unit
+        )
+      ) {
+        ingredient.measures = this.$store.state.mass_measures;
+      } else if (
+        this.$store.state.weight_measures_keys.includes(
+          nutrition_facts.serving_size_unit
+        )
+      ) {
+        ingredient.measures = this.$store.state.weight_measures;
+      } else {
+        ingredient.measures = this.$store.state.ingredients_measures;
+      }
+      ingredient.nutrition_facts_fields = true;
+    },
+
     getAllFoods: function () {
       getFoods()
         .then((foods) => {
           this.foods = foods.data;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
     getRecipe() {
@@ -175,12 +200,18 @@ export default {
           delete this.recipe.user;
           delete this.recipe.user_id;
           delete this.recipe.nutrition_facts;
+          if(this.recipe.ingredients.length > 0){
+            this.recipe.ingredients.map(ingredient => {
+              this.showFields(ingredient)
+              ingredient.nutrition_facts_fields = true;
+            })
+          }
           this.prepTime = this.convertTimestampInMinutes(
             this.recipe.preparation.preparation_time
           );
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     },
     onSubmit: function () {

@@ -56,6 +56,15 @@
           class="form-control"
         />
 
+        <v-select
+          v-model="roleId"
+          :items="roles"
+          item-text="name"
+          item-value="id"
+          label="Select a Role"
+          return-value
+        />
+
         <v-card-actions>
           <v-row justify="center">
             <v-btn
@@ -82,7 +91,7 @@
 </template>
 
 <script>
-import { createUser } from "@/api";
+import { createUser, getRoles } from "@/api";
 export default {
   data() {
     return {
@@ -94,7 +103,11 @@ export default {
         first_name: "",
         last_name: "",
         password: "",
+        roles: [],
       },
+      roles: [
+      ],
+      roleId: '',
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
@@ -109,20 +122,34 @@ export default {
   methods: {
     onSubmit: function () {
       this.submit = true;
-      this.user.roles = [
-        {
-          id: "D6742FBB-18AB-451B-A736-713B63B7A108",
-        },
-      ];
+      if(this.roleId != '')
+        this.user.roles = [{'id': this.roleId}]
       createUser(this.user)
         .then((result) => {
-          console.log(result);
           this.$router.push({ name: "ListUser" });
         })
         .catch((error) => {
           console.log(error.response);
         });
     },
+
+    getRoles() {
+      getRoles()
+        .then((result) => {
+          this.roles = result.data;
+          this.roles.push({
+            'id': '',
+            'name': 'User'
+          })
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+  },
+
+  created() {
+    this.getRoles();
   },
 
   computed: {
