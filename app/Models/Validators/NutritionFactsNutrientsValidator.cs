@@ -13,7 +13,7 @@ namespace TasteUfes.Models.Validators
             RuleFor(n => n.AmountPerServingUnit)
                 .NotEmpty()
                 .IsInEnum()
-                .Equal(Measures.G);
+                .Equal(Measures.g);
 
             RuleFor(n => n.NutrientId)
                 .NotEmpty();
