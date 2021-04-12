@@ -7,7 +7,6 @@ namespace TasteUfes.Models.Validators
         public NutritionFactsNutrientsValidator()
         {
             RuleFor(n => n.AmountPerServing)
-                .NotEmpty()
                 .GreaterThanOrEqualTo(0);
 
             RuleFor(n => n.AmountPerServingUnit)
