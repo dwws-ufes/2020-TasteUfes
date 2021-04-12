@@ -112,7 +112,6 @@ export default {
     },
   },
     created() {
-      console.log("Edit")
       this.getUser();
     },
 };

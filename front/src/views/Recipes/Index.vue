@@ -110,11 +110,6 @@ export default {
           class: "primary",
         },
         {
-          text: "Steps",
-          value: "preparation.steps.length",
-          class: "primary",
-        },
-        {
           text: "Time",
           value: "preparation.preparation_time",
           class: "primary",

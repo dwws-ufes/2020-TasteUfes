@@ -13,81 +13,81 @@ const store = new Vuex.Store({
     user: { first_name: '', roles: [] },
     ingredients_measures: [
       {
-        'name': 'G',
+        'name': 'g',
         'id': 1
       },
       {
-        'name': 'MG',
+        'name': 'mg',
         'id': 2
       },
       {
-        'name': 'KG',
+        'name': 'kg',
         'id': 3
       },
       {
-        'name': 'L',
+        'name': 'l',
         'id': 4
       },
       {
-        'name': 'ML',
+        'name': 'ml',
         'id': 5
       },
       {
-        'name': 'UN',
+        'name': 'un',
         'id': 6
       },
     ],
     nutrition_facts_measures: [
       {
-        'name': 'G',
+        'name': 'g',
         'id': 1
       },
       {
-        'name': 'MG',
+        'name': 'mg',
         'id': 2
       },
       {
-        'name': 'KG',
+        'name': 'kg',
         'id': 3
       },
       {
-        'name': 'L',
+        'name': 'l',
         'id': 4
       },
       {
-        'name': 'ML',
+        'name': 'ml',
         'id': 5
       },
     ],
     mass_measures: [
       {
-        'name': 'G',
+        'name': 'g',
         'id': 1
       },
       {
-        'name': 'MG',
+        'name': 'mg',
         'id': 2
       },
       {
-        'name': 'KG',
+        'name': 'kg',
         'id': 3
       },
       {
-        'name': 'UN',
+        'name': 'un',
         'id': 6
       },
     ],
     weight_measures: [
       {
-        'name': 'L',
+        'name': 'l',
         'id': 4
       },
       {
-        'name': 'ML',
+        'name': 'ml',
         'id': 5
       },
       {
-        'name': 'UN',
+        'name': 'un',
         'id': 6
       },
     ],
