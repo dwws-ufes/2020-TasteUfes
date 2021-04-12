@@ -156,9 +156,9 @@ namespace TasteUfes.Services
                 ingredient.Quantity *= proportion;
             }
 
-            recipe.NutritionFacts.ServingEnergy *= proportion;
-            recipe.NutritionFacts.DailyValue *= proportion;
-            recipe.NutritionFacts.ServingSize = servings;
+            // recipe.NutritionFacts.ServingEnergy *= proportion;
+            // recipe.NutritionFacts.DailyValue *= proportion;
+            // recipe.NutritionFacts.ServingSize = servings;
 
             foreach (var nfn in recipe.NutritionFacts.NutritionFactsNutrients)
             {

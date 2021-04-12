@@ -2,7 +2,7 @@
 using TasteUfes.Models;
 using TasteUfes.Resources;
 
-namespace Tacaro.Configurations
+namespace TasteUfes.Configurations
 {
     public class AutoMapperConfig : Profile
     {
