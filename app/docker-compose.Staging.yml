@@ -1,0 +1,16 @@
+﻿version: '3'
+
+services:
+  app:
+    image: tasteufes:1.0.0
+    container_name: tasteufes_dev_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    restart: always
+    command: ["dotnet", "TasteUfes.dll"]

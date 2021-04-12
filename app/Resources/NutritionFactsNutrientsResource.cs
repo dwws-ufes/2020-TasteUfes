@@ -7,7 +7,6 @@ namespace TasteUfes.Resources
 {
     public class NutritionFactsNutrientsResource : EntityResource
     {
-        [Required]
         [Range(0, Int16.MaxValue)]
         [JsonPropertyName("amount_per_serving")]
         public double AmountPerServing { get; set; }
