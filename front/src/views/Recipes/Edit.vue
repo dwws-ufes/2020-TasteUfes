@@ -229,7 +229,6 @@ export default {
       );
       updateRecipe(this.recipeId, this.recipe)
         .then((result) => {
-          console.log("Update feito: ", this.recipe, result);
           this.$router.push({ name: "ListRecipe" });
         })
         .catch((error) => {

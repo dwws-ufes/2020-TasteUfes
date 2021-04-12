@@ -40,6 +40,21 @@ const routes = [
       return import(/* webpackChunkName: "detailsRecipe" */ '../views/Recipes/Details.vue')
     }
   },
+  {
+    path: '/recipe/anonymous',
+    name: 'AnonymousRecipe',
+    component: function () {
+      return import(/* webpackChunkName: "anonymousRecipe" */ '../views/Recipes/AnonymousRecipe.vue')
+    }
+  },
+
+  {
+    path: '/recipe/recommend',
+    name: 'RecommendationRecipe',
+    component: function () {
+      return import(/* webpackChunkName: "recommendationRecipe" */ '../views/Recipes/RecommendationRecipe.vue')
+    },
+  },
 
   {
     path: '/food/create',
