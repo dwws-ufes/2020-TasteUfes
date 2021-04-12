@@ -14,7 +14,7 @@
         </v-col>
         <v-card-text class="d-flex justify-center pt-0">
           <v-row>
-            <v-col v-if="user.roles > 0" cols=12 class="d-flex justify-center">
+            <v-col v-if="user.roles.length > 0" cols=12 class="d-flex justify-center pb-0">
               <span><b>{{ user.roles[0].name }}</b></span>
             </v-col>
             <v-col v-else cols=12 class="d-flex justify-center pb-0">
