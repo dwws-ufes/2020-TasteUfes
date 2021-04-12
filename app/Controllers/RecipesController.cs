@@ -31,7 +31,10 @@ namespace TasteUfes.Controllers
         {
             var recipe = _recipeService.GetDetailed(id);
 
-            if (recipe == null || HasErrors())
+            if (HasErrors())
+                return BadRequest(Errors());
+
+            if (recipe == null)
                 return NotFound();
 
             return Mapper.Map<RecipeResource>(recipe);
