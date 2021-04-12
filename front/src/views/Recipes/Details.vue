@@ -45,7 +45,9 @@
                 :key="ingredient.id"
               >
                 <span>
+              <router-link class="text-decoration-none" :to="{ name: 'DetailsFood', params: {id: ingredient.food.id} }"">
                   <b>{{ ingredient.food.name }}:</b>
+              </router-link>
                   {{ ingredient.quantity
                   }}{{ getMeasureName(ingredient.quantity_unit) }}
                 </span>

@@ -2,6 +2,28 @@
   opacity: 0 !important;
 }
 
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.card-form {
+  .v-card {
+    .v-sheet {
+      &--outlined{ 
+        margin-bottom: 0px;
+        margin-top: 0px;
+
+      }
+    }
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+}
+
 .v-list-item--active::before{
   opacity: 0 !important;
 }
@@ -25,7 +47,7 @@
       padding: 2em;
       display: flex;
       justify-content: center;
-      min-width: 400px;
+      min-width: 500px;
       .v-form {
         width: 100%;
       }

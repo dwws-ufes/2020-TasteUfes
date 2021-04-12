@@ -20,19 +20,19 @@
           <v-divider class="my-4" />
           <v-row>
             <v-col>
-              <h3 class="py-1">Amount per serving</h3>
-              <h2 class="py-1">
+              <h2 class="py-1">Amount per serving</h2>
+              <h3 class="py-1">
                 Calories
                 <span class="float-right">{{
                   parseInt(data.serving_energy)
                 }}</span>
-              </h2>
-              <h2 class="py-1">
+              </h3>
+              <h3 class="py-1">
                 Daily Value
                 <span class="float-right"
                   >{{ getDailyValue(data.daily_value) }}%</span
                 >
-              </h2>
+              </h3>
             </v-col>
           </v-row>
           <v-divider class="my-4" />

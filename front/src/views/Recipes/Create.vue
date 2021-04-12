@@ -1,82 +1,161 @@
 <template>
   <v-card elevation="2" class="card-form">
-    <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
+    <v-form
+      ref="form"
+      lazy-validation
+      @submit.prevent="onSubmit"
+      v-model="valid"
+    >
       <h1>Create Recipe</h1>
       <div class="form-group">
-        <v-text-field
-          v-model="recipe.name"
-          :rules="[this.rules.required]"
-          label="Name"
-          hide-details="auto"
-          class="form-control"
-        />
-        <v-text-field
-          v-model.number="recipe.servings"
-          :rules="[this.rules.required]"
-          type="number"
-          label="Servings"
-          hide-details="auto"
-          class="form-control"
-        />
-        <v-text-field
-          v-model.number="prepTime"
-          :rules="[(value) => !!value || 'Required.']"
-          label="Preparation time (in minutes)"
-          type="number"
-          hide-details="auto"
-          class="form-control"
-        />
-        <div v-for="(ingredient, i) in this.recipe.ingredients" class="foods">
-          <v-select
-            v-model="ingredient.food_id"
-            :items="foods"
-            item-text="name"
-            item-value="id"
-            label="Select a food"
-            :rules="[(value) => !!value || 'Required.']"
-            return-value
-            @change="showFields(ingredient)"
-          />
-          <v-text-field
-            v-model.number="ingredient.quantity"
-            :rules="[(value) => !!value || 'Required.']"
-            type="number"
-            label="Quantity Food"
-            hide-details="auto"
-            class="form-control"
-            v-if="ingredient.nutrition_facts_fields"
-          />
-          <v-select
-            v-model="ingredient.quantity_unit"
-            :items="ingredient.measures"
-            item-text="name"
-            item-value="id"
-            label="Select a Measure"
-            :rules="[(value) => !!value || 'Required.']"
-            return-value
-            v-if="ingredient.nutrition_facts_fields"
-          />
-
-          <v-btn @click="removeFoodField(i)">-</v-btn>
-        </div>
-        <div
-          v-for="(preparation, i) in this.recipe.preparation.steps"
-          :key="i"
-          class="foods"
-        >
-          <v-text-field
-            v-model="preparation.description"
-            :rules="[(value) => !!value || 'Required.']"
-            label="Description"
-            hide-details="auto"
-            class="form-control"
-          />
-
-          <v-btn @click="removeStepField(i)">-</v-btn>
-        </div>
-        <v-btn @click="addFoodField">+ Ingredient</v-btn>
-        <v-btn @click="addStepField">+ Step</v-btn>
-
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-text-field
+              v-model="recipe.name"
+              :rules="[this.rules.required]"
+              label="Name"
+              hide-details="auto"
+              class="form-control"
+            />
+            <v-text-field
+              v-model.number="recipe.servings"
+              :rules="[this.rules.required]"
+              type="number"
+              label="Servings"
+              hide-details="auto"
+              class="form-control"
+            />
+            <v-text-field
+              v-model.number="prepTime"
+              :rules="[(value) => !!value || 'Required.']"
+              label="Preparation time (in minutes)"
+              type="number"
+              hide-details="auto"
+              class="form-control"
+            />
+          </v-container>
+        </v-card>
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-col class="d-flex justify-content-between">
+              <h2>Food</h2>
+              <v-btn
+                class="mx-1 my-0"
+                fab
+                x-small
+                color="primary"
+                @click="addFoodField"
+              >
+                <v-icon dark> mdi-plus </v-icon>
+              </v-btn>
+            </v-col>
+            <div
+              v-for="(ingredient, i) in this.recipe.ingredients"
+              class="foods"
+            >
+              <v-row>
+                <v-col cols="12" sm="10">
+                  <v-card outlined shaped>
+                    <v-container>
+                      <v-select
+                        v-model="ingredient.food_id"
+                        :items="foods"
+                        item-text="name"
+                        item-value="id"
+                        label="Select a food"
+                        :rules="[(value) => !!value || 'Required.']"
+                        return-value
+                        @change="showFields(ingredient)"
+                      />
+                      <v-text-field
+                        v-model.number="ingredient.quantity"
+                        :rules="[(value) => !!value || 'Required.']"
+                        type="number"
+                        label="Quantity Food"
+                        hide-details="auto"
+                        class="form-control"
+                        v-if="ingredient.nutrition_facts_fields"
+                      />
+                      <v-select
+                        v-model="ingredient.quantity_unit"
+                        :items="ingredient.measures"
+                        item-text="name"
+                        item-value="id"
+                        label="Select a Measure"
+                        :rules="[(value) => !!value || 'Required.']"
+                        return-value
+                        v-if="ingredient.nutrition_facts_fields"
+                      />
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="2">
+                  <v-btn
+                    fab
+                    x-small
+                    dark
+                    color="red"
+                    class="mx-0"
+                    @click="removeFoodField(i)"
+                  >
+                    <v-icon dark>mdi-minus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </div>
+          </v-container>
+        </v-card>
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-col class="d-flex justify-content-between">
+              <h2>Step</h2>
+              <div>
+                <v-btn
+                  class="mx-1 my-0"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="addStepField"
+                >
+                  <v-icon dark> mdi-plus </v-icon>
+                </v-btn>
+              </div>
+            </v-col>
+            <div
+              v-for="(preparation, i) in this.recipe.preparation.steps"
+              :key="i"
+              class="foods"
+            >
+              <v-row>
+                <v-col cols="12" sm="10">
+                  <v-card outlined shaped>
+                    <v-container>
+                      <v-text-field
+                        v-model="preparation.description"
+                        :rules="[(value) => !!value || 'Required.']"
+                        label="Description"
+                        hide-details="auto"
+                        class="form-control"
+                      />
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="2" class="d-flex align-center">
+                  <v-btn
+                    fab
+                    x-small
+                    dark
+                    color="red"
+                    class="mx-0"
+                    @click="removeStepField(i)"
+                  >
+                    <v-icon dark>mdi-minus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </div>
+          </v-container>
+        </v-card>
         <v-card-actions>
           <v-row justify="center">
             <v-card-actions>

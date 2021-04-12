@@ -15,10 +15,9 @@
           hide-details="auto"
           class="form-control"
         />
-
+        <h2 class="pt-5">Nutrition Facts</h2>
         <v-text-field
           v-model.number="food.nutrition_facts.serving_size"
-          :rules="[this.rules.required]"
           type="number"
           label="Serving Size"
           hide-details="auto"
@@ -34,32 +33,69 @@
           :rules="[(value) => !!value || 'Required.']"
           return-value
         />
-        <div
-          v-for="(nut_facts_nut, i) in this.food.nutrition_facts
-            .nutrition_facts_nutrients"
-          :key="i"
-          class="nutrition_facts_nutrients"
-        >
-          <v-select
-            v-model="nut_facts_nut.nutrient_id"
-            :items="nutrients"
-            item-text="name"
-            item-value="id"
-            label="Select a Nutrient"
-            :rules="[(value) => !!value || 'Required.']"
-            return-value
-          />
-          <v-text-field
-            v-model.number="nut_facts_nut.amount_per_serving"
-            :rules="[(value) => !!value || 'Required.']"
-            type="number"
-            label="Amount per serving (g)"
-            hide-details="auto"
-            class="form-control"
-          />
-          <v-btn @click="removeNutrientField(i)">-</v-btn>
-        </div>
-        <v-btn @click="addNutrientField">+ Nutrient</v-btn>
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-col class="d-flex justify-content-between">
+              <h2>Nutritient</h2>
+              <div>
+                <v-btn
+                  class="mx-0 my-0"
+                  fab
+                  small
+                  color="primary"
+                  @click="addNutrientField"
+                >
+                  <v-icon dark> mdi-plus </v-icon>
+                </v-btn>
+              </div>
+            </v-col>
+            <div
+              v-for="(nut_facts_nut, i) in this.food.nutrition_facts
+                .nutrition_facts_nutrients"
+              :key="i"
+              class="nutrition_facts_nutrients"
+            >
+              <v-row>
+                <v-col cols="12" sm="10">
+                  <v-card outlined shaped>
+                    <v-container>
+                      <v-select
+                        v-model="nut_facts_nut.nutrient_id"
+                        :items="nutrients"
+                        item-text="name"
+                        item-value="id"
+                        label="Select a Nutrient"
+                        :rules="[(value) => !!value || 'Required.']"
+                        return-value
+                      />
+                      <v-text-field
+                        v-model.number="nut_facts_nut.amount_per_serving"
+                        :rules="[(value) => !!value || 'Required.']"
+                        type="number"
+                        label="Amount per serving (g)"
+                        hide-details="auto"
+                        class="form-control"
+                      />
+                    </v-container>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" sm="2" class="d-flex align-center">
+                  <v-btn
+                    fab
+                    small
+                    dark
+                    color="red"
+                    class="mx-0"
+                    @click="removeNutrientField(i)"
+                  >
+                    <v-icon dark>mdi-minus</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-divider class="my-4" />
+              </v-row>
+            </div>
+          </v-container>
+        </v-card>
         <v-card-actions>
           <v-row justify="center">
             <v-btn
@@ -123,11 +159,14 @@ export default {
     onSubmit: function () {
       this.submit = true;
       this.food.nutrition_facts.nutrition_facts_nutrients.map((nut) => {
-        if (!nut.amount_per_serving_unit) {nut.amount_per_serving_unit = 1; console.log(nut)};
+        if (!nut.amount_per_serving_unit) {
+          nut.amount_per_serving_unit = 1;
+          console.log(nut);
+        }
         delete nut.nutrient;
         delete nut.id;
       });
-      
+
       updateFood(this.foodId, this.food)
         .then((result) => {
           console.log(result);

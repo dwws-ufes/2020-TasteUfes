@@ -8,63 +8,66 @@
     >
       <h1>Create User</h1>
       <div class="form-group">
-        <v-text-field
-          v-model="user.first_name"
-          :rules="[rules.required]"
-          label="FirstName"
-          hide-details="auto"
-          class="form-control"
-        />
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
+            <v-text-field
+              v-model="user.first_name"
+              :rules="[rules.required]"
+              label="FirstName"
+              hide-details="auto"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="user.last_name"
-          :rules="[rules.required]"
-          label="LastName"
-          hide-details="auto"
-          class="form-control"
-        />
+            <v-text-field
+              v-model="user.last_name"
+              :rules="[rules.required]"
+              label="LastName"
+              hide-details="auto"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="user.username"
-          :rules="[rules.required]"
-          label="Username"
-          hide-details="auto"
-          class="form-control"
-        />
+            <v-text-field
+              v-model="user.username"
+              :rules="[rules.required]"
+              label="Username"
+              hide-details="auto"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="user.email"
-          :rules="[rules.required, rules.email]"
-          label="Email"
-          hide-details="auto"
-          class="form-control"
-        />
+            <v-text-field
+              v-model="user.email"
+              :rules="[rules.required, rules.email]"
+              label="Email"
+              hide-details="auto"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="user.password"
-          :rules="[rules.required]"
-          label="Password"
-          :type="'password'"
-          class="form-control"
-        />
+            <v-text-field
+              v-model="user.password"
+              :rules="[rules.required]"
+              label="Password"
+              :type="'password'"
+              class="form-control"
+            />
 
-        <v-text-field
-          v-model="repeatPassword"
-          :rules="[rules.required, passwordConfirmationRule]"
-          label="RepeatPassword"
-          :type="'password'"
-          class="form-control"
-        />
+            <v-text-field
+              v-model="repeatPassword"
+              :rules="[rules.required, passwordConfirmationRule]"
+              label="RepeatPassword"
+              :type="'password'"
+              class="form-control"
+            />
 
-        <v-select
-          v-model="roleId"
-          :items="roles"
-          item-text="name"
-          item-value="id"
-          label="Select a Role"
-          return-value
-        />
-
+            <v-select
+              v-model="roleId"
+              :items="roles"
+              item-text="name"
+              item-value="id"
+              label="Select a Role"
+              return-value
+            />
+          </v-container>
+        </v-card>
         <v-card-actions>
           <v-row justify="center">
             <v-btn
@@ -105,9 +108,8 @@ export default {
         password: "",
         roles: [],
       },
-      roles: [
-      ],
-      roleId: '',
+      roles: [],
+      roleId: "",
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
@@ -122,8 +124,7 @@ export default {
   methods: {
     onSubmit: function () {
       this.submit = true;
-      if(this.roleId != '')
-        this.user.roles = [{'id': this.roleId}]
+      if (this.roleId != "") this.user.roles = [{ id: this.roleId }];
       createUser(this.user)
         .then((result) => {
           this.$router.push({ name: "ListUser" });
@@ -138,9 +139,9 @@ export default {
         .then((result) => {
           this.roles = result.data;
           this.roles.push({
-            'id': '',
-            'name': 'User'
-          })
+            id: "",
+            name: "User",
+          });
         })
         .catch((error) => {
           console.log(error.response);
