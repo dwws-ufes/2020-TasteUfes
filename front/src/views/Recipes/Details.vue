@@ -9,7 +9,6 @@
         </div>
       </v-col>
       <v-col cols="12" sm="8" d-flex justify-center>
-        <v-container>
           <v-card>
             <v-card-title
               ><h1>{{ recipe.name }}</h1></v-card-title
@@ -62,7 +61,6 @@
               </v-list-item-content>
             </v-list-item>
           </v-card>
-        </v-container>
       </v-col>
       <v-col cols="12" sm="4">
         <v-card>
