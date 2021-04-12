@@ -146,9 +146,9 @@ namespace TasteUfes.Controllers
             return Ok(Mapper.Map<AnonymousRecipeResource>(anonymous));
         }
 
-        [HttpPost("recommend-by-ingredients")]
+        [HttpPost("recommend-by-foods")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RecipeResource>> RecommendRecipesByIngredients(IEnumerable<FoodResource> resource)
+        public ActionResult<IEnumerable<RecipeResource>> RecommendRecipesByFoods(IEnumerable<FoodResource> resource)
         {
             foreach (var name in ModelState.Keys.Where(k => k.EndsWith("Name")))
             {
