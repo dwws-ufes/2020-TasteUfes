@@ -51,11 +51,6 @@ export default {
           class: "primary",
         },
         {
-          text: "Nutrition Facts ID",
-          value: "nutrition_facts_id",
-          class: "primary",
-        },
-        {
           text: "Actions",
           value: "actions",
           class: "primary",

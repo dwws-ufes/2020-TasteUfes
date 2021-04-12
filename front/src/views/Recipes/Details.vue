@@ -47,13 +47,13 @@
               <h3>Steps</h3>
               <v-divider class="px-1 pb-3" />
               <v-list-item-content
-                v-for="(step, i) in this.recipe.preparation.steps"
-                :key="i"
+                v-for="step in this.recipe.preparation.steps"
+                :key="step.step"
               >
                 <ul>
                   <li>
                     <span>
-                      <b>Step {{ i + 1 }}:</b> {{ step.description }}
+                      <b>Step {{ step.step }}:</b> {{ step.description }}
                     </span>
                   </li>
                 </ul>
@@ -64,7 +64,7 @@
       </v-col>
       <v-col cols="12" sm="4">
         <v-card class="mb-5">
-          <UserCard :user="this.recipe.user" :username="null"/>
+          <UserCard :user="this.recipe.user" :username="null" />
         </v-card>
         <v-card>
           <NutritionFactsTable
@@ -97,7 +97,7 @@ export default {
         ingredients: [],
         nutrition_facts: {},
         user: {
-          roles:[],
+          roles: [],
         },
       },
     };
@@ -112,6 +112,10 @@ export default {
       getRecipe(this.recipeId)
         .then((result) => {
           this.recipe = result.data;
+          this.recipe.preparation.steps.sort((step1, step2) => {
+            if (step1.step < step2.step) return -1;
+            else return 1;
+          });
         })
         .catch((error) => {
           console.log(error.response);

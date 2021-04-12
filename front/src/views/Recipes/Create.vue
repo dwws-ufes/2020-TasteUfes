@@ -203,6 +203,10 @@ export default {
       this.recipe.preparation.steps.map((step, i) => {
         step.step = i + 1;
       });
+      this.recipe.preparation.steps.sort((step1, step2) => {
+        if (step1.step < step2.step) return -1;
+        else return 1;
+      });
       this.recipe.preparation.preparation_time = this.convertMinutesInTimestamp(
         this.prepTime
       );
@@ -215,6 +219,7 @@ export default {
           this.submit = false;
           console.log(error.response);
         });
+      console.log(this.recipe.preparation.steps);
     },
   },
 
