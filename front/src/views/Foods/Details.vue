@@ -1,21 +1,20 @@
 <template>
   <v-container class="details">
     <v-row justify="center">
-      <v-col cols="12" sm="6" d-flex justify-center>
+      <v-col cols="12" sm="4" d-flex justify-center>
         <div class="d-flex">
           <span class="back-btn" @click="$router.go(-1)"
             ><v-icon>mdi-chevron-left</v-icon> Back</span
           >
         </div>
         <v-card>
-          <v-card-title>{{ food.name }}</v-card-title>
-          <v-divider class="mx-4"></v-divider>
-          <v-card-text>
-            <div class="my-2">
-              <b>Nutriction Facts:</b> {{ food.nutrition_facts_id }}
-            </div>
-          </v-card-text>
+          <v-container>
+            <v-card-title><h1>{{ food.name }}</h1></v-card-title>
+            <v-divider class="mx-4" />
+          </v-container>
+          <NutritionFactsTable :data="this.food.nutrition_facts" :servings="this.food.nutrition_facts.serving_size" />
         </v-card>
+
       </v-col>
     </v-row>
   </v-container>
@@ -23,6 +22,7 @@
 
 <script>
 import { getFood } from "@/api";
+import NutritionFactsTable from "@/components/NutritionFactsTable.vue";
 
 export default {
   name: "DetailsFood",
@@ -30,7 +30,9 @@ export default {
   data() {
     return {
       foodId: this.$route.params.id,
-      food: {},
+      food: {
+        nutrition_facts: []
+      },
     };
   },
 
@@ -49,5 +51,17 @@ export default {
         });
     },
   },
+
+  components: {
+    NutritionFactsTable,
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+  .v-card {
+    &__title {
+      padding-bottom: 5;
+    }
+  }
+</style>

@@ -1,24 +1,75 @@
 <template>
   <v-container class="details">
     <v-row justify="center">
-      <v-col cols="12" sm="6" d-flex justify-center>
+      <v-col cols="12" sm="12" d-flex justify-center class="py-0">
         <div class="d-flex">
-          <span class="back-btn" @click="$router.go(-1)"
-            ><v-icon>mdi-chevron-left</v-icon> Back</span
-          >
+          <span class="back-btn" @click="$router.go(-1)">
+            <v-icon>mdi-chevron-left</v-icon> Back
+          </span>
         </div>
+      </v-col>
+      <v-col cols="12" sm="8" d-flex justify-center>
+        <v-container>
+          <v-card>
+            <v-card-title
+              ><h1>{{ recipe.name }}</h1></v-card-title
+            >
+            <v-divider class="mx-4" />
+            <v-list-item>
+              <v-list-item-content>
+                <div class="my-2">
+                  <span><b>Servings:</b> {{ recipe.servings }}</span>
+                </div>
+                <div class="my-2">
+                  <b>Preparation Time:</b>
+                  {{ this.recipe.preparation.preparation_time }}
+                </div>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="this.recipe.ingredients.length > 0">
+              <v-list-item-content>
+                <h3>Ingredients</h3>
+                <v-divider class="px-1 pb-3" />
+
+                <v-list-item-content
+                  v-for="ingredient in this.recipe.ingredients"
+                  :key="ingredient.id"
+                >
+                  <span>
+                    <b>{{ ingredient.food.name }}:</b>
+                    {{ ingredient.quantity }}
+                    {{ getMeasureName(ingredient.quantity_unit) }}</span
+                  >
+                </v-list-item-content>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="this.recipe.preparation.steps.length > 0">
+              <v-list-item-content>
+                <h3>Steps</h3>
+                <v-divider class="px-1 pb-3" />
+                <v-list-item-content
+                  v-for="(step, i) in this.recipe.preparation.steps"
+                  :key="i"
+                >
+                  <ul>
+                    <li>
+                      <span>
+                        <b>Step {{ i + 1 }}:</b> {{ step.description }}
+                      </span>
+                    </li>
+                  </ul>
+                </v-list-item-content>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card>
+        </v-container>
+      </v-col>
+      <v-col cols="12" sm="4">
         <v-card>
-          <v-card-title>{{ recipe.name }}</v-card-title>
-          <v-divider class="mx-4"></v-divider>
-          <v-card-text>
-            <div class="my-2"><b>Servings:</b> {{ recipe.servings }}</div>
-            <div class="my-2" v-if="this.recipe.preparation != null">
-              <b>Total steps:</b> {{ this.recipe.preparation.steps.length }}
-            </div>
-            <div class="my-2" v-if="this.recipe.preparation != null">
-              <b>Total time:</b> {{ this.recipe.preparation.preparation_time }}
-            </div>
-          </v-card-text>
+          <NutritionFactsTable
+            :data="this.recipe.nutrition_facts"
+            :servings="this.recipe.servings"
+          />
         </v-card>
       </v-col>
     </v-row>
@@ -27,14 +78,27 @@
 
 <script>
 import { getRecipe } from "@/api";
+import NutritionFactsTable from "@/components/NutritionFactsTable.vue";
 
 export default {
   name: "DetailsRecipe",
 
   data() {
     return {
+      attrs: {
+        boilerplate: true,
+        elevation: 2,
+      },
       recipeId: this.$route.params.id,
-      recipe: [],
+      recipe: {
+        name: "",
+        servings: null,
+        preparation: {
+          steps: [],
+        },
+        ingredients: [],
+        nutrition_facts: {},
+      },
     };
   },
 
@@ -52,6 +116,26 @@ export default {
           console.log(error.response);
         });
     },
+    getMeasureName(id) {
+      return this.$store.state.ingredients_measures.find(
+        (measure) => measure.id == id
+      ).name;
+    },
+    getDailyValue(daily_value) {
+      return (daily_value * 100).toFixed(2);
+    },
+  },
+
+  components: {
+    NutritionFactsTable,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.details {
+  .v-card {
+    margin-top: 0;
+  }
+}
+</style>
