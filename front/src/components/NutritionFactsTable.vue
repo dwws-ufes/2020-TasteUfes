@@ -11,10 +11,10 @@
           >
           <h3 class="py-1">
             Serving size
-            <span class="float-right"
-              >{{ data.serving_size
-              }}{{ getMeasureName(data.serving_size_unit) }}</span
-            >
+            <span class="float-right">
+              {{ data.serving_size
+              }}{{ getMeasureName(data.serving_size_unit) }}
+            </span>
           </h3>
 
           <v-divider class="my-4" />
