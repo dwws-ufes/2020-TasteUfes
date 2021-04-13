@@ -138,7 +138,11 @@ namespace TasteUfes.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(Errors(resource));
 
-            var anonymous = _recipeService.CalculateAnonymousRecipe(Mapper.Map<Recipe>(resource));
+            var recipe = Mapper.Map<Recipe>(resource);
+
+            recipe.Servings = 1;
+
+            var anonymous = _recipeService.CalculateAnonymousRecipe(recipe);
 
             if (HasErrors())
                 return BadRequest(Errors(resource));
