@@ -41,6 +41,7 @@ namespace TasteUfes.Services
             try
             {
                 user.Roles = user.Roles
+                    .Where(r => r.Id != Guid.Empty)
                     .Select(r => UnitOfWork.Roles.Get(r.Id))
                     .ToList();
 
@@ -84,6 +85,7 @@ namespace TasteUfes.Services
             persisted.LastName = user.LastName;
             persisted.Username = user.Username;
             persisted.Roles = user.Roles
+                .Where(r => r.Id != Guid.Empty)
                 .Select(r => UnitOfWork.Roles.Get(r.Id))
                 .ToList();
 
