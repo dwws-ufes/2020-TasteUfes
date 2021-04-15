@@ -40,5 +40,12 @@ namespace TasteUfes.Controllers
         [Authorize(Roles = "Admin")]
         public override IActionResult Delete([FromRoute] Guid id)
             => base.Delete(id);
+
+        [HttpGet("~/api/v1/nutrients")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<NutrientResource>> GetNutrients([FromServices] INutrientService nutrientService)
+        {
+            return Ok(Mapper.Map<IEnumerable<NutrientResource>>(nutrientService.GetAll()));
+        }
     }
 }
