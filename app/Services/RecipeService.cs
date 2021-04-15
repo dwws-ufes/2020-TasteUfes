@@ -261,7 +261,7 @@ namespace TasteUfes.Services
             var foodsId = foods.Select(f => f.Id);
 
             var recipes = UnitOfWork.Recipes
-                .Search(r => r.Ingredients.All(i => foodsId.Contains(i.FoodId)));
+                .Search(r => r.Ingredients.Any() && r.Ingredients.All(i => foodsId.Contains(i.FoodId)));
 
             return recipes;
         }
