@@ -84,25 +84,31 @@
                           return-value
                           @change="showFields(ingredient)"
                         />
-                        <v-select
-                          v-model="ingredient.quantity_unit"
-                          :items="ingredient.measures"
-                          item-text="name"
-                          item-value="id"
-                          label="Select a Measure"
-                          :rules="[(value) => !!value || 'Required.']"
-                          return-value
-                          v-if="ingredient.nutrition_facts_fields"
-                        />
-                        <v-text-field
-                          v-model.number="ingredient.quantity"
-                          :rules="[(value) => !!value || 'Required.']"
-                          type="number"
-                          label="Quantity Food"
-                          hide-details="auto"
-                          class="form-control"
-                          v-if="ingredient.nutrition_facts_fields"
-                        />
+                        <v-row>
+                          <v-col>
+                            <v-text-field
+                              v-model.number="ingredient.quantity"
+                              :rules="[(value) => !!value || 'Required.']"
+                              type="number"
+                              label="Quantity Food"
+                              hide-details="auto"
+                              class="form-control"
+                              v-if="ingredient.nutrition_facts_fields"
+                            />
+                          </v-col>
+                          <v-col>
+                            <v-select
+                              v-model="ingredient.quantity_unit"
+                              :items="ingredient.measures"
+                              item-text="name"
+                              item-value="id"
+                              label="Select a Measure"
+                              :rules="[(value) => !!value || 'Required.']"
+                              return-value
+                              v-if="ingredient.nutrition_facts_fields"
+                            />
+                          </v-col>
+                        </v-row>
                       </v-container>
                     </v-col>
                   </v-row>
@@ -310,21 +316,21 @@ export default {
     onSubmit: function () {
       this.submit = true;
       if (this.$refs.form.validate()) {
-      this.recipe.preparation.steps.map((step, i) => {
-        step.step = i + 1;
-      });
-      this.recipe.preparation.preparation_time = this.convertMinutesInTimestamp(
-        this.prepTime
-      );
-      updateRecipe(this.recipeId, this.recipe)
-        .then((result) => {
-          this.$router.push({ name: "ListRecipe" });
-        })
-        .catch((error) => {
-          this.submit = false;
-          console.log(error.response);
+        this.recipe.preparation.steps.map((step, i) => {
+          step.step = i + 1;
         });
-      }else{
+        this.recipe.preparation.preparation_time = this.convertMinutesInTimestamp(
+          this.prepTime
+        );
+        updateRecipe(this.recipeId, this.recipe)
+          .then((result) => {
+            this.$router.push({ name: "ListRecipe" });
+          })
+          .catch((error) => {
+            this.submit = false;
+            console.log(error.response);
+          });
+      } else {
         this.submit = false;
       }
     },

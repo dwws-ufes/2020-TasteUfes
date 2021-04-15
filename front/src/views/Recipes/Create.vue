@@ -84,25 +84,31 @@
                           return-value
                           @change="showFields(ingredient)"
                         />
-                        <v-select
-                          v-model="ingredient.quantity_unit"
-                          :items="ingredient.measures"
-                          item-text="name"
-                          item-value="id"
-                          label="Select a Measure"
-                          :rules="[(value) => !!value || 'Required.']"
-                          return-value
-                          v-if="ingredient.nutrition_facts_fields"
-                        />
-                        <v-text-field
-                          v-model.number="ingredient.quantity"
-                          :rules="[(value) => !!value || 'Required.']"
-                          type="number"
-                          label="Quantity Food"
-                          hide-details="auto"
-                          class="form-control"
-                          v-if="ingredient.nutrition_facts_fields"
-                        />
+                        <v-row>
+                          <v-col>
+                            <v-text-field
+                              v-model.number="ingredient.quantity"
+                              :rules="[(value) => !!value || 'Required.']"
+                              type="number"
+                              label="Quantity Food"
+                              hide-details="auto"
+                              class="form-control"
+                              v-if="ingredient.nutrition_facts_fields"
+                            />
+                          </v-col>
+                          <v-col>
+                            <v-select
+                              v-model="ingredient.quantity_unit"
+                              :items="ingredient.measures"
+                              item-text="name"
+                              item-value="id"
+                              label="Select a Measure"
+                              :rules="[(value) => !!value || 'Required.']"
+                              return-value
+                              v-if="ingredient.nutrition_facts_fields"
+                            />
+                          </v-col>
+                        </v-row>
                       </v-container>
                     </v-col>
                   </v-row>

@@ -52,7 +52,7 @@ export default {
           class: "primary",
         },
         {
-          text: "Full Name",
+          text: "Name",
           value: "name",
           class: "primary",
         },
