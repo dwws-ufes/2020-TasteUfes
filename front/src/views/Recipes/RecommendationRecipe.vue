@@ -162,7 +162,10 @@ export default {
     getAllFoods: function () {
       getFoods()
         .then((foods) => {
-          this.foods = foods.data;
+          this.foods = foods.data.sort((food1, food2) => {
+            if (food1.name < food2.name) return -1;
+            else return 1;
+          });
         })
         .catch((error) => {
           console.log(error.response);

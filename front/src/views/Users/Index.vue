@@ -10,6 +10,15 @@
       :items-per-page="10"
       class="elevation-1"
     >
+      <template v-slot:item.name="{ item }">
+        <v-row>
+          <router-link
+            class="text-decoration-none"
+            :to="{ name: 'DetailsUser', params: { id: item.id } }"
+            >{{ item.first_name }} {{item.last_name}}</router-link
+          >
+        </v-row>
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-row>
           <DetailsButton :id="item.id" name="DetailsUser" />
@@ -37,20 +46,14 @@ export default {
       load: true,
       headers: [
         {
-          text: "ID",
+          text: "Nº",
           align: "start",
-          sortable: false,
-          value: "id",
+          value: "number",
           class: "primary",
         },
         {
-          text: "First Name",
-          value: "first_name",
-          class: "primary",
-        },
-        {
-          text: "Last Name",
-          value: "last_name",
+          text: "Full Name",
+          value: "name",
           class: "primary",
         },
         {
@@ -98,6 +101,9 @@ export default {
             ? (user.roles = user.roles[0].name)
             : (user.roles = "User");
         });
+        this.userList.map((user, index) => {
+            user.number = index + 1;
+          })
         this.changeLoading();
       });
     },

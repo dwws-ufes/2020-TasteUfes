@@ -19,9 +19,18 @@
           :items-per-page="10"
           class="elevation-1"
         >
+          <template v-slot:item.name="{ item }">
+            <v-row>
+              <router-link
+                class="text-decoration-none"
+                :to="{ name: 'DetailsRecipe', params: { id: item.id } }"
+              >
+                {{ item.name }}
+              </router-link>
+            </v-row>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-row>
-              <DetailsButton :id="item.id" name="DetailsRecipe" />
               <EditButton :id="item.id" name="EditRecipe" />
               <DeleteButton
                 :id="item.id"
@@ -92,10 +101,9 @@ export default {
       load: true,
       headers: [
         {
-          text: "ID",
+          text: "Nº",
           align: "start",
-          sortable: false,
-          value: "id",
+          value: "number",
           class: "primary",
         },
         {
@@ -182,6 +190,9 @@ export default {
               });
             } else {
               this.recipeListTable = auxList;
+              this.recipeListTable.map((rec, index) => {
+                rec.number = index + 1;
+              });
             }
             this.changeLoading();
           })

@@ -109,10 +109,11 @@ const store = new Vuex.Store({
     isAdmin: state => state.user.roles.length > 0,
     getUserId: state => state.userId,
     getUser: state => state.user,
+    
   },
 
   actions: {
-    async loadApplication({ dispatch, getters }) {
+    async loadApplication({ dispatch }) {
       let accessToken = localStorage.getItem('access_token');
       let userId = localStorage.getItem('user_id');
 
@@ -127,7 +128,7 @@ const store = new Vuex.Store({
         })
       }
     },
-
+    
     async load({ dispatch }, { userId, accessToken }) {
       // return new Promise((resolve, reject) => {
       await getUser(userId).then((user) => {
