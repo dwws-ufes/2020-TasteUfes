@@ -1,0 +1,10 @@
+sourceBaseDir: ../frameweb/src-gen/
+targetBaseDir: ../app/
+dirsToCompare:
+  - Models:Models
+  - Controllers:Controllers
+  - Services:Services
+  - Services:Services/Interfaces
+  - Data:Data
+  - Data:Data/Interfaces
+  
