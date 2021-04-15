@@ -9,17 +9,23 @@
       <h1>Edit Food</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
-          <v-container>
+          <v-sheet v-if="load" :color="`grey lighten-4`" class="pa-3">
+            <v-skeleton-loader
+              class="mx-auto"
+              type="article"
+            ></v-skeleton-loader>
+          </v-sheet>
+          <v-container v-else>
             <v-text-field
               v-model="food.name"
               :rules="[this.rules.required]"
-              label="Name"
+              label="Name*"
               hide-details="auto"
               class="form-control"
             />
           </v-container>
         </v-card>
-        <v-card class="mx-auto" elevation="0" outlined>
+        <v-card class="mx-auto" elevation="0" outlined v-if="!load">
           <v-container>
             <v-col class="d-flex justify-content-between">
               <h2>Nutrition Facts</h2>
@@ -53,7 +59,7 @@
                   <v-text-field
                     v-model.number="food.nutrition_facts.serving_size"
                     type="number"
-                    label="Serving Size"
+                    label="Serving Size*"
                     hide-details="auto"
                     :rules="[(value) => !!value || 'Required.']"
                     class="form-control"
@@ -65,7 +71,7 @@
                     :items="nutrition_facts_measures"
                     item-text="name"
                     item-value="id"
-                    label="Select a Measure"
+                    label="Select a Measure*"
                     :rules="[(value) => !!value || 'Required.']"
                     return-value
                   />
@@ -123,7 +129,7 @@
                             :items="nutrients"
                             item-text="name"
                             item-value="id"
-                            label="Select a Nutrient"
+                            label="Select a Nutrient*"
                             :rules="[(value) => !!value || 'Required.']"
                             return-value
                           />
@@ -133,7 +139,7 @@
                             v-model.number="nut_facts_nut.amount_per_serving"
                             :rules="[(value) => !!value || 'Required.']"
                             type="number"
-                            label="Amount per serving (g)"
+                            label="Amount per serving (g)*"
                             hide-details="auto"
                             class="form-control"
                           />
@@ -153,14 +159,18 @@
               type="submit"
               elevation="2"
               color="primary"
+              v-if="!submit"
               :disabled="!valid"
             >
-              <span v-if="!submit"> Save </span>
-              <v-progress-circular
-                v-else
-                indeterminate
-                color="white"
-              ></v-progress-circular>
+              <span> Save </span>
+            </v-btn>
+            <v-btn
+              v-else
+              color="primary"
+              class="submit"
+              loading
+              :disabled="!valid"
+            >
             </v-btn>
             <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
           </v-row>
@@ -179,6 +189,7 @@ export default {
 
   data() {
     return {
+      load: true,
       foodId: this.$route.params.id,
       valid: false,
       submit: false,
@@ -268,6 +279,9 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+        })
+        .finally(() => {
+          this.load = false;
         });
     },
   },

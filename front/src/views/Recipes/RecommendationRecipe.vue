@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col col="12" sm="4">
+    <v-row class="justify-center">
+      <v-col col="12" sm="8">
         <v-card class="card-list">
           <v-container>
             <v-card-title>
@@ -30,14 +30,18 @@
                     type="submit"
                     elevation="2"
                     color="primary"
+                    v-if="!submit"
                     :disabled="!valid"
                   >
-                    <span v-if="!submit"> Submit </span>
-                    <v-progress-circular
-                      v-else
-                      indeterminate
-                      color="white"
-                    ></v-progress-circular>
+                    <span> Submit </span>
+                  </v-btn>
+                  <v-btn
+                    v-else
+                    color="primary"
+                    class="submit"
+                    loading
+                    :disabled="!valid"
+                  >
                   </v-btn>
                 </v-col>
               </v-row>
@@ -58,7 +62,10 @@
                 <v-col
                   v-for="recipe in recipeList"
                   :key="recipe.name"
-                  justify="space-around"
+                  cols="12"
+                  xs="12"
+                  sm="6"
+                  lg="4"
                 >
                   <router-link
                     class="text-decoration-none title-link"
@@ -89,23 +96,17 @@
                 </v-col>
               </v-row>
               <div v-else-if="emptyRecipes">
-                <v-alert
-                  prominent
-                  dense
-                  text
-                  type="error"
-                >
-                <v-card-text> No recipes found, try with another foods. </v-card-text>
+                <v-alert prominent dense text type="error">
+                  <v-card-text>
+                    No recipes found, try with another foods.
+                  </v-card-text>
                 </v-alert>
               </div>
               <div v-else>
-                <v-alert
-                  prominent
-                  dense
-                  text
-                  type="info"
-                >
-                <v-card-text> Session empty, please select foods. </v-card-text>
+                <v-alert prominent dense text type="info">
+                  <v-card-text>
+                    Session empty, please select foods.
+                  </v-card-text>
                 </v-alert>
               </div>
             </v-col>
@@ -157,7 +158,6 @@ export default {
           this.submit = false;
         })
         .finally(() => {
-          this.selectFood = [];
           this.submit = false;
         });
     },

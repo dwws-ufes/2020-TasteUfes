@@ -2,17 +2,25 @@
   <v-container class="details">
     <v-row justify="center">
       <v-col cols="12" sm="4" d-flex justify-center>
-        <div class="d-flex">
-          <router-link class="text-decoration-none d-flex" :to="{name: 'ListFood'}">
+        <div class="d-flex" v-if="isAdmin">
+          <router-link
+            class="text-decoration-none d-flex"
+            :to="{ name: 'ListFood' }"
+          >
             <v-icon>mdi-chevron-left</v-icon> Back
           </router-link>
         </div>
         <v-card>
           <v-container>
-            <v-card-title><h1>{{ food.name }}</h1></v-card-title>
+            <v-card-title
+              ><h1>{{ food.name }}</h1></v-card-title
+            >
             <v-divider class="mx-4" />
           </v-container>
-          <NutritionFactsTable :data="this.food.nutrition_facts" :servings="this.food.nutrition_facts.serving_size" />
+          <NutritionFactsTable
+            :data="this.food.nutrition_facts"
+            :servings="this.food.nutrition_facts.serving_size"
+          />
         </v-card>
       </v-col>
     </v-row>
@@ -22,6 +30,7 @@
 <script>
 import { getFood } from "@/api";
 import NutritionFactsTable from "@/components/details/NutritionFactsTable.vue";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "DetailsFood",
@@ -33,6 +42,10 @@ export default {
         nutrition_facts: []
       },
     };
+  },
+
+  computed: {
+    ...mapGetters(['isAdmin', 'auth']),
   },
 
   created: function () {
@@ -58,9 +71,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .v-card {
-    &__title {
-      padding-bottom: 5;
-    }
+.v-card {
+  &__title {
+    padding-bottom: 5;
   }
+}
 </style>

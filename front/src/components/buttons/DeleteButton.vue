@@ -2,7 +2,7 @@
   <div class="delete">
     <v-dialog v-model="dialogDelete" max-width="500px">
       <template v-slot:activator="{ on, attrs }">
-        <v-icon small v-bind="attrs" v-on="on" secondary> mdi-delete </v-icon>
+        <v-icon medium v-bind="attrs" v-on="on" secondary> mdi-delete </v-icon>
       </template>
       <v-card>
         <v-card-title class="headline">Delete</v-card-title>

@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="white" light v-bind="attrs" v-on="on"> Login </v-btn>
+        <v-btn color="white" light v-bind="attrs" v-on="on"> Sign In </v-btn>
       </template>
       <v-card>
         <v-container>
@@ -38,13 +38,17 @@
                     color="primary"
                     class="submit"
                     :disabled="!valid"
+                    v-if="!submit"
                   >
-                    <span v-if="!submit"> Login </span>
-                    <v-progress-circular
-                      v-else
-                      indeterminate
-                      color="white"
-                    ></v-progress-circular>
+                    <span > Submit </span>
+                  </v-btn>
+                  <v-btn
+                    v-else
+                    color="primary"
+                    class="submit"
+                    loading
+                    :disabled="!valid"
+                  >
                   </v-btn>
                 </v-row>
               </v-container>
@@ -96,7 +100,7 @@ export default {
             });
           })
           .catch((error) => {
-            console.log("Erro: ", error.response);
+            console.log(error.response);
             this.submit = false;
             // this.valid = true;
           });

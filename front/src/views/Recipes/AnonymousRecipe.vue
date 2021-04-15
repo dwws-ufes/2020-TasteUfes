@@ -48,7 +48,7 @@
                           :items="foods"
                           item-text="name"
                           item-value="id"
-                          label="Select a food"
+                          label="Select a food*"
                           :rules="[(value) => !!value || 'Required.']"
                           return-value
                           @change="showFields(ingredient)"
@@ -59,7 +59,7 @@
                               v-model.number="ingredient.quantity"
                               :rules="[(value) => !!value || 'Required.']"
                               type="number"
-                              label="Quantity Food"
+                              label="Quantity Food*"
                               hide-details="auto"
                               class="form-control"
                               v-if="ingredient.nutrition_facts_fields"
@@ -71,7 +71,7 @@
                               :items="ingredient.measures"
                               item-text="name"
                               item-value="id"
-                              label="Select a Measure"
+                              label="Select a Measure*"
                               :rules="[(value) => !!value || 'Required.']"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
@@ -96,14 +96,18 @@
                     type="submit"
                     elevation="2"
                     color="primary"
-                    :disabled="!validBtn"
+                    v-if="!submit"
+                    :disabled="!valid"
                   >
-                    <span v-if="!submit"> Create </span>
-                    <v-progress-circular
-                      v-else
-                      indeterminate
-                      color="white"
-                    ></v-progress-circular>
+                    <span > Create </span>
+                  </v-btn>
+                  <v-btn
+                    v-else
+                    color="primary"
+                    class="submit"
+                    loading
+                    :disabled="!valid"
+                  >
                   </v-btn>
 
                   <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
@@ -139,9 +143,9 @@
                   :key="ingredient.id"
                 >
                   <span>
-                    <router-link target="_blank" class="text-decoration-none" :to="{ name: 'DetailsFood', params: {id: ingredient.food.id} }"">
-                  <b>{{ ingredient.food.name }}:</b>
-              </router-link>
+                    <router-link target="_blank" class="text-decoration-none" :to="{ name: 'DetailsFood', params: {id: ingredient.food.id} }">
+                      <b>{{ ingredient.food.name }}:</b>
+                    </router-link>
                     {{ ingredient.quantity
                     }}{{ getMeasureName(ingredient.quantity_unit) }}
                   </span>
@@ -176,7 +180,6 @@ export default {
   data() {
     return {
       valid: false,
-      validBtn: false,
       submit: false,
       prepTime: null,
       nutrition_facts_fields: false,
@@ -212,7 +215,7 @@ export default {
 
     removeFoodField: function (index) {
       this.recipe.ingredients.splice(index, 1);
-      if (this.recipe.ingredients.length == 0) this.validBtn = false;
+      // if (this.recipe.ingredients.length == 0) this.validBtn = false;
     },
 
     getMeasureName(id) {
@@ -229,18 +232,22 @@ export default {
       let nutrition_facts = this.foods.find((food) => food.id == foodId)
         .nutrition_facts;
       ingredient.measures = [];
-      if (
-        this.$store.state.mass_measures_keys.includes(
-          nutrition_facts.serving_size_unit
-        )
-      ) {
-        ingredient.measures = this.$store.state.mass_measures;
-      } else if (
-        this.$store.state.weight_measures_keys.includes(
-          nutrition_facts.serving_size_unit
-        )
-      ) {
-        ingredient.measures = this.$store.state.weight_measures;
+      if (nutrition_facts) {
+        if (
+          this.$store.state.mass_measures_keys.includes(
+            nutrition_facts.serving_size_unit
+          )
+        ) {
+          ingredient.measures = this.$store.state.mass_measures;
+        } else if (
+          this.$store.state.weight_measures_keys.includes(
+            nutrition_facts.serving_size_unit
+          )
+        ) {
+          ingredient.measures = this.$store.state.weight_measures;
+        } else {
+          ingredient.measures = this.$store.state.ingredients_measures;
+        }
       } else {
         ingredient.measures = this.$store.state.ingredients_measures;
       }
@@ -273,8 +280,9 @@ export default {
         );
         calculateAnonymous(this.recipe)
           .then((result) => {
+            console.log("Receita>: ", result.data)
             this.anonymous = result.data;
-            this.anonymous.name = this.recipe.name;
+            this.anonymous.ingredients
           })
           .catch((error) => {
             this.submit = false;
