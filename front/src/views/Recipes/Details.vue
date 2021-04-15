@@ -48,7 +48,7 @@
               <router-link class="text-decoration-none" :to="{ name: 'DetailsFood', params: {id: ingredient.food.id} }"">
                   <b>{{ ingredient.food.name }}:</b>
               </router-link>
-                  {{ ingredient.quantity
+                  {{ formatNumber(ingredient.quantity)
                   }}{{ getMeasureName(ingredient.quantity_unit) }}
                 </span>
               </v-list-item-content>
@@ -157,6 +157,13 @@ export default {
           .catch((error) => {
             console.log(error.response);
           });
+      }
+    },
+    formatNumber(value) {
+      if (parseInt(value) == 0) {
+        return value.toFixed(2);
+      } else {
+        return value;
       }
     },
   },

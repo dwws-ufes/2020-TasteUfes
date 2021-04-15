@@ -6,19 +6,16 @@
   justify-content: space-between;
 }
 
+.justify-flex-end {
+  justify-content: flex-end;
+}
+
 .w-100 {
   width: 100%;
 }
 
 .card-form {
   .v-card {
-    .v-sheet {
-      &--outlined{ 
-        margin-bottom: 0px;
-        margin-top: 0px;
-
-      }
-    }
     margin-bottom: 20px;
     margin-top: 20px;
   }

@@ -4,26 +4,6 @@
     <v-card elevation="2" class="card-form" v-if="!submit">
       <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
         <h1>Anonymous Recipe</h1>
-        <div class="form-group">
-          <v-card class="mx-auto" elevation="0" outlined>
-          <v-container>
-            <v-text-field
-              v-model="recipe.name"
-              :rules="[this.rules.required]"
-              label="Name"
-              hide-details="auto"
-              class="form-control"
-            />
-            <v-text-field
-              v-model.number="recipe.servings"
-              :rules="[this.rules.required]"
-              type="number"
-              label="Servings"
-              hide-details="auto"
-              class="form-control"
-            />
-          </v-container>
-        </v-card>
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
@@ -134,16 +114,9 @@
         <v-col cols="12" sm="8" d-flex justify-center>
           <v-card>
             <v-card-title
-            ><h1>{{ this.anonymous.name }}</h1></v-card-title
+            ><h1>Anonymous Recipe</h1></v-card-title
           ></v-card-title>
           <v-divider class="mx-4" />
-            <v-list-item>
-              <v-list-item-content>
-                <div class="my-2">
-                  <b>Servings:</b> {{ this.anonymous.servings }}
-                </div>
-              </v-list-item-content>
-            </v-list-item>
             <v-list-item v-if="this.anonymous.ingredients.length > 0">
               <v-list-item-content>
                 <h3>Ingredients</h3>
@@ -195,8 +168,6 @@ export default {
       prepTime: null,
       nutrition_facts_fields: false,
       recipe: {
-        name: "",
-        servings: null,
         preparation: {},
         ingredients: [{}],
       },
@@ -271,7 +242,10 @@ export default {
     getAllFoods: function () {
       getFoods()
         .then((foods) => {
-          this.foods = foods.data;
+          this.foods = foods.data.sort((food1, food2) => {
+            if (food1.name < food2.name) return -1;
+            else return 1;
+          });
         })
         .catch((error) => {
           console.log(error.response);

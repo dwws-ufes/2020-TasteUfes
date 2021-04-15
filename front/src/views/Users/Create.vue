@@ -48,6 +48,7 @@
               label="Password"
               :type="'password'"
               class="form-control"
+              hide-details="auto"
             />
 
             <v-text-field
@@ -56,15 +57,18 @@
               label="RepeatPassword"
               :type="'password'"
               class="form-control"
+              hide-details="auto"
             />
 
             <v-select
               v-model="roleId"
               :items="roles"
+              :rules="[rules.required]"
               item-text="name"
               item-value="id"
               label="Select a Role"
               return-value
+              hide-details="auto"
             />
           </v-container>
         </v-card>
@@ -124,14 +128,18 @@ export default {
   methods: {
     onSubmit: function () {
       this.submit = true;
-      if (this.roleId != "") this.user.roles = [{ id: this.roleId }];
-      createUser(this.user)
-        .then((result) => {
-          this.$router.push({ name: "ListUser" });
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
+      if (this.$refs.form.validate()) {
+        if (this.roleId != "") this.user.roles = [{ id: this.roleId }];
+        createUser(this.user)
+          .then((result) => {
+            this.$router.push({ name: "ListUser" });
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      } else {
+        this.submit = false;
+      }
     },
 
     getRoles() {
@@ -139,7 +147,7 @@ export default {
         .then((result) => {
           this.roles = result.data;
           this.roles.push({
-            id: "",
+            id: "00000000-0000-0000-0000-000000000000",
             name: "User",
           });
         })

@@ -28,6 +28,17 @@
               hide-details="auto"
               class="form-control"
             />
+
+            <v-select
+              v-model="roleId"
+              :items="roles"
+              :rules="[rules.required]"
+              item-text="name"
+              item-value="id"
+              label="Select a Role"
+              return-value
+              hide-details="auto"
+            />
           </v-container>
         </v-card>
         <v-card-actions>
@@ -56,7 +67,7 @@
 </template>
 
 <script>
-import { getUser, updateUser } from "@/api";
+import { getUser, getRoles, updateUser } from "@/api";
 
 export default {
   name: "EditUser",
@@ -72,7 +83,14 @@ export default {
         first_name: "",
         last_name: "",
         password: "",
+        roles: [
+          {
+            id: "",
+          },
+        ],
       },
+      roles: [],
+      roleId: "00000000-0000-0000-0000-000000000000",
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
@@ -94,20 +112,46 @@ export default {
   methods: {
     onSubmit: function () {
       this.submit = true;
-      updateUser(this.userId, this.user)
-        .then((result) => {
-          console.log(result.data);
-          this.$router.push({ name: "ListUser" });
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
+      if (this.$refs.form.validate()) {
+        if(this.user.roles.length > 0)
+        this.user.roles[0].id = this.roleId;
+        else
+        this.user.roles = [{
+          id: this.roleId,
+        }];
+        updateUser(this.userId, this.user)
+          .then((result) => {
+            console.log(result.data);
+            this.$router.push({ name: "ListUser" });
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      } else {
+        this.submit = false;
+      }
     },
     getUser() {
       getUser(this.userId)
         .then((result) => {
           this.user = result.data;
           delete this.user.password;
+          if (this.user.roles.length > 0) {
+            this.roleId = this.user.roles[0].id;
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+    getRoles() {
+      getRoles()
+        .then((result) => {
+          this.roles = result.data;
+          this.roles.push({
+            id: "00000000-0000-0000-0000-000000000000",
+            name: "User",
+          });
         })
         .catch((error) => {
           console.log(error.response);
@@ -116,6 +160,7 @@ export default {
   },
   created() {
     this.getUser();
+    this.getRoles();
   },
 };
 </script>

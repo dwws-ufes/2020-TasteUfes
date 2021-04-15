@@ -27,18 +27,27 @@
               :type="'password'"
               label="Password"
               class="form-control"
+              hide-details="auto"
             />
             <v-card-actions>
-              <v-row justify="end">
-                <v-btn
-                  type="submit"
-                  elevation="2"
-                  color="primary"
-                  :disabled="!valid"
-                >
-                  Login
-                </v-btn>
-              </v-row>
+              <v-container>
+                <v-row justify="end">
+                  <v-btn
+                    type="submit"
+                    elevation="2"
+                    color="primary"
+                    class="submit"
+                    :disabled="!valid"
+                  >
+                    <span v-if="!submit"> Login </span>
+                    <v-progress-circular
+                      v-else
+                      indeterminate
+                      color="white"
+                    ></v-progress-circular>
+                  </v-btn>
+                </v-row>
+              </v-container>
             </v-card-actions>
           </v-form>
         </v-container>
@@ -55,6 +64,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      submit: false,
       dialog: false,
       valid: false,
       user: {
@@ -70,21 +80,29 @@ export default {
   methods: {
     ...mapActions(["doLogin"]),
     onSubmit() {
-      login(this.user)
-        .then((result) => {
-          createAuthAPI(result.data.token_type, result.data.access_token);
-          getUser(result.data.user_id).then((user) => {
-            Promise.all([
-              this.$store.dispatch("ActionSetUser", user.data),
-            ]).finally(() => {
-              this.doLogin(result.data);
-              this.dialog = false;
+      // this.valid = false;
+      this.submit = true;
+      if (this.$refs.form.validate()) {
+        login(this.user)
+          .then((result) => {
+            createAuthAPI(result.data.token_type, result.data.access_token);
+            getUser(result.data.user_id).then((user) => {
+              Promise.all([
+                this.$store.dispatch("ActionSetUser", user.data),
+              ]).finally(() => {
+                this.doLogin(result.data);
+                this.dialog = false;
+              });
             });
+          })
+          .catch((error) => {
+            console.log("Erro: ", error.response);
+            this.submit = false;
+            // this.valid = true;
           });
-        })
-        .catch((error) => {
-          console.log("Erro: ", error);
-        });
+      } else {
+        this.submit = false;
+      }
     },
   },
 };
