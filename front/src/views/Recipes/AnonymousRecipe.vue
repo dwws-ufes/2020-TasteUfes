@@ -43,7 +43,7 @@
                     </v-col>
                     <v-col cols="12" sm="10" class="pl-0">
                       <v-container>
-                        <v-select
+                        <v-autocomplete
                           v-model="ingredient.food_id"
                           :items="foods"
                           item-text="name"
@@ -53,25 +53,31 @@
                           return-value
                           @change="showFields(ingredient)"
                         />
-                        <v-select
-                          v-model="ingredient.quantity_unit"
-                          :items="ingredient.measures"
-                          item-text="name"
-                          item-value="id"
-                          label="Select a Measure"
-                          :rules="[(value) => !!value || 'Required.']"
-                          return-value
-                          v-if="ingredient.nutrition_facts_fields"
-                        />
-                        <v-text-field
-                          v-model.number="ingredient.quantity"
-                          :rules="[(value) => !!value || 'Required.']"
-                          type="number"
-                          label="Quantity Food"
-                          hide-details="auto"
-                          class="form-control"
-                          v-if="ingredient.nutrition_facts_fields"
-                        />
+                        <v-row>
+                          <v-col>
+                            <v-text-field
+                              v-model.number="ingredient.quantity"
+                              :rules="[(value) => !!value || 'Required.']"
+                              type="number"
+                              label="Quantity Food"
+                              hide-details="auto"
+                              class="form-control"
+                              v-if="ingredient.nutrition_facts_fields"
+                            />
+                          </v-col>
+                          <v-col>
+                            <v-select
+                              v-model="ingredient.quantity_unit"
+                              :items="ingredient.measures"
+                              item-text="name"
+                              item-value="id"
+                              label="Select a Measure"
+                              :rules="[(value) => !!value || 'Required.']"
+                              return-value
+                              v-if="ingredient.nutrition_facts_fields"
+                            />
+                          </v-col>
+                        </v-row>
                       </v-container>
                     </v-col>
                   </v-row>
@@ -206,7 +212,7 @@ export default {
 
     removeFoodField: function (index) {
       this.recipe.ingredients.splice(index, 1);
-      if(this.recipe.ingredients.length == 0) this.validBtn = false;
+      if (this.recipe.ingredients.length == 0) this.validBtn = false;
     },
 
     getMeasureName(id) {
