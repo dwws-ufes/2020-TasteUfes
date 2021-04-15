@@ -11,6 +11,14 @@ function login(data) {
   });
 }
 
+function registerUser(user) {
+  return notAuthAPI({
+    method: 'POST',
+    url: `/users`,
+    data: user,
+  });
+}
+
 function createUser(user) {
   return authAPI({
     method: 'POST',
@@ -18,6 +26,7 @@ function createUser(user) {
     data: user,
   });
 }
+
 
 function getUsers() {
   return authAPI({
@@ -111,14 +120,14 @@ function createFood(food) {
 }
 
 function getFoods() {
-  return authAPI({
+  return notAuthAPI({
     method: 'GET',
     url: `/foods`,
   });
 }
 
 function getFood(id) {
-  return authAPI({
+  return notAuthAPI({
     method: 'GET',
     url: `/foods/${id}`,
   });
@@ -175,6 +184,7 @@ function recommendationByFoods(foods) {
 
 export {
   login,
+  registerUser,
 
   createUser,
   getUsers,

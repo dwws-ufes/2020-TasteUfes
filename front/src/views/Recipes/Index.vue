@@ -31,6 +31,7 @@
           </template>
           <template v-slot:item.actions="{ item }">
             <v-row>
+              <DetailsButton :id="item.id" name="DetailsRecipe" />
               <EditButton :id="item.id" name="EditRecipe" />
               <DeleteButton
                 :id="item.id"
@@ -53,7 +54,10 @@
             <v-col
               v-for="recipe in recipeList"
               :key="recipe.name"
-              justify="space-around"
+              cols="12"
+              xs="12"
+              sm="6"
+              lg="4"
             >
               <router-link
                 class="text-decoration-none title-link"
@@ -190,10 +194,10 @@ export default {
               });
             } else {
               this.recipeListTable = auxList;
-              this.recipeListTable.map((rec, index) => {
-                rec.number = index + 1;
-              });
             }
+            this.recipeListTable.map((rec, index) => {
+              rec.number = index + 1;
+            });
             this.changeLoading();
           })
           .catch((error) => {

@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 if (localStorage.getItem('access_token') != '') {
   Promise.all([
     store.dispatch('loadApplication'),
-  ]).finally(() => {
+  ]).then(() => {
     window._Vue = new Vue({
       store,
       vuetify,

@@ -13,7 +13,7 @@
             <v-text-field
               v-model="user.first_name"
               :rules="[rules.required]"
-              label="FirstName"
+              label="FirstName*"
               hide-details="auto"
               class="form-control"
             />
@@ -21,7 +21,7 @@
             <v-text-field
               v-model="user.last_name"
               :rules="[rules.required]"
-              label="LastName"
+              label="LastName*"
               hide-details="auto"
               class="form-control"
             />
@@ -29,7 +29,7 @@
             <v-text-field
               v-model="user.username"
               :rules="[rules.required]"
-              label="Username"
+              label="Username*"
               hide-details="auto"
               class="form-control"
             />
@@ -37,7 +37,7 @@
             <v-text-field
               v-model="user.email"
               :rules="[rules.required, rules.email]"
-              label="Email"
+              label="Email*"
               hide-details="auto"
               class="form-control"
             />
@@ -45,7 +45,7 @@
             <v-text-field
               v-model="user.password"
               :rules="[rules.required]"
-              label="Password"
+              label="Password*"
               :type="'password'"
               class="form-control"
               hide-details="auto"
@@ -54,19 +54,20 @@
             <v-text-field
               v-model="repeatPassword"
               :rules="[rules.required, passwordConfirmationRule]"
-              label="RepeatPassword"
+              label="RepeatPassword*"
               :type="'password'"
               class="form-control"
               hide-details="auto"
             />
 
             <v-select
+              v-if="isAdmin"
               v-model="roleId"
               :items="roles"
               :rules="[rules.required]"
               item-text="name"
               item-value="id"
-              label="Select a Role"
+              label="Select a Role*"
               return-value
               hide-details="auto"
             />
@@ -79,14 +80,18 @@
               type="submit"
               elevation="2"
               color="primary"
+              v-if="!submit"
               :disabled="!valid"
             >
-              <span v-if="!submit"> Create </span>
-              <v-progress-circular
-                v-else
-                indeterminate
-                color="white"
-              ></v-progress-circular>
+              <span> Create </span>
+            </v-btn>
+            <v-btn
+              v-else
+              color="primary"
+              class="submit"
+              loading
+              :disabled="!valid"
+            >
             </v-btn>
 
             <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
@@ -98,7 +103,14 @@
 </template>
 
 <script>
-import { createUser, getRoles } from "@/api";
+import {
+  createUser,
+  registerUser,
+  getRoles,
+  login,
+  createAuthAPI,
+} from "@/api";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -113,7 +125,7 @@ export default {
         roles: [],
       },
       roles: [],
-      roleId: "",
+      roleId: "00000000-0000-0000-0000-000000000000",
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
@@ -126,17 +138,47 @@ export default {
   },
 
   methods: {
+    ...mapActions(["doLogin"]),
     onSubmit: function () {
       this.submit = true;
       if (this.$refs.form.validate()) {
         if (this.roleId != "") this.user.roles = [{ id: this.roleId }];
-        createUser(this.user)
-          .then((result) => {
-            this.$router.push({ name: "ListUser" });
-          })
-          .catch((error) => {
-            console.log(error.response);
-          });
+        if (this.isAdmin) {
+          createUser(this.user)
+            .then((result) => {
+              this.$router.push({ name: "ListUser" });
+            })
+            .catch((error) => {
+              console.log(error.response);
+              this.submit = false;
+            });
+        } else {
+          registerUser(this.user)
+            .then((registerResult) => {
+              login(this.user)
+                .then((result) => {
+                  createAuthAPI(
+                    result.data.token_type,
+                    result.data.access_token
+                  );
+                  Promise.all([
+                    this.$store.dispatch("ActionSetUser", registerResult.data),
+                  ]).finally(() => {
+                    this.doLogin(result.data);
+                    this.$router.push({ name: "ListRecipe" });
+                  });
+                })
+                .catch((error) => {
+                  console.log(error);
+                  this.submit = false;
+                  // this.valid = true;
+                });
+            })
+            .catch((error) => {
+              console.log(error.response);
+              this.submit = false;
+            });
+        }
       } else {
         this.submit = false;
       }
@@ -158,7 +200,7 @@ export default {
   },
 
   created() {
-    this.getRoles();
+    if (this.isAdmin) this.getRoles();
   },
 
   computed: {
@@ -166,6 +208,7 @@ export default {
       return () =>
         this.user.password === this.repeatPassword || "Password must match";
     },
+    ...mapGetters(["isAdmin"]),
   },
 };
 </script>

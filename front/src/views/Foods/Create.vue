@@ -13,7 +13,7 @@
             <v-text-field
               v-model="food.name"
               :rules="[this.rules.required]"
-              label="Name"
+              label="Name*"
               hide-details="auto"
               class="form-control"
             />
@@ -48,29 +48,29 @@
               </div>
             </v-col>
             <div v-if="nutritionFacts">
-                <v-row>
-                  <v-col>
-                    <v-text-field
-                      v-model.number="food.nutrition_facts.serving_size"
-                      type="number"
-                      label="Serving Size"
-                      hide-details="auto"
-                      :rules="[(value) => !!value || 'Required.']"
-                      class="form-control"
-                    />
-                  </v-col>
-                  <v-col>
-                    <v-select
-                      v-model="food.nutrition_facts.serving_size_unit"
-                      :items="nutrition_facts_measures"
-                      item-text="name"
-                      item-value="id"
-                      label="Select a Measure"
-                      :rules="[(value) => !!value || 'Required.']"
-                      return-value
-                    />
-                  </v-col>
-                </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model.number="food.nutrition_facts.serving_size"
+                    type="number"
+                    label="Serving Size*"
+                    hide-details="auto"
+                    :rules="[(value) => !!value || 'Required.']"
+                    class="form-control"
+                  />
+                </v-col>
+                <v-col>
+                  <v-select
+                    v-model="food.nutrition_facts.serving_size_unit"
+                    :items="nutrition_facts_measures"
+                    item-text="name"
+                    item-value="id"
+                    label="Select a Measure*"
+                    :rules="[(value) => !!value || 'Required.']"
+                    return-value
+                  />
+                </v-col>
+              </v-row>
             </div>
           </v-container>
         </v-card>
@@ -123,7 +123,7 @@
                             :items="nutrients"
                             item-text="name"
                             item-value="id"
-                            label="Select a Nutrient"
+                            label="Select a Nutrient*"
                             :rules="[(value) => !!value || 'Required.']"
                             return-value
                           />
@@ -131,9 +131,9 @@
                         <v-col>
                           <v-text-field
                             v-model.number="nut_facts_nut.amount_per_serving"
-                            :rules="[(value) => !!value || 'Required.']"
                             type="number"
-                            label="Amount per serving (g)"
+                            label="Amount per serving (g)*"
+                            :rules="[(value) => !!value || 'Required.']"
                             hide-details="auto"
                             class="form-control"
                           />
@@ -154,13 +154,17 @@
               elevation="2"
               color="primary"
               :disabled="!valid"
+              v-if="!submit"
             >
-              <span v-if="!submit"> Create </span>
-              <v-progress-circular
-                v-else
-                indeterminate
-                color="white"
-              ></v-progress-circular>
+              <span> Create </span>
+            </v-btn>
+            <v-btn
+              v-else
+              color="primary"
+              class="submit"
+              loading
+              :disabled="!valid"
+            >
             </v-btn>
             <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
           </v-row>

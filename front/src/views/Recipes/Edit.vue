@@ -9,11 +9,17 @@
       <h1>Edit Recipe</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
-          <v-container>
+          <v-sheet v-if="load" :color="`grey lighten-4`" class="pa-3">
+            <v-skeleton-loader
+              class="mx-auto"
+              type="article"
+            ></v-skeleton-loader>
+          </v-sheet>
+          <v-container v-else>
             <v-text-field
               v-model="recipe.name"
               :rules="[this.rules.required]"
-              label="Name"
+              label="Name*"
               hide-details="auto"
               class="form-control"
             />
@@ -21,21 +27,21 @@
               v-model.number="recipe.servings"
               :rules="[this.rules.required]"
               type="number"
-              label="Servings"
+              label="Servings*"
               hide-details="auto"
               class="form-control"
             />
             <v-text-field
               v-model.number="prepTime"
               :rules="[(value) => !!value || 'Required.']"
-              label="Preparation time (in minutes)"
+              label="Preparation time (in minutes)*"
               type="number"
               hide-details="auto"
               class="form-control"
             />
           </v-container>
         </v-card>
-        <v-card class="mx-auto" elevation="0" outlined>
+        <v-card class="mx-auto" elevation="0" outlined v-if="!load">
           <v-container>
             <v-col class="d-flex justify-content-between">
               <h2>Food</h2>
@@ -79,7 +85,7 @@
                           :items="foods"
                           item-text="name"
                           item-value="id"
-                          label="Select a food"
+                          label="Select a food*"
                           :rules="[(value) => !!value || 'Required.']"
                           return-value
                           @change="showFields(ingredient)"
@@ -88,9 +94,9 @@
                           <v-col>
                             <v-text-field
                               v-model.number="ingredient.quantity"
-                              :rules="[(value) => !!value || 'Required.']"
                               type="number"
-                              label="Quantity Food"
+                              label="Quantity Food*"
+                              :rules="[(value) => !!value || 'Required.']"
                               hide-details="auto"
                               class="form-control"
                               v-if="ingredient.nutrition_facts_fields"
@@ -102,7 +108,7 @@
                               :items="ingredient.measures"
                               item-text="name"
                               item-value="id"
-                              label="Select a Measure"
+                              label="Select a Measure*"
                               :rules="[(value) => !!value || 'Required.']"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
@@ -117,7 +123,7 @@
             </div>
           </v-container>
         </v-card>
-        <v-card class="mx-auto" elevation="0" outlined>
+        <v-card class="mx-auto" elevation="0" outlined v-if="!load">
           <v-container>
             <v-col class="d-flex justify-content-between">
               <h2>Step</h2>
@@ -162,7 +168,7 @@
                         <v-text-field
                           v-model="preparation.description"
                           :rules="[(value) => !!value || 'Required.']"
-                          label="Description"
+                          label="Description*"
                           hide-details="auto"
                           class="form-control"
                         />
@@ -183,14 +189,18 @@
                   type="submit"
                   elevation="2"
                   color="primary"
+                  v-if="!submit"
                   :disabled="!valid"
                 >
-                  <span v-if="!submit"> Save </span>
-                  <v-progress-circular
-                    v-else
-                    indeterminate
-                    color="white"
-                  ></v-progress-circular>
+                  <span> Save </span>
+                </v-btn>
+                <v-btn
+                  v-else
+                  color="primary"
+                  class="submit"
+                  loading
+                  :disabled="!valid"
+                >
                 </v-btn>
                 <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
               </v-row>
@@ -211,6 +221,7 @@ export default {
 
   data() {
     return {
+      load: true,
       recipeId: this.$route.params.id,
       valid: false,
       submit: false,
@@ -231,6 +242,11 @@ export default {
       },
       rules: {
         required: (value) => !!value || "Required.",
+      },
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2,
       },
     };
   },
@@ -257,18 +273,22 @@ export default {
       let nutrition_facts = this.foods.find((food) => food.id == foodId)
         .nutrition_facts;
       ingredient.measures = [];
-      if (
-        this.$store.state.mass_measures_keys.includes(
-          nutrition_facts.serving_size_unit
-        )
-      ) {
-        ingredient.measures = this.$store.state.mass_measures;
-      } else if (
-        this.$store.state.weight_measures_keys.includes(
-          nutrition_facts.serving_size_unit
-        )
-      ) {
-        ingredient.measures = this.$store.state.weight_measures;
+      if (nutrition_facts) {
+        if (
+          this.$store.state.mass_measures_keys.includes(
+            nutrition_facts.serving_size_unit
+          )
+        ) {
+          ingredient.measures = this.$store.state.mass_measures;
+        } else if (
+          this.$store.state.weight_measures_keys.includes(
+            nutrition_facts.serving_size_unit
+          )
+        ) {
+          ingredient.measures = this.$store.state.weight_measures;
+        } else {
+          ingredient.measures = this.$store.state.ingredients_measures;
+        }
       } else {
         ingredient.measures = this.$store.state.ingredients_measures;
       }
@@ -285,6 +305,9 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+        })
+        .finally(() => {
+          this.load = false;
         });
     },
     getRecipe() {

@@ -13,7 +13,7 @@
             <v-text-field
               v-model="recipe.name"
               :rules="[this.rules.required]"
-              label="Name"
+              label="Name*"
               hide-details="auto"
               class="form-control"
             />
@@ -21,14 +21,14 @@
               v-model.number="recipe.servings"
               :rules="[this.rules.required]"
               type="number"
-              label="Servings"
+              label="Servings*"
               hide-details="auto"
               class="form-control"
             />
             <v-text-field
               v-model.number="prepTime"
               :rules="[(value) => !!value || 'Required.']"
-              label="Preparation time (in minutes)"
+              label="Preparation time (in minutes)*"
               type="number"
               hide-details="auto"
               class="form-control"
@@ -79,7 +79,7 @@
                           :items="foods"
                           item-text="name"
                           item-value="id"
-                          label="Select a food"
+                          label="Select a food*"
                           :rules="[(value) => !!value || 'Required.']"
                           return-value
                           @change="showFields(ingredient)"
@@ -90,7 +90,7 @@
                               v-model.number="ingredient.quantity"
                               :rules="[(value) => !!value || 'Required.']"
                               type="number"
-                              label="Quantity Food"
+                              label="Quantity Food*"
                               hide-details="auto"
                               class="form-control"
                               v-if="ingredient.nutrition_facts_fields"
@@ -102,7 +102,7 @@
                               :items="ingredient.measures"
                               item-text="name"
                               item-value="id"
-                              label="Select a Measure"
+                              label="Select a Measure*"
                               :rules="[(value) => !!value || 'Required.']"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
@@ -162,7 +162,7 @@
                         <v-text-field
                           v-model="preparation.description"
                           :rules="[(value) => !!value || 'Required.']"
-                          label="Description"
+                          label="Description*"
                           hide-details="auto"
                           class="form-control"
                         />
@@ -183,14 +183,18 @@
                   type="submit"
                   elevation="2"
                   color="primary"
+                  v-if="!submit"
                   :disabled="!valid"
                 >
-                  <span v-if="!submit"> Create </span>
-                  <v-progress-circular
-                    v-else
-                    indeterminate
-                    color="white"
-                  ></v-progress-circular>
+                  <span> Create </span>
+                </v-btn>
+                <v-btn
+                  v-else
+                  color="primary"
+                  class="submit"
+                  loading
+                  :disabled="!valid"
+                >
                 </v-btn>
                 <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
               </v-row>

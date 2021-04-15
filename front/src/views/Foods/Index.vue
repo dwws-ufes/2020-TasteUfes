@@ -31,6 +31,7 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-row>
+          <DetailsButton :id="item.id" name="DetailsFood" />
           <EditButton :id="item.id" name="EditFood" />
           <DeleteButton
             :id="item.id"

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import beforeEach from '@/router/beforeEach'
+import { store } from '@/auth';
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,14 @@ const routes = [
     name: 'CreateRecipe',
     component: function () {
       return import(/* webpackChunkName: "createRecipe" */ '../views/Recipes/Create.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -24,6 +33,14 @@ const routes = [
     name: 'ListRecipe',
     component: function () {
       return import(/* webpackChunkName: "recipe" */ '../views/Recipes/Index.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -31,6 +48,14 @@ const routes = [
     name: 'EditRecipe',
     component: function () {
       return import(/* webpackChunkName: "editRecipe" */ '../views/Recipes/Edit.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -45,7 +70,7 @@ const routes = [
     name: 'AnonymousRecipe',
     component: function () {
       return import(/* webpackChunkName: "anonymousRecipe" */ '../views/Recipes/AnonymousRecipe.vue')
-    }
+    },
   },
 
   {
@@ -61,6 +86,14 @@ const routes = [
     name: 'CreateFood',
     component: function () {
       return import(/* webpackChunkName: "createFood" */ '../views/Foods/Create.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -68,6 +101,14 @@ const routes = [
     name: 'ListFood',
     component: function () {
       return import(/* webpackChunkName: "food" */ '../views/Foods/Index.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -75,6 +116,14 @@ const routes = [
     name: 'EditFood',
     component: function () {
       return import(/* webpackChunkName: "editFood" */ '../views/Foods/Edit.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -97,6 +146,14 @@ const routes = [
     name: 'ListUser',
     component: function () {
       return import(/* webpackChunkName: "user" */ '../views/Users/Index.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -104,6 +161,14 @@ const routes = [
     name: 'EditUser',
     component: function () {
       return import(/* webpackChunkName: "editUser" */ '../views/Users/Edit.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
   {
@@ -111,6 +176,14 @@ const routes = [
     name: 'DetailsUser',
     component: function () {
       return import(/* webpackChunkName: "detailsUser" */ '../views/Users/Details.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
     }
   },
 ]

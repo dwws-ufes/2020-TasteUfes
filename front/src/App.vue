@@ -8,11 +8,13 @@
         </v-row>
       </v-container>
     </v-main>
+    <Footbar />
   </v-app>
 </template>
 
 <script>
 import Toolbar from "@/components/Toolbar.vue";
+import Footbar from "@/components/Footbar.vue";
 import { mapActions } from "vuex";
 import { refreshAuthentication } from "@/api";
 
@@ -21,6 +23,7 @@ export default {
 
   components: {
     Toolbar,
+    Footbar,
   },
 
   data: () => ({

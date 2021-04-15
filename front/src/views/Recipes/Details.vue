@@ -9,7 +9,13 @@
         </div>
       </v-col>
       <v-col cols="12" sm="8" d-flex justify-center>
-        <v-card>
+        <v-sheet v-if="load" :color="`grey lighten-4`" class="pa-3">
+          <v-skeleton-loader
+            class="mx-auto"
+            type="article, list-item-three-line"
+          ></v-skeleton-loader>
+        </v-sheet>
+        <v-card v-else>
           <v-card-title
             ><h1>{{ recipe.name }}</h1></v-card-title
           >
@@ -45,9 +51,16 @@
                 :key="ingredient.id"
               >
                 <span>
-              <router-link class="text-decoration-none" :to="{ name: 'DetailsFood', params: {id: ingredient.food.id} }"">
-                  <b>{{ ingredient.food.name }}:</b>
-              </router-link>
+                  <router-link
+                    target="_blank"
+                    class="text-decoration-none"
+                    :to="{
+                      name: 'DetailsFood',
+                      params: { id: ingredient.food.id },
+                    }"
+                  >
+                    <b>{{ ingredient.food.name }}:</b>
+                  </router-link>
                   {{ formatNumber(ingredient.quantity)
                   }}{{ getMeasureName(ingredient.quantity_unit) }}
                 </span>
@@ -99,6 +112,7 @@ export default {
 
   data() {
     return {
+      load: true,
       recipeId: this.$route.params.id,
       serv: null,
       limitRule: [
@@ -137,6 +151,9 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+        })
+        .finally(() => {
+          this.load = false;
         });
     },
     getMeasureName(id) {
@@ -153,6 +170,15 @@ export default {
         recalculatePerServing(this.recipe.id, this.serv)
           .then((result) => {
             this.recipe = result.data;
+            this.recipe.preparation.steps.sort((step1, step2) => {
+              if (step1.step < step2.step) return -1;
+              else return 1;
+            });
+            this.recipe.ingredients.map((ing) => {
+              let value = ing.quantity;
+              ing.quantity = parseFloat(value.toFixed(2));
+            });
+            console.log(this.recipe);
           })
           .catch((error) => {
             console.log(error.response);
@@ -160,11 +186,7 @@ export default {
       }
     },
     formatNumber(value) {
-      if (parseInt(value) == 0) {
-        return value.toFixed(2);
-      } else {
-        return value;
-      }
+      return parseFloat(value.toFixed(2));
     },
   },
 

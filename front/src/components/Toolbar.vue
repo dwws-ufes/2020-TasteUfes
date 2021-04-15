@@ -3,15 +3,21 @@
     <v-app-bar dark color="primary">
       <v-toolbar-title class="text-no-wrap">
         <router-link
-          class="text-decoration-none title-link"
+          class="text-decoration-none title-link d-flex align-center"
           :to="{ name: 'Home' }"
         >
-          TasteUfes
+          <v-icon>mdi-home</v-icon>
+          <span class="title-name">TasteUfes</span>
         </router-link>
       </v-toolbar-title>
       <v-spacer />
-      <div v-if="this.$store.state.auth" class="menu">
+      <div class="menu">
         <MenuOption v-for="menu in menuList" :key="menu.name" :menu="menu" />
+      </div>
+      <div v-if="!auth">
+        <v-btn outlined :to="{ name: 'CreateUser' }" class="mx-2"
+          >Sign Up</v-btn
+        >
       </div>
       <Login v-if="!auth" />
     </v-app-bar>
@@ -19,91 +25,107 @@
 </template>
 
 <script>
-import Login from "@/components/Login.vue";
-import MenuOption from "@/components/MenuOption.vue";
-import { mapGetters } from "vuex";
+import Login from '@/components/Login.vue';
+import MenuOption from '@/components/MenuOption.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "Toolbar",
+  name: 'Toolbar',
   computed: {
-    ...mapGetters(["auth", "isAdmin"]),
+    ...mapGetters(['auth', 'isAdmin', 'getUserId']),
     showMenu() {
       return this.isAdmin;
     },
     menuList() {
       return [
         {
-          name: "Recipe",
+          name: 'Recipe',
           icon: null,
           show: true,
           options: [
             {
-              name: "Create Recipe",
-              routeName: "CreateRecipe",
+              name: 'Create Recipe',
+              routeName: 'CreateRecipe',
+              param: null,
+              action: false,
+              show: this.auth,
+            },
+            {
+              name: 'List Recipe',
+              routeName: 'ListRecipe',
+              param: null,
+              action: false,
+              show: this.auth,
+            },
+            {
+              name: 'Create Anonymous Recipe',
+              routeName: 'AnonymousRecipe',
+              param: null,
               action: false,
               show: true,
             },
             {
-              name: "List Recipe",
-              routeName: "ListRecipe",
-              action: false,
-              show: true,
-            },
-            {
-              name: "Create Anonymous Recipe",
-              routeName: "AnonymousRecipe",
-              action: false,
-              show: true,
-            },
-            {
-              name: "Recommendation Recipe",
-              routeName: "RecommendationRecipe",
+              name: 'Recommendation Recipe',
+              routeName: 'RecommendationRecipe',
+              param: null,
               action: false,
               show: true,
             },
           ],
         },
         {
-          name: "Food",
+          name: 'Food',
           icon: null,
-          show: this.showMenu,
+          show: this.isAdmin,
           options: [
             {
-              name: "Create Food",
-              routeName: "CreateFood",
+              name: 'Create Food',
+              routeName: 'CreateFood',
+              param: null,
               action: false,
-              show: this.showMenu,
+              show: this.auth,
             },
             {
-              name: "List Food",
-              routeName: "ListFood",
+              name: 'List Food',
+              routeName: 'ListFood',
+              param: null,
               action: false,
-              show: this.showMenu,
+              show: this.auth,
             },
           ],
         },
         {
           name: this.$store.state.user.first_name,
-          icon: "mdi-account-circle",
-          show: true,
+          icon: 'mdi-account-circle',
+          show: this.auth,
           options: [
             {
-              name: "Create User",
-              routeName: "CreateUser",
+              name: 'My Account',
+              routeName: 'DetailsUser',
+              param: this.getUserId,
               action: false,
-              show: this.showMenu,
+              show: this.auth,
             },
             {
-              name: "List User",
-              routeName: "ListUser",
+              name: 'Create User',
+              routeName: 'CreateUser',
+              param: null,
               action: false,
-              show: this.showMenu,
+              show: this.isAdmin,
             },
             {
-              name: "Logout",
-              routeName: "Logout",
+              name: 'List User',
+              routeName: 'ListUser',
+              param: null,
+              action: false,
+              show: this.isAdmin,
+            },
+            {
+              name: 'Logout',
+              routeName: 'Logout',
+              param: null,
               action: true,
-              show: true,
+              show: this.auth,
             },
           ],
         },
@@ -126,6 +148,7 @@ export default {
 .title {
   &-link {
     color: #ffffff;
+    font-size: 26px;
   }
 }
 </style>

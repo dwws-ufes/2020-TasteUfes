@@ -41,9 +41,14 @@
         </v-card-text>
       </v-row>
     </v-card-title>
+    <v-card-actions>
     <v-row>
-      <v-col> </v-col>
+      <v-col class="d-flex justify-flex-end">
+        <v-btn class="primary" :to="{ name: 'EditUser', params: { id: user.id } }"><v-icon small class="mr-2">mdi-pencil</v-icon> Edit</v-btn>
+      </v-col>
     </v-row>
+
+    </v-card-actions>
   </v-container>
 </template>
 

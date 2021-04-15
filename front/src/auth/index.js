@@ -4,13 +4,18 @@ import { createAuthAPI, deleteAuthAPI, getUser } from '@/api';
 
 Vue.use(Vuex)
 
+const userDefault = () => ({
+  first_name: '',
+  roles: []
+})
+
 const store = new Vuex.Store({
   state: {
     auth: false,
     token: '',
     tokenType: '',
     userId: '',
-    user: { first_name: '', roles: [] },
+    user: userDefault(),
     ingredients_measures: [
       {
         'name': 'g',
@@ -97,7 +102,7 @@ const store = new Vuex.Store({
 
   mutations: {
     login: state => state.auth = state.auth = true,
-    logout: state => state.auth = false,
+    logout: state => { state.auth = false; state.user = userDefault() },
     setTokenType: (state, tokenType) => state.tokenType = tokenType,
     setToken: (state, token) => state.token = token,
     setUserId: (state, userId) => state.userId = userId,
@@ -109,7 +114,6 @@ const store = new Vuex.Store({
     isAdmin: state => state.user.roles.length > 0,
     getUserId: state => state.userId,
     getUser: state => state.user,
-    
   },
 
   actions: {
@@ -128,7 +132,7 @@ const store = new Vuex.Store({
         })
       }
     },
-    
+
     async load({ dispatch }, { userId, accessToken }) {
       // return new Promise((resolve, reject) => {
       await getUser(userId).then((user) => {
@@ -184,9 +188,11 @@ const store = new Vuex.Store({
 
     loadSession: ({ dispatch }, { token_type, access_token }) => {
       if (access_token != null) {
-        createAuthAPI(token_type, access_token);
-        dispatch('ActionSetToken', access_token);
-        dispatch('loginAuth');
+        Promise.all([
+          createAuthAPI(token_type, access_token),
+          dispatch('ActionSetToken', access_token),
+          dispatch('loginAuth'),
+        ]);
       } else {
         dispatch('doLogout');
       }

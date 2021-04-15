@@ -3,7 +3,7 @@
     class="text-decoration-none title-link"
     :to="{ name: name, params: { id: id } }"
   >
-    <v-icon small class="mr-2"> mdi-format-list-bulleted </v-icon>
+    <v-icon medium class="mr-2"> mdi-format-list-bulleted </v-icon>
   </router-link>
 </template>
 
