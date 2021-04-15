@@ -321,8 +321,8 @@
         <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="CalculateAnonymousRecipe" methodType="//@compose.0/Models/Recipe" requestMethod="GET">
           <ownedParameter name="recipe" type="//@compose.0/Models/Recipe"/>
         </ownedOperation>
-        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="RecommendRecipesByIngredients" requestMethod="GET">
-          <ownedParameter name="ingredients">
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="RecommendRecipesByFoods" requestMethod="GET">
+          <ownedParameter name="foods">
             <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
           </ownedParameter>
           <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
@@ -354,6 +354,9 @@
           </ownedParameter>
           <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
         </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="GetNutrients" requestMethod="GET">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xsi:type="frameweb:FrontControllerClass" name="UserController">
         <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Post_User" visibility="public" requestMethod="POST">
@@ -375,22 +378,26 @@
             <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
           </ownedParameter>
         </ownedOperation>
-        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Authenticate_User" visibility="public" methodType="//@compose.0/Models/User" requestMethod="GET">
-          <ownedParameter name="email">
-            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
-          </ownedParameter>
-          <ownedParameter name="password">
-            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/string"/>
-          </ownedParameter>
-        </ownedOperation>
-        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Logout_User" requestMethod="GET">
-          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Login_User" visibility="public" methodType="//@compose.0/Models/User" requestMethod="GET">
+          <ownedParameter name="user" type="//@compose.0/Models/User"/>
         </ownedOperation>
         <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="Delete_User" requestMethod="DELETE">
           <ownedParameter name="id">
             <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
           </ownedParameter>
           <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IActionResult"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="GetRoles" requestMethod="GET">
+          <methodType xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/IEnumerable"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="RefreshToken" methodType="//@compose.0/Models/Token" requestMethod="POST">
+          <ownedParameter name="resource" type="//@compose.0/Models/Token"/>
+        </ownedOperation>
+        <ownedOperation xsi:type="frameweb:FrontControllerMethod" name="UpdatePassword" methodType="//@compose.0/Models/User" requestMethod="PUT">
+          <ownedParameter name="id">
+            <type xsi:type="uml:Class" href="CSharp.frameweb#//@compose.0/Guid"/>
+          </ownedParameter>
+          <ownedParameter name="user" type="//@compose.0/Models/User"/>
         </ownedOperation>
       </packagedElement>
       <packagedElement xsi:type="frameweb:ServiceControllerAssociation" memberEnd="//@compose.1/Controllers/@packagedElement.3/Source //@compose.1/Controllers/@packagedElement.3/Target">
@@ -657,12 +664,12 @@
     <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Edit" resultMethod="//@compose.1/Controllers/UserController/Put_User">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
-    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Login.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Authenticate_User"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App" resultMethod="//@compose.1/Controllers/UserController/Authenticate_User">
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Login.1" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Login_User"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App" resultMethod="//@compose.1/Controllers/UserController/Login_User">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
-    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Logout_User"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App" resultMethod="//@compose.1/Controllers/UserController/Logout_User">
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components/Toolbar" supplier="//@compose.1/Controllers/UserController"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components/App">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
     <packagedElement xsi:type="frameweb:PageDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Components.Users/Details">
@@ -678,12 +685,12 @@
     <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Index" resultMethod="//@compose.1/Controllers/RecipesController/GetRecipesByUser">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
-    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients">
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByFoods"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByFoods">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
-    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Recommendation" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients"/>
-    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Recommendation" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByIngredients">
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Recommendation" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/RecommendRecipesByFoods"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Recommendation" resultMethod="//@compose.1/Controllers/RecipesController/RecommendRecipesByFoods">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
     <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Index" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/Delete_User"/>
@@ -707,6 +714,22 @@
     </packagedElement>
     <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Recipes/Details" supplier="//@compose.1/Controllers/RecipesController" method="//@compose.1/Controllers/RecipesController/CalculateAnonymousRecipe"/>
     <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/RecipesController" supplier="//@compose.1/Components.Recipes/Details" resultMethod="//@compose.1/Controllers/RecipesController/CalculateAnonymousRecipe">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Create" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/GetNutrients"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Create" resultMethod="//@compose.1/Controllers/FoodsController/GetNutrients">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Foods/Edit" supplier="//@compose.1/Controllers/FoodsController" method="//@compose.1/Controllers/FoodsController/GetNutrients"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/FoodsController" supplier="//@compose.1/Components.Foods/Edit" resultMethod="//@compose.1/Controllers/FoodsController/GetNutrients">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Edit" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/GetRoles"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Edit" resultMethod="//@compose.1/Controllers/FoodsController/GetNutrients">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Create" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/GetRoles"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Create" resultMethod="//@compose.1/Controllers/FoodsController/GetNutrients">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
   </compose>
