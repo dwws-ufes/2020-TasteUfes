@@ -8,6 +8,10 @@
 </div>
 </h1>
 
+"Uma derrota é sempre um aprendizado. E assim vamos perdendo e aprendendo. E perdendo novamente e aprendendo novamente. E perdendo e perdendo e perdendo, e aprendendo e aprendendo. Quando terá fim esse aprendizado, meu Deus?"
+
+<sup>Craque Daniel</sup>
+
 ## :hammer_and_wrench: Pré-Requisitos
 - Docker Engine (>= v20.10.5) :whale:
 
