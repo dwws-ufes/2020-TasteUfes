@@ -74,7 +74,7 @@
                     </v-col>
                     <v-col cols="12" sm="10" class="pl-0">
                       <v-container>
-                        <v-select
+                        <v-autocomplete
                           v-model="ingredient.food_id"
                           :items="foods"
                           item-text="name"

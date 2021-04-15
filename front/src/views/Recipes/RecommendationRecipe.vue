@@ -9,7 +9,7 @@
             </v-card-title>
             <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
               <div class="form-group">
-                <v-select
+                <v-autocomplete
                   v-model="selectFood"
                   :items="foods"
                   item-text="name"
@@ -17,6 +17,9 @@
                   label="Select a food"
                   :rules="[(value) => !!value || 'Required.']"
                   multiple
+                  clearable
+                  deletable-chips
+                  chips
                   return-value
                 />
               </div>
