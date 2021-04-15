@@ -3,7 +3,7 @@
 
     <v-card elevation="2" class="card-form" v-if="!submit">
       <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
-        <h1>Anonymous Recipe</h1>
+        <h1>My Recipe</h1>
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
@@ -22,55 +22,61 @@
               v-for="(ingredient, i) in this.recipe.ingredients"
               class="foods"
             >
-              <v-row>
-                <v-col cols="12" sm="10">
-                  <v-card outlined shaped>
-                    <v-container>
-                      <v-select
-                        v-model="ingredient.food_id"
-                        :items="foods"
-                        item-text="name"
-                        item-value="id"
-                        label="Select a food"
-                        :rules="[(value) => !!value || 'Required.']"
-                        return-value
-                        @change="showFields(ingredient)"
-                      />
-                      <v-text-field
-                        v-model.number="ingredient.quantity"
-                        :rules="[(value) => !!value || 'Required.']"
-                        type="number"
-                        label="Quantity Food"
-                        hide-details="auto"
-                        class="form-control"
-                        v-if="ingredient.nutrition_facts_fields"
-                      />
-                      <v-select
-                        v-model="ingredient.quantity_unit"
-                        :items="ingredient.measures"
-                        item-text="name"
-                        item-value="id"
-                        label="Select a Measure"
-                        :rules="[(value) => !!value || 'Required.']"
-                        return-value
-                        v-if="ingredient.nutrition_facts_fields"
-                      />
-                    </v-container>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" sm="2">
-                  <v-btn
-                    fab
-                    x-small
-                    dark
-                    color="red"
-                    class="mx-0"
-                    @click="removeFoodField(i)"
-                  >
-                    <v-icon dark>mdi-minus</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
+              <v-container>
+                <v-card outlined shaped>
+                  <v-row>
+                    <v-col
+                      cols="12"
+                      sm="2"
+                      class="d-flex align-center justify-flex-end"
+                    >
+                      <v-btn
+                        fab
+                        x-small
+                        dark
+                        color="red"
+                        class="mx-0"
+                        @click="removeFoodField(i)"
+                      >
+                        <v-icon dark>mdi-minus</v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="12" sm="10" class="pl-0">
+                      <v-container>
+                        <v-select
+                          v-model="ingredient.food_id"
+                          :items="foods"
+                          item-text="name"
+                          item-value="id"
+                          label="Select a food"
+                          :rules="[(value) => !!value || 'Required.']"
+                          return-value
+                          @change="showFields(ingredient)"
+                        />
+                        <v-select
+                          v-model="ingredient.quantity_unit"
+                          :items="ingredient.measures"
+                          item-text="name"
+                          item-value="id"
+                          label="Select a Measure"
+                          :rules="[(value) => !!value || 'Required.']"
+                          return-value
+                          v-if="ingredient.nutrition_facts_fields"
+                        />
+                        <v-text-field
+                          v-model.number="ingredient.quantity"
+                          :rules="[(value) => !!value || 'Required.']"
+                          type="number"
+                          label="Quantity Food"
+                          hide-details="auto"
+                          class="form-control"
+                          v-if="ingredient.nutrition_facts_fields"
+                        />
+                      </v-container>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </v-container>
             </div>
           </v-container>
         </v-card>
@@ -84,7 +90,7 @@
                     type="submit"
                     elevation="2"
                     color="primary"
-                    :disabled="!valid"
+                    :disabled="!validBtn"
                   >
                     <span v-if="!submit"> Create </span>
                     <v-progress-circular
@@ -164,6 +170,7 @@ export default {
   data() {
     return {
       valid: false,
+      validBtn: false,
       submit: false,
       prepTime: null,
       nutrition_facts_fields: false,
@@ -199,6 +206,7 @@ export default {
 
     removeFoodField: function (index) {
       this.recipe.ingredients.splice(index, 1);
+      if(this.recipe.ingredients.length == 0) this.validBtn = false;
     },
 
     getMeasureName(id) {
@@ -253,18 +261,22 @@ export default {
     },
     onSubmit: function () {
       this.submit = true;
-      this.recipe.preparation.preparation_time = this.convertMinutesInTimestamp(
-        this.prepTime
-      );
-      calculateAnonymous(this.recipe)
-        .then((result) => {
-          this.anonymous = result.data;
-          this.anonymous.name = this.recipe.name;
-        })
-        .catch((error) => {
-          this.submit = false;
-          console.log(error.response);
-        });
+      if (this.$refs.form.validate()) {
+        this.recipe.preparation.preparation_time = this.convertMinutesInTimestamp(
+          this.prepTime
+        );
+        calculateAnonymous(this.recipe)
+          .then((result) => {
+            this.anonymous = result.data;
+            this.anonymous.name = this.recipe.name;
+          })
+          .catch((error) => {
+            this.submit = false;
+            console.log(error.response);
+          });
+      } else {
+        this.submit = false;
+      }
     },
   },
 

@@ -3,9 +3,9 @@
     <v-row justify="center">
       <v-col cols="12" sm="4" d-flex justify-center>
         <div class="d-flex">
-          <span class="back-btn" @click="$router.go(-1)"
-            ><v-icon>mdi-chevron-left</v-icon> Back</span
-          >
+          <router-link class="text-decoration-none d-flex" :to="{name: 'ListFood'}">
+            <v-icon>mdi-chevron-left</v-icon> Back
+          </router-link>
         </div>
         <v-card>
           <v-container>

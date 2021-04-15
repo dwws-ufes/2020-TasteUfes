@@ -77,7 +77,7 @@
         <v-card class="mx-auto" elevation="0" outlined v-if="nutritionFacts">
           <v-container>
             <v-col class="d-flex justify-content-between">
-              <h2>Nutritient</h2>
+              <h2>Nutritients</h2>
               <div>
                 <v-btn
                   class="mx-0 my-0"
@@ -102,7 +102,7 @@
                     <v-col
                       cols="12"
                       sm="2"
-                      class="d-flex align-center justify-flex-end"
+                      class="d-flex align-center justify-center"
                     >
                       <v-btn
                         fab
@@ -116,25 +116,29 @@
                       </v-btn>
                     </v-col>
                     <v-col cols="12" sm="10" class="pl-0">
-                      <v-container>
-                        <v-select
-                          v-model="nut_facts_nut.nutrient_id"
-                          :items="nutrients"
-                          item-text="name"
-                          item-value="id"
-                          label="Select a Nutrient"
-                          :rules="[(value) => !!value || 'Required.']"
-                          return-value
-                        />
-                        <v-text-field
-                          v-model.number="nut_facts_nut.amount_per_serving"
-                          :rules="[(value) => !!value || 'Required.']"
-                          type="number"
-                          label="Amount per serving (g)"
-                          hide-details="auto"
-                          class="form-control"
-                        />
-                      </v-container>
+                      <v-row>
+                        <v-col>
+                          <v-select
+                            v-model="nut_facts_nut.nutrient_id"
+                            :items="nutrients"
+                            item-text="name"
+                            item-value="id"
+                            label="Select a Nutrient"
+                            :rules="[(value) => !!value || 'Required.']"
+                            return-value
+                          />
+                        </v-col>
+                        <v-col>
+                          <v-text-field
+                            v-model.number="nut_facts_nut.amount_per_serving"
+                            :rules="[(value) => !!value || 'Required.']"
+                            type="number"
+                            label="Amount per serving (g)"
+                            hide-details="auto"
+                            class="form-control"
+                          />
+                        </v-col>
+                      </v-row>
                     </v-col>
                   </v-row>
                 </v-container>
