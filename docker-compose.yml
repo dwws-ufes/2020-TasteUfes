@@ -29,9 +29,9 @@ services:
       # Por tratar-se de um trabalho de faculdade e, buscando a simplificação do mesmo para
       # facilitar na correção do professor da disciplina, estaremos expondo a chave secreta
       # do token de acesso, mas isso NUNCA deve ser feito num projeto real.
-      Jwt:SecretKey: "Rw5yMDUbmpBkpxDYDGsDj9yLitEoXADFx35grq8QZ0oheg0w4fUd4s19eKgGSJu"
-      Jwt:TokenType: "Bearer"
-      Jwt:TokenLifetime: "0.02:00:00"
-      Jwt:RefreshLifetime: "3.00:00:00"
+      SECRET_KEY: "Rw5yMDUbmpBkpxDYDGsDj9yLitEoXADFx35grq8QZ0oheg0w4fUd4s19eKgGSJu"
+      TOKEN_TYPE: "Bearer"
+      TOKEN_LIFETIME: "0.02:00:00"
+      REFRESH_LIFETIME: "3.00:00:00"
     restart: always
     command: ["dotnet", "TasteUfes.dll"]

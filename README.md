@@ -15,13 +15,13 @@
 ## :hammer_and_wrench: Pré-Requisitos
 - Docker Engine (>= v20.10.5) :whale:
 
-## :rocket: Execução da aplicação
+## :rocket: Execução da aplicação localmente
 Na raiz do projeto, digite o seguinte comando:
 ```bash
 docker-compose up --build
 ```
 
-A aplicação encontra-se disponível em
+A aplicação ficará disponível em
 `http://localhost:8080`
 
 ## :page_facing_up: Documentação da API
@@ -30,4 +30,4 @@ A documentação da API encontra-se disponível em:
 
 ---
 
-Para execução do ambiente de desenvolvimento, leia os READMEs de [API](app/README.md) e [FRONT](app/ClientApp/README.md).
+Para execução do ambiente de desenvolvimento, leia os READMEs de [API](app/README.md) e [CLIENT](app/ClientApp/README.md).
