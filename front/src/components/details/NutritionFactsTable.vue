@@ -6,8 +6,8 @@
         type="article, list-item-three-line, list-item-three-line"
       ></v-skeleton-loader>
     </v-sheet>
-    <v-container v-else>
-      <v-card-title>Nutrition Facts</v-card-title>
+    <div v-else>
+      <v-card-title class="primary">Nutrition Facts</v-card-title>
       <v-row>
         <v-col>
           <v-card-text>
@@ -71,7 +71,7 @@
           </v-card-text>
         </v-col>
       </v-row>
-    </v-container>
+    </div>
   </div>
 </template>
 

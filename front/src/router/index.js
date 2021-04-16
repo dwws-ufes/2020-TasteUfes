@@ -19,14 +19,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "createRecipe" */ '../views/Recipes/Create.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   if (store.getters["auth"]) next()
-    //   else if (to.name !== 'Home') {
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/recipe',
@@ -34,14 +34,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "recipe" */ '../views/Recipes/Index.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   if (store.getters["auth"]) next()
-    //   else if (to.name !== 'Home') {
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/recipe/edit/:id',
@@ -49,14 +49,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "editRecipe" */ '../views/Recipes/Edit.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   if (store.getters["auth"]) next()
-    //   else if (to.name !== 'Home') {
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/recipe/details/:id',
@@ -87,15 +87,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "createFood" */ '../views/Foods/Create.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   if (store.getters["isAdmin"]) next()
-    //   else if (to.name !== 'Home') {
-    //     console.log('dfds')
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/food',
@@ -103,15 +102,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "food" */ '../views/Foods/Index.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   console.log(store.getters["isAdmin"])
-    //   if (store.getters["auth"]) next()
-    //   else if (to.name !== 'Home') {
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/food/edit/:id',
@@ -119,16 +117,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "editFood" */ '../views/Foods/Edit.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   console.log(store.getters["isAdmin"])
-    //   if (store.getters["isAdmin"]) next()
-    //   else if (to.name !== 'Home') {
-    //     console.log('dfds')
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/food/details/:id',
@@ -151,16 +147,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "user" */ '../views/Users/Index.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   console.log(store.getters["isAdmin"])
-    //   if (store.getters["isAdmin"]) next()
-    //   else if (to.name !== 'Home') {
-    //     console.log('dfds')
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["isAdmin"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/user/edit/:id',
@@ -168,14 +162,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "editUser" */ '../views/Users/Edit.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   if (store.getters["auth"]) next()
-    //   else if (to.name !== 'Home') {
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/user/details/:id',
@@ -183,14 +177,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "detailsUser" */ '../views/Users/Details.vue')
     },
-    // beforeEnter: (to, from, next) => {
-    //   if (store.getters["auth"]) next()
-    //   else if (to.name !== 'Home') {
-    //     next({ name: 'Home' });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
   },
 ]
 

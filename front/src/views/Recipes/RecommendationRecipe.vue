@@ -72,7 +72,7 @@
                     :to="{ name: 'DetailsRecipe', params: { id: recipe.id } }"
                   >
                     <v-card>
-                      <v-card-title>{{ recipe.name }}</v-card-title>
+                      <v-card-title class="primary">{{ recipe.name }}</v-card-title>
                       <v-divider class="mx-4"></v-divider>
                       <v-card-text>
                         <div class="my-2">

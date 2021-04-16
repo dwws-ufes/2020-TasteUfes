@@ -42,7 +42,7 @@
       </v-row>
     </v-card-title>
     <v-card-actions>
-    <v-row>
+    <v-row v-if="user.id == getUserId && username != null">
       <v-col class="d-flex justify-flex-end">
         <v-btn class="primary" :to="{ name: 'EditUser', params: { id: user.id } }"><v-icon small class="mr-2">mdi-pencil</v-icon> Edit</v-btn>
       </v-col>
@@ -53,12 +53,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   props: {
     user: {
       roles: [],
     },
     username: String,
+  },
+  computed: {
+    ...mapGetters(['getUserId']),
   },
 };
 </script>

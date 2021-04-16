@@ -16,7 +16,7 @@
           ></v-skeleton-loader>
         </v-sheet>
         <v-card v-else>
-          <v-card-title
+          <v-card-title class="primary"
             ><h1>{{ recipe.name }}</h1></v-card-title
           >
           <v-divider class="mx-4" />

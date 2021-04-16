@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     token: '',
     tokenType: '',
     userId: '',
+    isAdmin: false,
     user: userDefault(),
     ingredients_measures: [
       {
@@ -106,12 +107,13 @@ const store = new Vuex.Store({
     setTokenType: (state, tokenType) => state.tokenType = tokenType,
     setToken: (state, token) => state.token = token,
     setUserId: (state, userId) => state.userId = userId,
+    setIsAdmin: (state, isAdmin) => state.isAdmin = isAdmin,
     setUser: (state, user) => state.user = user,
   },
 
   getters: {
     auth: state => state.auth,
-    isAdmin: state => state.user.roles.length > 0,
+    isAdmin: state => state.isAdmin,
     getUserId: state => state.userId,
     getUser: state => state.user,
   },
@@ -120,41 +122,35 @@ const store = new Vuex.Store({
     async loadApplication({ dispatch }) {
       let accessToken = localStorage.getItem('access_token');
       let userId = localStorage.getItem('user_id');
-
+      let tokenType = localStorage.getItem('token_type');
       if (userId != null) {
+        createAuthAPI(tokenType, accessToken)
         await getUser(userId).then((user) => {
-          Promise.all([
-            dispatch('ActionSetToken', accessToken),
+          dispatch('ActionSetToken', accessToken),
             dispatch('ActionSetUser', user.data),
             dispatch('ActionSetUserId', user.data.id),
-          ]).finally(() => { });
-
+            dispatch('ActionSetIsAdmin', user.data),
+            dispatch('loginAuth', true)
+            
         })
       }
     },
 
     async load({ dispatch }, { userId, accessToken }) {
-      // return new Promise((resolve, reject) => {
       await getUser(userId).then((user) => {
-        Promise.all([
-          dispatch('ActionSetToken', accessToken),
-          dispatch('ActionSetUser', user.data),
-        ]).finally(() => {
-          // resolve();
-        });
-        // })
-        //   .catch((error) => {
-        //     console.log(error.response);
-        //     reject(error.response);
-        //   });
-
+        dispatch('ActionSetToken', accessToken);
+        dispatch('ActionSetUser', user.data);
       })
+        .catch(error => {
+          console.log(error.response);
+        });
     },
 
     ActionSetUser: ({ commit }, payload) => {
       commit('setUser', payload)
     },
     ActionSetUserId: ({ commit }, payload) => commit('setUserId', payload),
+    ActionSetIsAdmin: ({ commit }, payload) => commit('setIsAdmin', payload.roles.length > 0),
     loginAuth: ({ commit }) => commit('login'),
     logoutAuth: ({ commit }) => commit('logout'),
     ActionSetToken: ({ commit }, payload) => commit('setToken', payload),
