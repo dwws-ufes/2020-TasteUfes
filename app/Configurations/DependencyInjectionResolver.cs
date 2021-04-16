@@ -8,6 +8,7 @@ using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace TasteUfes.Configurations
 {
@@ -21,7 +22,13 @@ namespace TasteUfes.Configurations
             services.AddScoped<INotificator, Notificator>();
 
             // Jwt settings
-            services.Configure<JwtSettings>(configuration.GetSection("Jwt"));
+            services.Configure<JwtSettings>(settings =>
+            {
+                settings.SecretKey = configuration["SECRET_KEY"];
+                settings.RefreshLifetime = TimeSpan.Parse(configuration["REFRESH_LIFETIME"]);
+                settings.TokenLifetime = TimeSpan.Parse(configuration["TOKEN_LIFETIME"]);
+                settings.TokenType = configuration["TOKEN_TYPE"];
+            });
             services.AddScoped<ITokenService, TokenService>();
 
             // User context

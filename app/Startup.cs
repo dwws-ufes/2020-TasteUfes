@@ -32,7 +32,7 @@ namespace TasteUfes
 
             services
                 .AddCors()
-                .AddAuthConfig(Configuration["Jwt:SecretKey"]);
+                .AddAuthConfig(Configuration["SECRET_KEY"]);
 
             services.AddControllers();
 
