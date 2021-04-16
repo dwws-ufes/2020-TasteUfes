@@ -23,7 +23,7 @@
 
             <v-text-field
               v-model="user.password"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.minPass, rules.maxPass]"
               :type="'password'"
               label="Password"
               class="form-control"
@@ -77,6 +77,9 @@ export default {
       },
       rules: {
         required: (value) => !!value || "Required.",
+        minPass: (value) => value.length >= 6 || "Must be minimum length of 6.",
+        maxPass: (value) =>
+          value.length <= 32 || "Must be maximun length of 32.",
       },
     };
   },
@@ -84,7 +87,6 @@ export default {
   methods: {
     ...mapActions(["doLogin"]),
     onSubmit() {
-      // this.valid = false;
       this.submit = true;
       if (this.$refs.form.validate()) {
         login(this.user)
@@ -98,7 +100,7 @@ export default {
                 this.doLogin(result.data);
                 this.dialog = false;
                 this.$store.dispatch("setSnackbar", {
-                  text: `Welcome ${ user.data.first_name }.`,
+                  text: `Welcome ${user.data.first_name}.`,
                   color: "success",
                 });
               });
@@ -112,7 +114,6 @@ export default {
               });
             });
             this.submit = false;
-            // this.valid = true;
           });
       } else {
         this.submit = false;
