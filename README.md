@@ -12,6 +12,9 @@
 
 <sup>Craque Daniel</sup>
 
+## :unicorn: TasteUfes powered by `Heroku`
+Acesse o TasteUfes online em: https://vue-tasteufes.herokuapp.com, ou siga as instruções abaixo.
+
 ## :hammer_and_wrench: Pré-Requisitos
 - Docker Engine (>= v20.10.5) :whale:
 
