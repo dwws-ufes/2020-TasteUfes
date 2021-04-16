@@ -150,7 +150,12 @@ export default {
           this.serv = this.recipe.servings;
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         })
         .finally(() => {
           this.load = false;
@@ -178,10 +183,14 @@ export default {
               let value = ing.quantity;
               ing.quantity = parseFloat(value.toFixed(2));
             });
-            console.log(this.recipe);
           })
           .catch((error) => {
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       }
     },

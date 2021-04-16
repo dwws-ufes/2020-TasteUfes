@@ -152,7 +152,13 @@ export default {
             }
           })
           .catch((error) => {
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+              this.submit = false;
+            });
           });
       } else {
         this.submit = false;
@@ -168,7 +174,12 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         })
         .finally(() => {
           this.load = false;
@@ -184,7 +195,12 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
   },

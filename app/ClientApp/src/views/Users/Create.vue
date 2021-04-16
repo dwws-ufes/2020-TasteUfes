@@ -44,7 +44,7 @@
 
             <v-text-field
               v-model="user.password"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.minPass, rules.maxPass]"
               label="Password*"
               :type="'password'"
               class="form-control"
@@ -53,7 +53,7 @@
 
             <v-text-field
               v-model="repeatPassword"
-              :rules="[rules.required, passwordConfirmationRule]"
+              :rules="[rules.required, passwordConfirmationRule, rules.minPass, rules.maxPass]"
               label="RepeatPassword*"
               :type="'password'"
               class="form-control"
@@ -129,6 +129,8 @@ export default {
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
+        minPass: (value) => (value).length >= 6 || 'Must be minimum length of 6.',
+        maxPass: (value) => (value).length <= 32 || 'Must be maximun length of 32.',
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
@@ -146,10 +148,19 @@ export default {
         if (this.isAdmin) {
           createUser(this.user)
             .then((result) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `User ${this.user.first_name} created.`,
+                color: "success",
+              });
               this.$router.push({ name: "ListUser" });
             })
             .catch((error) => {
-              console.log(error.response);
+              error.response.data.errors.map((error) => {
+                this.$store.dispatch("setSnackbar", {
+                  text: `${error.message}`,
+                  color: "error",
+                });
+              });
               this.submit = false;
             });
         } else {
@@ -165,17 +176,31 @@ export default {
                     this.$store.dispatch("ActionSetUser", registerResult.data),
                   ]).finally(() => {
                     this.doLogin(result.data);
+                    this.$store.dispatch("setSnackbar", {
+                      text: `Welcome ${ this.user.first_name }.`,
+                      color: "success",
+                    });
                     this.$router.push({ name: "ListRecipe" });
                   });
                 })
                 .catch((error) => {
-                  console.log(error);
+                  error.response.data.errors.map((error) => {
+                    this.$store.dispatch("setSnackbar", {
+                      text: `${error.message}`,
+                      color: "error",
+                    });
+                  });
                   this.submit = false;
                   // this.valid = true;
                 });
             })
             .catch((error) => {
-              console.log(error.response);
+              error.response.data.errors.map((error) => {
+                this.$store.dispatch("setSnackbar", {
+                  text: `${error.message}`,
+                  color: "error",
+                });
+              });
               this.submit = false;
             });
         }
@@ -194,7 +219,12 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
   },

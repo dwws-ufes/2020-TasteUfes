@@ -9,23 +9,17 @@
       <h1>Edit Food</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
-          <v-sheet v-if="load" :color="`grey lighten-4`" class="pa-3">
-            <v-skeleton-loader
-              class="mx-auto"
-              type="article"
-            ></v-skeleton-loader>
-          </v-sheet>
-          <v-container v-else>
+          <v-container>
             <v-text-field
               v-model="food.name"
-              :rules="[this.rules.required]"
+              :rules="[rules.required]"
               label="Name*"
               hide-details="auto"
               class="form-control"
             />
           </v-container>
         </v-card>
-        <v-card class="mx-auto" elevation="0" outlined v-if="!load">
+        <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
               <h2>Nutrition Facts</h2>
@@ -61,7 +55,7 @@
                     type="number"
                     label="Serving Size*"
                     hide-details="auto"
-                    :rules="[(value) => !!value || 'Required.']"
+                    :rules="[rules.required, rules.limitMax, rules.limitMin]"
                     class="form-control"
                   />
                 </v-col>
@@ -72,7 +66,7 @@
                     item-text="name"
                     item-value="id"
                     label="Select a Measure*"
-                    :rules="[(value) => !!value || 'Required.']"
+                    :rules="[rules.required]"
                     return-value
                   />
                 </v-col>
@@ -130,16 +124,20 @@
                             item-text="name"
                             item-value="id"
                             label="Select a Nutrient*"
-                            :rules="[(value) => !!value || 'Required.']"
+                            :rules="[rules.required]"
                             return-value
                           />
                         </v-col>
                         <v-col>
                           <v-text-field
                             v-model.number="nut_facts_nut.amount_per_serving"
-                            :rules="[(value) => !!value || 'Required.']"
                             type="number"
                             label="Amount per serving (g)*"
+                            :rules="[
+                              rules.required,
+                              rules.limitMax,
+                              rules.limitMin,
+                            ]"
                             hide-details="auto"
                             class="form-control"
                           />
@@ -159,10 +157,10 @@
               type="submit"
               elevation="2"
               color="primary"
-              v-if="!submit"
               :disabled="!valid"
+              v-if="!submit"
             >
-              <span> Save </span>
+              <span> Create </span>
             </v-btn>
             <v-btn
               v-else
@@ -203,6 +201,8 @@ export default {
       nutrients: [],
       rules: {
         required: (value) => !!value || "Required.",
+        limitMax: (value) => value < 10000 || "Value too big",
+        limitMin: (value) => value > 0 || "Value must not be negative or 0",
       },
     };
   },
@@ -251,12 +251,20 @@ export default {
         }
         updateFood(this.foodId, this.food)
           .then((result) => {
-            console.log(result);
+            this.$store.dispatch("setSnackbar", {
+              text: `Food ${this.food.name} updated.`,
+              color: "success",
+            });
             this.$router.push({ name: "ListFood" });
           })
           .catch((error) => {
             this.submit = false;
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       } else {
         this.submit = false;
@@ -268,7 +276,12 @@ export default {
           this.nutrients = nutrients.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
     getFood() {
@@ -278,7 +291,12 @@ export default {
           if (this.food.nutrition_facts) this.nutritionFacts = true;
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         })
         .finally(() => {
           this.load = false;

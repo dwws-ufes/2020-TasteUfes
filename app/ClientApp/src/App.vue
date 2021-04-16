@@ -2,6 +2,7 @@
   <v-app>
     <Toolbar />
     <v-main>
+      <Snackbar />
       <v-container class="container-main">
         <v-row class="row-main">
           <router-view></router-view>
@@ -14,6 +15,7 @@
 
 <script>
 import Toolbar from "@/components/Toolbar.vue";
+import Snackbar from "@/components/Snackbar.vue";
 import Footbar from "@/components/Footbar.vue";
 import { mapActions } from "vuex";
 import { refreshAuthentication } from "@/api";
@@ -23,6 +25,7 @@ export default {
 
   components: {
     Toolbar,
+    Snackbar,
     Footbar,
   },
 

@@ -12,7 +12,7 @@
           <v-container>
             <v-text-field
               v-model="food.name"
-              :rules="[this.rules.required]"
+              :rules="[rules.required]"
               label="Name*"
               hide-details="auto"
               class="form-control"
@@ -55,7 +55,7 @@
                     type="number"
                     label="Serving Size*"
                     hide-details="auto"
-                    :rules="[(value) => !!value || 'Required.']"
+                    :rules="[rules.required, rules.limitMax, rules.limitMin]"
                     class="form-control"
                   />
                 </v-col>
@@ -66,7 +66,7 @@
                     item-text="name"
                     item-value="id"
                     label="Select a Measure*"
-                    :rules="[(value) => !!value || 'Required.']"
+                    :rules="[rules.required]"
                     return-value
                   />
                 </v-col>
@@ -80,6 +80,7 @@
               <h2>Nutritients</h2>
               <div>
                 <v-btn
+                  v-if="this.food.nutrition_facts.nutrition_facts_nutrients.length == 0"
                   class="mx-0 my-0"
                   fab
                   x-small
@@ -124,7 +125,7 @@
                             item-text="name"
                             item-value="id"
                             label="Select a Nutrient*"
-                            :rules="[(value) => !!value || 'Required.']"
+                            :rules="[rules.required]"
                             return-value
                           />
                         </v-col>
@@ -133,7 +134,11 @@
                             v-model.number="nut_facts_nut.amount_per_serving"
                             type="number"
                             label="Amount per serving (g)*"
-                            :rules="[(value) => !!value || 'Required.']"
+                            :rules="[
+                              rules.required,
+                              rules.limitMax,
+                              rules.limitMin,
+                            ]"
                             hide-details="auto"
                             class="form-control"
                           />
@@ -144,6 +149,19 @@
                 </v-container>
               </v-card>
             </div>
+            <v-row v-if="this.food.nutrition_facts.nutrition_facts_nutrients.length > 0">
+              <v-col class="d-flex justify-end">
+                <v-btn
+                  class="mx-1 my-0"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="addNutrientField"
+                >
+                  <v-icon dark> mdi-plus </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card>
         <v-card-actions>
@@ -193,6 +211,8 @@ export default {
       nutrients: [],
       rules: {
         required: (value) => !!value || "Required.",
+        limitMax: (value) => value < 10000 || "Value too big",
+        limitMin: (value) => value > 0 || "Value must not be negative or 0",
       },
     };
   },
@@ -235,12 +255,20 @@ export default {
         }
         createFood(this.food)
           .then((result) => {
-            console.log(result);
+            this.$store.dispatch("setSnackbar", {
+              text: `Food ${ this.food.name } created.`,
+              color: "success",
+            });
             this.$router.push({ name: "ListFood" });
           })
           .catch((error) => {
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
             this.submit = false;
-            console.log(error.response);
           });
       } else {
         this.submit = false;
@@ -253,7 +281,12 @@ export default {
           this.nutrients = nutrients.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
   },

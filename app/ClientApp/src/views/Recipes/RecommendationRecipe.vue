@@ -72,7 +72,9 @@
                     :to="{ name: 'DetailsRecipe', params: { id: recipe.id } }"
                   >
                     <v-card>
-                      <v-card-title class="primary">{{ recipe.name }}</v-card-title>
+                      <v-card-title class="primary">{{
+                        recipe.name
+                      }}</v-card-title>
                       <v-divider class="mx-4"></v-divider>
                       <v-card-text>
                         <div class="my-2">
@@ -154,7 +156,12 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
           this.submit = false;
         })
         .finally(() => {
@@ -171,7 +178,12 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
   },

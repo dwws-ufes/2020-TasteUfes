@@ -8,6 +8,7 @@
             <v-col class="d-flex justify-content-between">
               <h2>Food</h2>
               <v-btn
+                v-if="this.recipe.ingredients.length == 0"
                 class="mx-1 my-0"
                 fab
                 x-small
@@ -48,7 +49,7 @@
                           item-text="name"
                           item-value="id"
                           label="Select a food*"
-                          :rules="[(value) => !!value || 'Required.']"
+                          :rules="[rules.required]"
                           return-value
                           @change="showFields(ingredient)"
                         />
@@ -56,7 +57,7 @@
                           <v-col>
                             <v-text-field
                               v-model.number="ingredient.quantity"
-                              :rules="[(value) => !!value || 'Required.']"
+                              :rules="[rules.required, rules.limitMin, rules.limitMax]"
                               type="number"
                               label="Quantity Food*"
                               hide-details="auto"
@@ -71,7 +72,7 @@
                               item-text="name"
                               item-value="id"
                               label="Select a Measure*"
-                              :rules="[(value) => !!value || 'Required.']"
+                              :rules="[rules.required]"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
                             />
@@ -83,6 +84,19 @@
                 </v-card>
               </v-container>
             </div>
+            <v-row v-if="this.recipe.ingredients.length > 0">
+              <v-col class="d-flex justify-end">
+                <v-btn
+                  class="mx-1 my-0"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="addFoodField"
+                >
+                  <v-icon dark> mdi-plus </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card>
 
@@ -203,6 +217,8 @@ export default {
       },
       rules: {
         required: (value) => !!value || "Required.",
+        limitMax: (value) => value < 10000 || "Value too big",
+        limitMin: (value) => value > 0 || "Value must not be negative or 0",
       },
     };
   },
@@ -214,7 +230,6 @@ export default {
 
     removeFoodField: function (index) {
       this.recipe.ingredients.splice(index, 1);
-      // if (this.recipe.ingredients.length == 0) this.validBtn = false;
     },
 
     getMeasureName(id) {
@@ -268,7 +283,12 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
     onSubmit: function () {
@@ -279,13 +299,18 @@ export default {
         );
         calculateAnonymous(this.recipe)
           .then((result) => {
-            console.log("Receita>: ", result.data)
+            console.log("Receita>: ", result.data);
             this.anonymous = result.data;
-            this.anonymous.ingredients
+            this.anonymous.ingredients;
           })
           .catch((error) => {
             this.submit = false;
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       } else {
         this.submit = false;

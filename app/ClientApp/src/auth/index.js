@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     userId: '',
     isAdmin: false,
     user: userDefault(),
+    snackbar: {},
     ingredients_measures: [
       {
         'name': 'g',
@@ -103,12 +104,13 @@ const store = new Vuex.Store({
 
   mutations: {
     login: state => state.auth = state.auth = true,
-    logout: state => { state.auth = false; state.user = userDefault() },
+    logout: state => { state.auth = false; state.isAdmin = false, state.user = userDefault() },
     setTokenType: (state, tokenType) => state.tokenType = tokenType,
     setToken: (state, token) => state.token = token,
     setUserId: (state, userId) => state.userId = userId,
     setIsAdmin: (state, isAdmin) => state.isAdmin = isAdmin,
     setUser: (state, user) => state.user = user,
+    setSnackbar: (state, snackbar) => state.snackbar = snackbar,
   },
 
   getters: {
@@ -119,6 +121,10 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    setSnackbar({ commit }, snackbar) {
+      snackbar.show = true,
+        commit('setSnackbar', snackbar);
+    },
     async loadApplication({ dispatch }) {
       let accessToken = localStorage.getItem('access_token');
       let userId = localStorage.getItem('user_id');
@@ -131,19 +137,9 @@ const store = new Vuex.Store({
             dispatch('ActionSetUserId', user.data.id),
             dispatch('ActionSetIsAdmin', user.data),
             dispatch('loginAuth', true)
-            
+
         })
       }
-    },
-
-    async load({ dispatch }, { userId, accessToken }) {
-      await getUser(userId).then((user) => {
-        dispatch('ActionSetToken', accessToken);
-        dispatch('ActionSetUser', user.data);
-      })
-        .catch(error => {
-          console.log(error.response);
-        });
     },
 
     ActionSetUser: ({ commit }, payload) => {
@@ -170,9 +166,11 @@ const store = new Vuex.Store({
       localStorage.setItem('refresh_token', access.refresh_token);
       localStorage.setItem('user_id', access.user_id);
       localStorage.setItem('now', access.now.toString());
-      dispatch('loginAuth');
-      dispatch('ActionSetToken', access.access_token);
-      dispatch('ActionSetUserId', access.user_id);
+      Promise.all([
+        dispatch('loginAuth'),
+        dispatch('ActionSetToken', access.access_token),
+        dispatch('ActionSetUserId', access.user_id)
+      ]).then(() => {})
     },
 
     doLogout: ({ dispatch }) => {
