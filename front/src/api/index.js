@@ -3,24 +3,24 @@ import { authAPI, notAuthAPI, createAuthAPI, deleteAuthAPI } from '@/config/axio
 // Functions
 
 // --- User ---
-function login(data) {
-  return notAuthAPI({
+async function login(data) {
+  return await notAuthAPI({
     method: 'POST',
     url: `/users/login`,
     data: data,
   });
 }
 
-function registerUser(user) {
-  return notAuthAPI({
+async function registerUser(user) {
+  return await notAuthAPI({
     method: 'POST',
     url: `/users`,
     data: user,
   });
 }
 
-function createUser(user) {
-  return authAPI({
+async function createUser(user) {
+  return await authAPI({
     method: 'POST',
     url: `/users`,
     data: user,
@@ -28,44 +28,44 @@ function createUser(user) {
 }
 
 
-function getUsers() {
-  return authAPI({
+async function getUsers() {
+  return await authAPI({
     method: 'GET',
     url: `/users`,
   });
 }
 
-function getUser(id) {
-  return authAPI({
+async function getUser(id) {
+  return await authAPI({
     method: 'GET',
     url: `/users/${id}`,
   });
 }
 
-function updateUser(id, user) {
-  return authAPI({
+async function updateUser(id, user) {
+  return await authAPI({
     method: 'PUT',
     url: `/users/${id}`,
     data: user,
   });
 }
 
-function deleteUser(id) {
-  return authAPI({
+async function deleteUser(id) {
+  return await authAPI({
     method: 'DELETE',
     url: `/users/${id}`,
   });
 }
 
-function getRoles(id) {
-  return authAPI({
+async function getRoles(id) {
+  return await authAPI({
     method: 'GET',
     url: `/roles`,
   });
 }
 
-function refreshAuthentication(data) {
-  return notAuthAPI({
+async function refreshAuthentication(data) {
+  return await notAuthAPI({
     method: 'POST',
     url: `/users/refresh-token`,
     data: data,
@@ -73,84 +73,84 @@ function refreshAuthentication(data) {
 }
 
 // --- Recipe ---
-function createRecipe(recipe) {
-  return authAPI({
+async function createRecipe(recipe) {
+  return await authAPI({
     method: 'POST',
     url: `/recipes`,
     data: recipe,
   });
 }
 
-function getRecipes() {
-  return notAuthAPI({
+async function getRecipes() {
+  return await notAuthAPI({
     method: 'GET',
     url: `/recipes`,
   });
 }
 
-function getRecipe(id) {
-  return notAuthAPI({
+async function getRecipe(id) {
+  return await notAuthAPI({
     method: 'GET',
     url: `/recipes/${id}`,
   });
 }
 
-function updateRecipe(id, recipe) {
-  return authAPI({
+async function updateRecipe(id, recipe) {
+  return await authAPI({
     method: 'PUT',
     url: `/recipes/${id}`,
     data: recipe,
   });
 }
 
-function deleteRecipe(id) {
-  return authAPI({
+async function deleteRecipe(id) {
+  return await authAPI({
     method: 'DELETE',
     url: `/recipes/${id}`,
   });
 }
 
 // --- Foods ---
-function createFood(food) {
-  return authAPI({
+async function createFood(food) {
+  return await authAPI({
     method: 'POST',
     url: `/foods`,
     data: food,
   });
 }
 
-function getFoods() {
-  return notAuthAPI({
+async function getFoods() {
+  return await notAuthAPI({
     method: 'GET',
     url: `/foods`,
   });
 }
 
-function getFood(id) {
-  return notAuthAPI({
+async function getFood(id) {
+  return await notAuthAPI({
     method: 'GET',
     url: `/foods/${id}`,
   });
 }
 
-function updateFood(id, food) {
-  return authAPI({
+async function updateFood(id, food) {
+  return await authAPI({
     method: 'PUT',
     url: `/foods/${id}`,
     data: food,
   });
 }
 
-function deleteFood(id) {
-  return authAPI({
+async function deleteFood(id) {
+  return await authAPI({
     method: 'DELETE',
     url: `/foods/${id}`,
   });
 }
 
 // --- Nutrients ---
-function getNutrients() {
-  return authAPI({
+async function getNutrients() {
+  return await authAPI({
     method: 'GET',
     url: `/nutrients`,
   });
@@ -158,24 +158,24 @@ function getNutrients() {
 
 
 // --- Services --- 
-function recalculatePerServing(recipeId, serving) {
-  return notAuthAPI({
+async function recalculatePerServing(recipeId, serving) {
+  return await notAuthAPI({
     method: 'GET',
     url: `/recipes/${recipeId}/recalculate-per-servings/${serving}`,
   });
 }
 
 
-function calculateAnonymous(recipe) {
-  return notAuthAPI({
+async function calculateAnonymous(recipe) {
+  return await notAuthAPI({
     method: 'POST',
     url: `/recipes/calculate-anonymous`,
     data: recipe,
   });
 }
 
-function recommendationByFoods(foods) {
-  return notAuthAPI({
+async function recommendationByFoods(foods) {
+  return await notAuthAPI({
     method: 'POST',
     url: `/recipes/recommend-by-foods`,
     data: foods,

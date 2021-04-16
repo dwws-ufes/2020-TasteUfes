@@ -1,6 +1,5 @@
 <template>
   <v-container class="d-flex justify-center">
-
     <v-card elevation="2" class="card-form" v-if="!submit">
       <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
         <h1>My Recipe</h1>

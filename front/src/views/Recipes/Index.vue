@@ -50,7 +50,23 @@
           <h1>Recipes</h1>
         </v-col>
         <v-container>
-          <v-row>
+          <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
+            <v-container>
+              <v-row>
+                <v-skeleton-loader class="mx-auto w-100" type="image" />
+              </v-row>
+            </v-container>
+          </v-sheet>
+          <v-alert
+            v-else-if="recipeList.length == 0"
+            prominent
+            dense
+            text
+            type="warning"
+          >
+            <v-card-text> No recipe found. </v-card-text>
+          </v-alert>
+          <v-row v-else>
             <v-col
               v-for="recipe in recipeList"
               :key="recipe.name"
@@ -64,24 +80,28 @@
                 :to="{ name: 'DetailsRecipe', params: { id: recipe.id } }"
               >
                 <v-card>
-                  <v-card-title>{{ recipe.name }}</v-card-title>
-                  <v-divider class="mx-4"></v-divider>
-                  <v-card-text>
-                    <div class="my-2">
-                      <b>Servings:</b> {{ recipe.servings }}
-                    </div>
-                    <div class="my-2" v-if="recipe.preparation != null">
-                      <b>Total steps:</b> {{ recipe.preparation.steps.length }}
-                    </div>
-                    <div class="my-2" v-if="recipe.preparation != null">
-                      <b>Total time:</b>
-                      {{ recipe.preparation.preparation_time }}
-                    </div>
-                    <div class="my-2">
-                      <b>Author:</b> {{ recipe.user.first_name }}
-                      {{ recipe.user.last_name }}
-                    </div>
-                  </v-card-text>
+                  <v-card-title class="primary">{{ recipe.name }}</v-card-title>
+                  <v-container>
+                    <v-row>
+                      <v-col>
+                        <div class="my-2">
+                          <b>Servings:</b> {{ recipe.servings }}
+                        </div>
+                        <div class="my-2" v-if="recipe.preparation != null">
+                          <b>Preparation Time:</b>
+                          {{ recipe.preparation.preparation_time }}
+                        </div>
+                        <div class="my-2" v-if="recipe.preparation != null">
+                          <b>Total steps:</b>
+                          {{ recipe.preparation.steps.length }}
+                        </div>
+                        <div class="my-2">
+                          <b>Author:</b> {{ recipe.user.first_name }}
+                          {{ recipe.user.last_name }}
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </v-card>
               </router-link>
             </v-col>
@@ -103,6 +123,7 @@ export default {
   data() {
     return {
       load: true,
+      loadSkeleton: true,
       headers: [
         {
           text: "Nº",
@@ -153,6 +174,9 @@ export default {
 
   created: function () {
     this.getData();
+    setTimeout(() => {
+      this.loadSkeleton = false;
+    }, 300);
   },
 
   computed: {

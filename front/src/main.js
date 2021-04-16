@@ -7,17 +7,15 @@ import { store } from '@/auth';
 Vue.config.productionTip = false
 
 if (localStorage.getItem('access_token') != '') {
-  Promise.all([
-    store.dispatch('loadApplication'),
-  ]).then(() => {
-    window._Vue = new Vue({
-      store,
-      vuetify,
-      router,
-      render: function (h) { return h(App) }
-    }).$mount('#app')
-
-  });
+  store.dispatch('loadApplication')
+    .then(response => {
+      window._Vue = new Vue({
+        store,
+        vuetify,
+        router,
+        render: function (h) { return h(App) }
+      }).$mount('#app')
+    });
 } else {
   window._Vue = new Vue({
     store,

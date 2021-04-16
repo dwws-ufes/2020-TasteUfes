@@ -151,4 +151,7 @@ export default {
     font-size: 26px;
   }
 }
+.v-icon {
+  font-size: 28px;
+}
 </style>
