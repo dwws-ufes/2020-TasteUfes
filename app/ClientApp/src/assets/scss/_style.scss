@@ -1,0 +1,76 @@
+.theme--light.v-btn--active::before {
+  opacity: 0 !important;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-flex-end {
+  justify-content: flex-end;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.card-form {
+  .v-card {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+}
+
+.v-list-item--active::before{
+  opacity: 0 !important;
+}
+.container-main {
+  .row-main {
+    padding: 2em;
+    display: flex;
+    justify-content: center;
+
+    .list {
+      h1 {
+        margin-bottom: 0.8em;
+      }
+      .v-btn {
+        margin: 0 0 2em;
+      }
+    }
+
+    // Cards of forms
+    .card-form {
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+      width: 600px;
+      min-width: 600px;
+      .v-form {
+        width: 100%;
+      }
+      .v-input {
+        margin: 0.8em 0em;
+      }
+      .v-btn {
+        margin: 0.8em;
+      }
+    }
+  }
+}
+.primary {
+  color: white !important;
+}
+.details {
+  .v-card {
+    margin-top: 1em;
+  }
+  .back-btn, .v-icon{
+    display: flex;
+    color: $primary;
+    cursor: pointer;
+  }
+}
+.submit {
+  width: 95px;
+}

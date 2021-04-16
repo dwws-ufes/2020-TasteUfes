@@ -2,12 +2,12 @@ namespace TasteUfes.Models
 {
     public enum Measures
     {
-        G = 1,
-        MG = 2,
-        KG = 3,
+        g = 1,
+        mg = 2,
+        kg = 3,
         L = 4,
-        ML = 5,
-        UN = 6,
-        KCAL = 7
+        ml = 5,
+        un = 6,
+        kcal = 7
     }
 }

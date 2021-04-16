@@ -10,6 +10,6 @@ namespace TasteUfes.Models
         public string Name { get; set; }
 
         // Fluent API : Many-to-Many
-        public IEnumerable<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

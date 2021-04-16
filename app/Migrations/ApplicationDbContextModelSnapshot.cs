@@ -14,7 +14,7 @@ namespace TasteUfes.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.3");
+                .HasAnnotation("ProductVersion", "5.0.4");
 
             modelBuilder.Entity("TasteUfes.Models.Food", b =>
                 {
@@ -27,15 +27,9 @@ namespace TasteUfes.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("NutritionFactsId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("NutritionFactsId")
                         .IsUnique();
 
                     b.ToTable("Foods");
@@ -50,8 +44,8 @@ namespace TasteUfes.Migrations
                     b.Property<Guid>("FoodId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Quantity")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("QuantityUnit")
                         .HasColumnType("INTEGER");
@@ -95,21 +89,21 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f8f85450-70bf-483f-9b58-e88d4fd700a6"),
+                            Id = new Guid("2b2dd419-c6b4-49cc-9be8-50992e91f36c"),
                             DailyRecommendation = 375.0,
                             EnergyPerGram = 4.0,
                             Name = "Carbohydrate"
                         },
                         new
                         {
-                            Id = new Guid("831c3d2f-4f95-4291-9b05-aaec98b8b9d7"),
+                            Id = new Guid("829e1eb9-5eea-4856-8906-74cff3b95cb1"),
                             DailyRecommendation = 50.0,
                             EnergyPerGram = 4.0,
                             Name = "Protein"
                         },
                         new
                         {
-                            Id = new Guid("22c8fc61-40fe-466c-8c6e-0eecc9b713b4"),
+                            Id = new Guid("db02fbba-a1bb-4bf7-8411-69412b446f50"),
                             DailyRecommendation = 80.0,
                             EnergyPerGram = 9.0,
                             Name = "Total Fat"
@@ -122,8 +116,8 @@ namespace TasteUfes.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("ServingEnergy")
-                        .HasColumnType("REAL");
+                    b.Property<Guid>("FoodId")
+                        .HasColumnType("TEXT");
 
                     b.Property<double>("ServingSize")
                         .HasColumnType("REAL");
@@ -132,6 +126,9 @@ namespace TasteUfes.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FoodId")
+                        .IsUnique();
 
                     b.ToTable("NutritionFacts");
                 });
@@ -252,9 +249,43 @@ namespace TasteUfes.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("398da46e-c2f7-4953-8ec1-68367a661724"),
+                            Id = new Guid("d6742fbb-18ab-451b-a736-713b63b7a108"),
                             Name = "Admin"
                         });
+                });
+
+            modelBuilder.Entity("TasteUfes.Models.Token", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessTokenLifetime")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("RefreshTokenExpiresIn")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TokenType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tokens");
                 });
 
             modelBuilder.Entity("TasteUfes.Models.User", b =>
@@ -295,6 +326,17 @@ namespace TasteUfes.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"),
+                            Email = "admin@tasteufes.es",
+                            FirstName = "Zé",
+                            LastName = "Gonc",
+                            Password = "AQAAAAEAACcQAAAAEM4y+xpWBmcmKPIBsBOrcTJiJ5I8NyphxIhDWYNlEQRsoTwJDTWUwiDoDqecgXCKxA==",
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("TasteUfes.Models.UserRole", b =>
@@ -310,15 +352,13 @@ namespace TasteUfes.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole");
-                });
 
-            modelBuilder.Entity("TasteUfes.Models.Food", b =>
-                {
-                    b.HasOne("TasteUfes.Models.NutritionFacts", "NutritionFacts")
-                        .WithOne("Food")
-                        .HasForeignKey("TasteUfes.Models.Food", "NutritionFactsId");
-
-                    b.Navigation("NutritionFacts");
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("cab6b7ab-636c-4b3f-a549-7e5284a92848"),
+                            RoleId = new Guid("d6742fbb-18ab-451b-a736-713b63b7a108")
+                        });
                 });
 
             modelBuilder.Entity("TasteUfes.Models.Ingredient", b =>
@@ -336,6 +376,16 @@ namespace TasteUfes.Migrations
                     b.Navigation("Food");
 
                     b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("TasteUfes.Models.NutritionFacts", b =>
+                {
+                    b.HasOne("TasteUfes.Models.Food", "Food")
+                        .WithOne("NutritionFacts")
+                        .HasForeignKey("TasteUfes.Models.NutritionFacts", "FoodId")
+                        .IsRequired();
+
+                    b.Navigation("Food");
                 });
 
             modelBuilder.Entity("TasteUfes.Models.NutritionFactsNutrients", b =>
@@ -385,6 +435,17 @@ namespace TasteUfes.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TasteUfes.Models.Token", b =>
+                {
+                    b.HasOne("TasteUfes.Models.User", "User")
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TasteUfes.Models.UserRole", b =>
                 {
                     b.HasOne("TasteUfes.Models.Role", "Role")
@@ -405,6 +466,8 @@ namespace TasteUfes.Migrations
             modelBuilder.Entity("TasteUfes.Models.Food", b =>
                 {
                     b.Navigation("Ingredients");
+
+                    b.Navigation("NutritionFacts");
                 });
 
             modelBuilder.Entity("TasteUfes.Models.Nutrient", b =>
@@ -414,8 +477,6 @@ namespace TasteUfes.Migrations
 
             modelBuilder.Entity("TasteUfes.Models.NutritionFacts", b =>
                 {
-                    b.Navigation("Food");
-
                     b.Navigation("NutritionFactsNutrients");
                 });
 
@@ -434,6 +495,8 @@ namespace TasteUfes.Migrations
             modelBuilder.Entity("TasteUfes.Models.User", b =>
                 {
                     b.Navigation("Recipes");
+
+                    b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618
         }

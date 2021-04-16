@@ -26,9 +26,11 @@ namespace TasteUfes.Models
         public string Email { get; set; }
 
         // Fluent API : Many-to-Many
-        public IEnumerable<Role> Roles { get; set; }
+        public ICollection<Role> Roles { get; set; }
 
         [InverseProperty("User")]
-        public IEnumerable<Recipe> Recipes { get; set; }
+        public ICollection<Recipe> Recipes { get; set; }
+
+        public ICollection<Token> Tokens { get; set; }
     }
 }

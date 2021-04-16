@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,15 +13,17 @@ namespace TasteUfes.Models
         [Required]
         public Measures ServingSizeUnit { get; set; }
 
-        [Required]
+        [NotMapped]
         public double ServingEnergy { get; set; }
 
         [NotMapped]
         public double DailyValue { get; set; }
 
         [InverseProperty("NutritionFacts")]
-        public IEnumerable<NutritionFactsNutrients> NutritionFactsNutrients { get; set; }
+        public ICollection<NutritionFactsNutrients> NutritionFactsNutrients { get; set; }
 
+        [ForeignKey("FoodId")]
         public Food Food { get; set; }
+        public Guid FoodId { get; set; }
     }
 }

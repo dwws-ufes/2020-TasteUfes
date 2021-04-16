@@ -1,0 +1,5 @@
+heroku login
+heroku git:remote -a vue-tasteufes
+git checkout deployui
+git subtree push --prefix app/ClientApp heroku main
+heroku logs --tail

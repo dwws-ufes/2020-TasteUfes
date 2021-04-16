@@ -1,0 +1,37 @@
+﻿version: '3'
+
+services:
+  ui:
+    image: tasteufes-ui:1.0.0
+    container_name: tasteufes_ui_container
+    mem_limit: 1G
+    build:
+      context: ./app/ClientApp
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      VUE_APP_TITLE: "TasteUfes"
+      VUE_APP_API_URL: "http://localhost:80/api/v1"
+    command: ["npm", "run", "serve"]
+  app:
+    image: tasteufes-app:1.0.0
+    container_name: tasteufes_app_container
+    mem_limit: 1G
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      # Por tratar-se de um trabalho de faculdade e, buscando a simplificação do mesmo para
+      # facilitar na correção do professor da disciplina, estaremos expondo a chave secreta
+      # do token de acesso, mas isso NUNCA deve ser feito num projeto real.
+      SECRET_KEY: "Rw5yMDUbmpBkpxDYDGsDj9yLitEoXADFx35grq8QZ0oheg0w4fUd4s19eKgGSJu"
+      TOKEN_TYPE: "Bearer"
+      TOKEN_LIFETIME: "0.02:00:00"
+      REFRESH_LIFETIME: "3.00:00:00"
+    restart: always
+    command: ["dotnet", "TasteUfes.dll"]

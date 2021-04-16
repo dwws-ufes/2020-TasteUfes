@@ -13,21 +13,29 @@ namespace TasteUfes.Services
     public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : Entity
     {
         protected readonly IUnitOfWork UnitOfWork;
+        protected readonly AbstractValidator<TEntity> DefaultValidator;
         protected readonly INotificator Notificator;
         protected readonly ILogger Logger;
 
-        protected abstract AbstractValidator<TEntity> DefaultValidator { get; }
-
-        public EntityService(IUnitOfWork unitOfWork, INotificator notificator, ILogger<EntityService<TEntity>> logger)
+        public EntityService(IUnitOfWork unitOfWork, AbstractValidator<TEntity> defaultValidator, INotificator notificator, ILogger<EntityService<TEntity>> logger)
         {
             UnitOfWork = unitOfWork;
+            DefaultValidator = defaultValidator;
             Notificator = notificator;
             Logger = logger;
         }
 
         public virtual TEntity Get(Guid id)
         {
-            return UnitOfWork.Repository<TEntity>().Get(id);
+            var entity = UnitOfWork.Repository<TEntity>().Get(id);
+
+            if (entity == null)
+            {
+                Notify(NotificationType.ERROR, string.Empty, $"{nameof(TEntity)} not found.");
+                return null;
+            }
+
+            return entity;
         }
 
         public virtual IEnumerable<TEntity> GetAll()
@@ -35,14 +43,15 @@ namespace TasteUfes.Services
             return UnitOfWork.Repository<TEntity>().GetAll();
         }
 
-        public virtual TEntity Add(TEntity entity, AbstractValidator<TEntity> validator = null)
+        public virtual TEntity Add(TEntity entity, params string[] ruleSets)
         {
-            if (!IsValid(validator ?? DefaultValidator, entity))
+            if (!IsValid(DefaultValidator, entity, ruleSets))
                 return null;
 
             try
             {
-                UnitOfWork.Repository<TEntity>().Add(entity);
+                entity = UnitOfWork.Repository<TEntity>().Add(entity);
+
                 UnitOfWork.SaveChanges();
 
                 return entity;
@@ -50,7 +59,7 @@ namespace TasteUfes.Services
             catch (Exception e)
             {
                 Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, typeof(TEntity).Name, $"There was an error adding {typeof(TEntity).Name}.");
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error adding {typeof(TEntity).Name}.");
 
                 return null;
             }
@@ -60,24 +69,27 @@ namespace TasteUfes.Services
         {
             try
             {
-                UnitOfWork.Repository<TEntity>().Remove(id);
+                var entity = UnitOfWork.Repository<TEntity>().Get(id);
+
+                UnitOfWork.Repository<TEntity>().Remove(entity);
                 UnitOfWork.SaveChanges();
             }
             catch (Exception e)
             {
                 Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, typeof(TEntity).Name, $"There was an error removing {typeof(TEntity).Name}.");
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error removing {typeof(TEntity).Name}.");
             }
         }
 
-        public virtual TEntity Update(TEntity entity, AbstractValidator<TEntity> validator = null)
+        public virtual TEntity Update(TEntity entity, params string[] ruleSets)
         {
-            if (!IsValid(validator ?? DefaultValidator, entity))
+            if (!IsValid(DefaultValidator, entity, ruleSets))
                 return null;
 
             try
             {
-                UnitOfWork.Repository<TEntity>().Update(entity);
+                entity = UnitOfWork.Repository<TEntity>().Update(entity);
+
                 UnitOfWork.SaveChanges();
 
                 return entity;
@@ -85,7 +97,7 @@ namespace TasteUfes.Services
             catch (Exception e)
             {
                 Logger.LogError(e.Message);
-                Notify(NotificationType.ERROR, typeof(TEntity).Name, $"There was an error updating {typeof(TEntity).Name}.");
+                Notify(NotificationType.ERROR, string.Empty, $"There was an error updating {typeof(TEntity).Name}.");
 
                 return null;
             }
@@ -114,17 +126,17 @@ namespace TasteUfes.Services
             }
         }
 
-        protected virtual bool IsValid<TV, TE>(TV validation, TE entity)
+        protected virtual bool IsValid<TV, TE>(TV validation, TE entity, params string[] ruleSets)
             where TV : AbstractValidator<TE>
             where TE : Entity
         {
             if (entity == null)
             {
-                Notify(NotificationType.ERROR, typeof(TE).Name, $"{typeof(TE).Name} not found.");
+                Notify(NotificationType.ERROR, string.Empty, $"{typeof(TE).Name} not found.");
                 return false;
             }
 
-            var validator = validation.Validate(entity);
+            var validator = validation.Validate(entity, options => options.IncludeRuleSets(ruleSets));
 
             if (validator.IsValid)
                 return true;

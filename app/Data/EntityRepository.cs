@@ -33,9 +33,14 @@ namespace TasteUfes.Data
             return _context.Set<TEntity>().Update(entity).Entity;
         }
 
-        public virtual void Remove(Guid id)
+        public virtual void Remove(TEntity entity)
         {
-            _context.Set<TEntity>().Remove(new TEntity { Id = id });
+            _context.Set<TEntity>().Remove(entity);
+        }
+
+        public virtual void Remove(IEnumerable<TEntity> entities)
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
         }
 
         public virtual IEnumerable<TEntity> GetAll()
@@ -43,12 +48,12 @@ namespace TasteUfes.Data
             return _context.Set<TEntity>().AsNoTracking().ToList();
         }
 
-        public bool Exists(Guid id)
+        public virtual bool Exists(Guid id)
         {
             return _context.Set<TEntity>().Find(id) != null;
         }
 
-        public IEnumerable<TEntity> Search(Expression<Func<TEntity, bool>> predicate)
+        public virtual IEnumerable<TEntity> Search(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Where(predicate).AsNoTracking().ToList();
         }

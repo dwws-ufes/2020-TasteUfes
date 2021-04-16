@@ -17,7 +17,7 @@ namespace TasteUfes.Models
         public Preparation Preparation { get; set; }
 
         [InverseProperty("Recipe")]
-        public IEnumerable<Ingredient> Ingredients { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }

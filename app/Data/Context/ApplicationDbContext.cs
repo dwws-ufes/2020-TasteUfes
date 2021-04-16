@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using TasteUfes.Data.Context.Extensions;
 using TasteUfes.Models;
 using TasteUfes.Seeders;
@@ -8,7 +10,11 @@ namespace TasteUfes.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+            // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            // ChangeTracker.AutoDetectChangesEnabled = false;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +55,8 @@ namespace TasteUfes.Data.Context
 
             modelBuilder.Seed<Nutrient>();
             modelBuilder.Seed<Role>();
+            modelBuilder.Seed<User>();
+            modelBuilder.Seed<UserRole>();
 
             /**
              * Por padrão a engine do SQLite mapeia "string" para "text" sem especificar o tamanho máximo.
@@ -59,6 +67,13 @@ namespace TasteUfes.Data.Context
              */
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
             modelBuilder.OnDeleteClientSetNull();
+
+            // Evita a modificação de OnDeleteClientSetNull
+            modelBuilder.Entity<Token>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Tokens)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -74,5 +89,6 @@ namespace TasteUfes.Data.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }

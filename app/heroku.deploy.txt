@@ -1,0 +1,8 @@
+heroku login
+heroku git:remote -a dotnet-tasteufes
+heroku container:login
+docker build -f Dockerfile.web -t dotnet-tasteufes .
+docker tag dotnet-tasteufes registry.heroku.com/dotnet-tasteufes/web
+docker push registry.heroku.com/dotnet-tasteufes/web
+heroku container:release web --app dotnet-tasteufes
+heroku logs --tail
