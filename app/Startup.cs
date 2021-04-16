@@ -31,7 +31,15 @@ namespace TasteUfes
                 .AddAutoMapper(typeof(Startup));
 
             services
-                .AddCors()
+                .AddCors(options =>
+                {
+                    options.AddPolicy("TastePolicy", builder => builder
+                        .WithOrigins("https://vue-tasteufes.herokuapp.com", "http://localhost:8080")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .Build());
+                })
                 .AddAuthConfig(Configuration["SECRET_KEY"]);
 
             services.AddControllers();
@@ -56,10 +64,7 @@ namespace TasteUfes
 
             app.UseRouting();
 
-            app.UseCors(cors => cors
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors("TastePolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
