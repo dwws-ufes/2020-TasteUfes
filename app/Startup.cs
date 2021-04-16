@@ -1,5 +1,3 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -39,14 +37,7 @@ namespace TasteUfes
             services.AddControllers();
 
             services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
-
-            // services.AddSpaStaticFiles(config =>
-            // {
-            //     config.RootPath = @"ClientApp/dist";
-            // });
+                options.SuppressModelStateInvalidFilter = true);
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TasteUfes", Version = "v1" }));
@@ -72,13 +63,6 @@ namespace TasteUfes
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseDefaultFiles();
-            // app.UseStaticFiles();
-            // app.UseSpa(spa =>
-            // {
-            //     spa.Options.SourcePath = @"ClientApp";
-            // });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

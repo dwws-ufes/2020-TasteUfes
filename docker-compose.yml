@@ -6,7 +6,7 @@ services:
     container_name: tasteufes_ui_container
     mem_limit: 1G
     build:
-      context: ./front
+      context: ./app/ClientApp
       dockerfile: Dockerfile
     ports:
       - 8080:8080
