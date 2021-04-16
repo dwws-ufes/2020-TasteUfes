@@ -1,8 +1,5 @@
 heroku login
 heroku git:remote -a vue-tasteufes
-heroku container:login
-docker build -f Dockerfile.web -t vue-tasteufes .
-docker tag vue-tasteufes registry.heroku.com/vue-tasteufes/web
-docker push registry.heroku.com/vue-tasteufes/web
-heroku container:release web --app vue-tasteufes
+git checkout deployui
+git subtree push --prefix app/ClientApp heroku main
 heroku logs --tail
