@@ -43,6 +43,11 @@ namespace TasteUfes
                 options.SuppressModelStateInvalidFilter = true;
             });
 
+            // services.AddSpaStaticFiles(config =>
+            // {
+            //     config.RootPath = @"ClientApp/dist";
+            // });
+
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TasteUfes", Version = "v1" }));
         }
@@ -55,6 +60,7 @@ namespace TasteUfes
                 app.UseDeveloperExceptionPage();
             }
 
+            // app.UseHsts();
             // app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -66,6 +72,13 @@ namespace TasteUfes
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseDefaultFiles();
+            // app.UseStaticFiles();
+            // app.UseSpa(spa =>
+            // {
+            //     spa.Options.SourcePath = @"ClientApp";
+            // });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

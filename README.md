@@ -30,4 +30,4 @@ A documentação da API encontra-se disponível em:
 
 ---
 
-Para execução do ambiente de desenvolvimento, leia os READMEs de [API](app/README.md) e [FRONT](front/README.md).
+Para execução do ambiente de desenvolvimento, leia os READMEs de [API](app/README.md) e [FRONT](app/ClientApp/README.md).
