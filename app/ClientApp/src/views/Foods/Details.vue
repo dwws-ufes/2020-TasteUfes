@@ -18,6 +18,7 @@
             <v-divider class="white" />
           </v-container>
           <NutritionFactsTable
+            v-if="this.food.nutrition_facts"
             :data="this.food.nutrition_facts"
             :servings="this.food.nutrition_facts.serving_size"
           />
