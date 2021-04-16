@@ -141,6 +141,23 @@ const routes = [
       return import(/* webpackChunkName: "createUser" */ '../views/Users/Create.vue')
     }
   },
+  
+  {
+    path: '/user/updatePassword',
+    name: 'UpdatePassword',
+    component: function () {
+      return import(/* webpackChunkName: "updatePassword" */ '../views/Users/UpdatePassword.vue')
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters["auth"]) next()
+      else if (to.name !== 'Home') {
+        next({ name: 'Home' });
+      } else {
+        next();
+      }
+    }
+  },
+  
   {
     path: '/users',
     name: 'ListUser',
