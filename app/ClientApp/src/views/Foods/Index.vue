@@ -11,6 +11,7 @@
         :headers="headers"
         :items="foodList"
         :items-per-page="10"
+        :search="search"
         class="elevation-1"
       >
         <template v-slot:item.name="{ item }">
@@ -36,7 +37,7 @@
             <DeleteButton
               :id="item.id"
               :name="item.name"
-              @delete="deleteFood(item.id)"
+              @delete="deleteFood(item.id, item.name)"
             />
           </v-row>
         </template>
@@ -67,7 +68,7 @@
             </v-alert>
             <v-row v-else>
               <v-col
-                v-for="food in foodList"
+                v-for="food in visibleFoods"
                 :key="food.name"
                 cols="12"
                 xs="12"
@@ -103,6 +104,10 @@
               </v-col>
             </v-row>
           </v-container>
+          <v-pagination
+            v-model="page"
+            :length="Math.ceil(foodList.length / perPage)"
+          ></v-pagination>
         </div>
       </div>
     </template>
@@ -118,6 +123,9 @@ import DeleteButton from "@/components/buttons/DeleteButton.vue";
 export default {
   data() {
     return {
+      search: '',
+      page: 1,
+      perPage: 12,
       load: true,
       loadSkeleton: true,
       headers: [
@@ -145,6 +153,15 @@ export default {
       ],
       foodList: [],
     };
+  },
+
+  computed: {
+    visibleFoods() {
+      return this.foodList.slice(
+        (this.page - 1) * this.perPage,
+        this.page * this.perPage
+      );
+    },
   },
 
   props: {
@@ -175,7 +192,12 @@ export default {
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
     getMeasureName: function (id) {
@@ -185,17 +207,25 @@ export default {
         ).name;
     },
 
-    deleteFood(id) {
+    deleteFood(id, name) {
       this.changeLoading();
       deleteFood(id)
         .then((result) => {
-          console.log(result);
+          this.$store.dispatch("setSnackbar", {
+            text: `Food ${ name } deleted.`,
+            color: "success",
+          });
           let foodId = this.foodList.findIndex((food) => food.id === id);
           this.foodList.splice(foodId, 1);
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
 

@@ -36,7 +36,7 @@
               <DeleteButton
                 :id="item.id"
                 :name="item.name"
-                @delete="deleteRecipe(item.id)"
+                @delete="deleteRecipe(item.id, item.name)"
               />
             </v-row>
           </template>
@@ -66,46 +66,50 @@
           >
             <v-card-text> No recipe found. </v-card-text>
           </v-alert>
-          <v-row v-else>
-            <v-col
-              v-for="recipe in recipeList"
-              :key="recipe.name"
-              cols="12"
-              xs="12"
-              sm="6"
-              lg="4"
-            >
-              <router-link
-                class="text-decoration-none title-link"
-                :to="{ name: 'DetailsRecipe', params: { id: recipe.id } }"
+          <div v-else>
+            <v-row class="mb-5 min-height">
+              <v-col
+                v-for="recipe in visibleRecipes"
+                :key="recipe.name"
+                cols="12"
+                xs="12"
+                sm="6"
+                lg="4"
               >
-                <v-card>
-                  <v-card-title class="primary">{{ recipe.name }}</v-card-title>
-                  <v-container>
-                    <v-row>
-                      <v-col>
-                        <div class="my-2">
-                          <b>Servings:</b> {{ recipe.servings }}
-                        </div>
-                        <div class="my-2" v-if="recipe.preparation != null">
-                          <b>Preparation Time:</b>
-                          {{ recipe.preparation.preparation_time }}
-                        </div>
-                        <div class="my-2" v-if="recipe.preparation != null">
-                          <b>Total steps:</b>
-                          {{ recipe.preparation.steps.length }}
-                        </div>
-                        <div class="my-2">
-                          <b>Author:</b> {{ recipe.user.first_name }}
-                          {{ recipe.user.last_name }}
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card>
-              </router-link>
-            </v-col>
-          </v-row>
+                <router-link
+                  class="text-decoration-none title-link"
+                  :to="{ name: 'DetailsRecipe', params: { id: recipe.id } }"
+                >
+                  <v-card>
+                    <v-card-title class="primary">{{
+                      recipe.name
+                    }}</v-card-title>
+                    <v-container>
+                      <v-row>
+                        <v-col>
+                          <div class="my-2">
+                            <b>Servings:</b> {{ recipe.servings }}
+                          </div>
+                          <div class="my-2" v-if="recipe.preparation != null">
+                            <b>Preparation Time:</b>
+                            {{ recipe.preparation.preparation_time }}
+                          </div>
+                          <div class="my-2">
+                            <b>Author:</b> {{ recipe.user.first_name }}
+                            {{ recipe.user.last_name }}
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </router-link>
+              </v-col>
+            </v-row>
+            <v-pagination
+              v-model="page"
+              :length="Math.ceil(recipeList.length / perPage)"
+            ></v-pagination>
+          </div>
         </v-container>
       </div>
     </template>
@@ -122,6 +126,8 @@ import DeleteButton from "@/components/buttons/DeleteButton.vue";
 export default {
   data() {
     return {
+      page: 1,
+      perPage: 9,
       load: true,
       loadSkeleton: true,
       headers: [
@@ -180,23 +186,37 @@ export default {
   },
 
   computed: {
+    visibleRecipes() {
+      return this.recipeList.slice(
+        (this.page - 1) * this.perPage,
+        this.page * this.perPage
+      );
+    },
     ...mapGetters(["isAdmin", "getUserId"]),
   },
 
   methods: {
-    deleteRecipe(id) {
+    deleteRecipe(id, name) {
       this.changeLoading();
       deleteRecipe(id)
         .then((result) => {
-          console.log(result);
           let recipeId = this.recipeListTable.findIndex(
             (recipe) => recipe.id === id
           );
+          this.$store.dispatch("setSnackbar", {
+            text: `Recipe ${name} deleted.`,
+            color: "success",
+          });
           this.recipeListTable.splice(recipeId, 1);
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
 
@@ -225,7 +245,12 @@ export default {
             this.changeLoading();
           })
           .catch((error) => {
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       } else {
         getRecipes()
@@ -234,10 +259,21 @@ export default {
             this.changeLoading();
           })
           .catch((error) => {
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       }
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+// .min-height {
+//   min-height: 660px;
+// }
+</style>

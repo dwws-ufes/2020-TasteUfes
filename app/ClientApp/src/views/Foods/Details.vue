@@ -11,11 +11,11 @@
           </router-link>
         </div>
         <v-card>
-          <v-container>
+          <v-container class="primary">
             <v-card-title
               ><h1>{{ food.name }}</h1></v-card-title
             >
-            <v-divider class="mx-4" />
+            <v-divider class="white" />
           </v-container>
           <NutritionFactsTable
             :data="this.food.nutrition_facts"
@@ -30,7 +30,7 @@
 <script>
 import { getFood } from "@/api";
 import NutritionFactsTable from "@/components/details/NutritionFactsTable.vue";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "DetailsFood",
@@ -39,13 +39,13 @@ export default {
     return {
       foodId: this.$route.params.id,
       food: {
-        nutrition_facts: []
+        nutrition_facts: [],
       },
     };
   },
 
   computed: {
-    ...mapGetters(['isAdmin', 'auth']),
+    ...mapGetters(["isAdmin", "auth"]),
   },
 
   created: function () {
@@ -59,14 +59,19 @@ export default {
           this.food = result.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
   },
 
   components: {
     NutritionFactsTable,
-  }
+  },
 };
 </script>
 
@@ -75,5 +80,9 @@ export default {
   &__title {
     padding-bottom: 5;
   }
+}
+h1 {
+  word-break: break-word;
+  line-height: 1em;
 }
 </style>

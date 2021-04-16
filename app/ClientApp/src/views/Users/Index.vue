@@ -15,7 +15,7 @@
           <router-link
             class="text-decoration-none"
             :to="{ name: 'DetailsUser', params: { id: item.id } }"
-            >{{ item.first_name }} {{item.last_name}}</router-link
+            >{{ item.first_name }} {{ item.last_name }}</router-link
           >
         </v-row>
       </template>
@@ -26,7 +26,7 @@
           <DeleteButton
             :id="item.id"
             :name="item.first_name"
-            @delete="deleteUser(item.id)"
+            @delete="deleteUser(item.id, item.first_name)"
           />
         </v-row>
       </template>
@@ -102,23 +102,31 @@ export default {
             : (user.roles = "User");
         });
         this.userList.map((user, index) => {
-            user.number = index + 1;
-          })
+          user.number = index + 1;
+        });
         this.changeLoading();
       });
     },
 
-    deleteUser(id) {
+    deleteUser(id, name) {
       this.changeLoading();
       deleteUser(id)
         .then((result) => {
-          console.log(result);
+          this.$store.dispatch("setSnackbar", {
+            text: `User ${ name } deleted.`,
+            color: "success",
+          });
           let userId = this.userList.findIndex((user) => user.id === id);
           this.userList.splice(userId, 1);
           this.changeLoading();
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
 

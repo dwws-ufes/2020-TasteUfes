@@ -40,7 +40,7 @@
                     :disabled="!valid"
                     v-if="!submit"
                   >
-                    <span > Submit </span>
+                    <span> Submit </span>
                   </v-btn>
                   <v-btn
                     v-else
@@ -93,14 +93,24 @@ export default {
             getUser(result.data.user_id).then((user) => {
               Promise.all([
                 this.$store.dispatch("ActionSetUser", user.data),
+                this.$store.dispatch("ActionSetIsAdmin", user.data),
               ]).finally(() => {
                 this.doLogin(result.data);
                 this.dialog = false;
+                this.$store.dispatch("setSnackbar", {
+                  text: `Welcome ${ user.data.first_name }.`,
+                  color: "success",
+                });
               });
             });
           })
           .catch((error) => {
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
             this.submit = false;
             // this.valid = true;
           });

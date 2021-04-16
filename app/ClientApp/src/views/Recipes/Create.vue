@@ -19,7 +19,11 @@
             />
             <v-text-field
               v-model.number="recipe.servings"
-              :rules="[this.rules.required]"
+              :rules="[
+                this.rules.required,
+                this.rules.limitMax,
+                this.rules.limitMin,
+              ]"
               type="number"
               label="Servings*"
               hide-details="auto"
@@ -27,7 +31,11 @@
             />
             <v-text-field
               v-model.number="prepTime"
-              :rules="[(value) => !!value || 'Required.']"
+              :rules="[
+                this.rules.required,
+                this.rules.limitMaxTime,
+                this.rules.limitMin,
+              ]"
               label="Preparation time (in minutes)*"
               type="number"
               hide-details="auto"
@@ -40,6 +48,7 @@
             <v-col class="d-flex justify-content-between">
               <h2>Food</h2>
               <v-btn
+                v-if="this.recipe.ingredients.length == 0"
                 class="mx-1 my-0"
                 fab
                 x-small
@@ -80,7 +89,7 @@
                           item-text="name"
                           item-value="id"
                           label="Select a food*"
-                          :rules="[(value) => !!value || 'Required.']"
+                          :rules="[rules.required]"
                           return-value
                           @change="showFields(ingredient)"
                         />
@@ -88,7 +97,11 @@
                           <v-col>
                             <v-text-field
                               v-model.number="ingredient.quantity"
-                              :rules="[(value) => !!value || 'Required.']"
+                              :rules="[
+                                rules.required,
+                                rules.limitMax,
+                                rules.limitMin,
+                              ]"
                               type="number"
                               label="Quantity Food*"
                               hide-details="auto"
@@ -103,7 +116,7 @@
                               item-text="name"
                               item-value="id"
                               label="Select a Measure*"
-                              :rules="[(value) => !!value || 'Required.']"
+                              :rules="[rules.required]"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
                             />
@@ -115,6 +128,19 @@
                 </v-card>
               </v-container>
             </div>
+            <v-row v-if="this.recipe.ingredients.length > 0">
+              <v-col class="d-flex justify-end">
+                <v-btn
+                  class="mx-1 my-0"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="addFoodField"
+                >
+                  <v-icon dark> mdi-plus </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card>
         <v-card class="mx-auto" elevation="0" outlined>
@@ -123,6 +149,7 @@
               <h2>Step</h2>
               <div>
                 <v-btn
+                  v-if="this.recipe.preparation.steps.length == 0"
                   class="mx-1 my-0"
                   fab
                   x-small
@@ -172,6 +199,19 @@
                 </v-card>
               </v-container>
             </div>
+            <v-row v-if="this.recipe.preparation.steps.length > 0">
+              <v-col class="d-flex justify-end">
+                <v-btn
+                  class="mx-1 my-0"
+                  fab
+                  x-small
+                  color="primary"
+                  @click="addStepField"
+                >
+                  <v-icon dark> mdi-plus </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-container>
         </v-card>
         <v-card-actions>
@@ -233,6 +273,9 @@ export default {
       },
       rules: {
         required: (value) => !!value || "Required.",
+        limitMax: (value) => value < 10000 || "Value too big",
+        limitMaxTime: (value) => value < 1400 || "Value too big for time",
+        limitMin: (value) => value > 0 || "Value must not be negative or 0",
       },
     };
   },
@@ -290,7 +333,12 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error.response);
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
         });
     },
     onSubmit: function () {
@@ -308,12 +356,20 @@ export default {
         );
         createRecipe(this.recipe)
           .then((result) => {
-            console.log(result);
+            this.$store.dispatch("setSnackbar", {
+              text: `Recipe ${this.recipe.name} created.`,
+              color: "success",
+            });
             this.$router.push({ name: "ListRecipe" });
           })
           .catch((error) => {
             this.submit = false;
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       } else {
         this.submit = false;

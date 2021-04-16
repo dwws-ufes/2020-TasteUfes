@@ -18,6 +18,7 @@
     <v-list v-for="option in menu.options" :key="option.routeName">
       <div v-if="option.show">
         <v-list-item
+          color="primary"
           link
           v-if="!option.action"
           :to="{ name: option.routeName, params: { id: option.param } }"

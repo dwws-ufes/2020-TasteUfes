@@ -29,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: '/recipe',
+    path: '/recipes',
     name: 'ListRecipe',
     component: function () {
       return import(/* webpackChunkName: "recipe" */ '../views/Recipes/Index.vue')
@@ -97,7 +97,7 @@ const routes = [
     }
   },
   {
-    path: '/food',
+    path: '/foods',
     name: 'ListFood',
     component: function () {
       return import(/* webpackChunkName: "food" */ '../views/Foods/Index.vue')
@@ -142,7 +142,7 @@ const routes = [
     }
   },
   {
-    path: '/user',
+    path: '/users',
     name: 'ListUser',
     component: function () {
       return import(/* webpackChunkName: "user" */ '../views/Users/Index.vue')

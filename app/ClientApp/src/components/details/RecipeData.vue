@@ -117,7 +117,12 @@ export default {
             console.log(result);
           })
           .catch((error) => {
-            console.log(error.response);
+            error.response.data.errors.map((error) => {
+              this.$store.dispatch("setSnackbar", {
+                text: `${error.message}`,
+                color: "error",
+              });
+            });
           });
       }
     },

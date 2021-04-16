@@ -148,10 +148,10 @@ export default {
 .title {
   &-link {
     color: #ffffff;
-    font-size: 26px;
+    font-size: 22px;
   }
 }
 .v-icon {
-  font-size: 28px;
+  font-size: 24px;
 }
 </style>

@@ -1,26 +1,32 @@
 <template>
   <div class="home w-100">
     <v-container>
-      <v-row >
+      <v-row>
         <v-tabs vertical hide-slider>
           <v-col>
-          <v-card>
-            <v-list class="py-0">
-              <v-card-title class="primary border-radius">
-                <h3 class="menu-title">Menu</h3>
-              </v-card-title>
-              <v-list-item-group>
-                <v-tab class="justify-start d-flex">
-                  <v-icon color="primary" class="mr-1">mdi-note-text</v-icon>
-                  <span>Recipes</span>
-                </v-tab>
-                <v-tab class="justify-start d-flex">
-                  <v-icon color="primary" class="mr-1">mdi-food</v-icon>
-                  <span>Foods</span>
-                </v-tab>
-              </v-list-item-group>
-            </v-list>
-          </v-card>
+            <v-card>
+              <v-list class="py-0">
+                <v-card-title class="primary border-radius">
+                  <h3 class="menu-title">Menu</h3>
+                </v-card-title>
+                <keep-alive>
+                  <v-navigation-drawer permanent>
+                    <v-list-item-group color="primary">
+                      <v-tab class="justify-start d-flex">
+                        <v-icon color="primary" class="mr-1"
+                          >mdi-note-text</v-icon
+                        >
+                        <span>Recipes</span>
+                      </v-tab>
+                      <v-tab class="justify-start d-flex">
+                        <v-icon color="primary" class="mr-1">mdi-food</v-icon>
+                        <span>Foods</span>
+                      </v-tab>
+                    </v-list-item-group>
+                  </v-navigation-drawer>
+                </keep-alive>
+              </v-list>
+            </v-card>
           </v-col>
           <v-tab-item>
             <Recipes :isTable="true" />
@@ -34,18 +40,21 @@
   </div>
 </template>
 
+
 <script>
 // @ is an alias to /src
+import AnonymousRecipe from "@/views/Recipes/AnonymousRecipe.vue";
+import RecommendationRecipe from "@/views/Recipes/RecommendationRecipe.vue";
 import Recipes from "@/views/Recipes/Index.vue";
 import Foods from "@/views/Foods/Index.vue";
-import LateralMenu from "@/components/LateralMenu.vue";
 
 export default {
   name: "Home",
   components: {
+    AnonymousRecipe,
+    RecommendationRecipe,
     Recipes,
     Foods,
-    LateralMenu,
   },
 };
 </script>
