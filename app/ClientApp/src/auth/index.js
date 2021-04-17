@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { createAuthAPI, deleteAuthAPI, getUser } from '@/api';
+import { createAuthAPI, deleteAuthAPI, getUser, healthCheck } from '@/api';
 
 Vue.use(Vuex)
 
@@ -18,6 +18,15 @@ const store = new Vuex.Store({
     isAdmin: false,
     user: userDefault(),
     snackbar: {},
+    loadingMain: true,
+    loadingMainError: false,
+    randomizeQuote: 0,
+    quotes: [
+      "We're poor and waiting for server to wake up...",
+      "Wait for a bit, dollar is very high...",
+      "If you wanna a faster website, make a donation to us...",
+      "Waiting it's the hardest thing...",
+    ],
     ingredients_measures: [
       {
         'name': 'g',
@@ -111,6 +120,9 @@ const store = new Vuex.Store({
     setIsAdmin: (state, isAdmin) => state.isAdmin = isAdmin,
     setUser: (state, user) => state.user = user,
     setSnackbar: (state, snackbar) => state.snackbar = snackbar,
+    setLoadingMain: (state, loadingMain) => state.loadingMain = loadingMain,
+    setLoadingMainError: (state, loadingMainError) => state.loadingMainError = loadingMainError,
+    setRandomizeQuote: (state, randomizeQuote) => state.randomizeQuote = randomizeQuote,
   },
 
   getters: {
@@ -118,6 +130,10 @@ const store = new Vuex.Store({
     isAdmin: state => state.isAdmin,
     getUserId: state => state.userId,
     getUser: state => state.user,
+    getLoadingMain: state => state.loadingMain,
+    getLoadingMainError: state => state.loadingMainError,
+    getQuotes: state => state.quotes,
+    getRandomizeQuote: state => state.randomizeQuote,
   },
 
   actions: {
@@ -125,6 +141,53 @@ const store = new Vuex.Store({
       snackbar.show = true,
         commit('setSnackbar', snackbar);
     },
+    tryAgain({ dispatch, commit }) {
+      return new Promise((resolve, reject) => {
+        for (let index = 0; index < 4; index++) {
+          (function (i) {
+            setTimeout(function () {
+              let quotesLength = store.state.quotes.length;
+              let rand = Math.floor(Math.random() * quotesLength);
+              commit('setRandomizeQuote', rand);
+              healthCheck()
+                .then(() => {
+                  dispatch('loadApplication');
+                  resolve();
+                  return null;
+                }).
+                catch(() => { });
+            }, index * 5000);
+          })(index);
+        }
+        setTimeout(reject, 20000);
+      });
+    },
+    verifyConnection({ dispatch }) {
+      return new Promise((resolve, reject) => {
+        healthCheck()
+          .then(() => {
+            dispatch('loadApplication');
+            resolve();
+          }).
+          catch(() => {
+            dispatch('ActionSetLoadingMainError', true);
+            dispatch('tryAgain')
+              .then(() => {
+                resolve();
+              })
+              .catch(() => {
+                dispatch("setSnackbar", {
+                  text: `Network error, please contact server administrator.`,
+                  color: "error",
+                });
+                dispatch('ActionSetLoadingMain', false);
+                dispatch('ActionSetLoadingMainError', false);
+                resolve();
+              });
+          });
+      });
+    },
+
     async loadApplication({ dispatch }) {
       let accessToken = localStorage.getItem('access_token');
       let userId = localStorage.getItem('user_id');
@@ -132,18 +195,19 @@ const store = new Vuex.Store({
       if (userId != null) {
         createAuthAPI(tokenType, accessToken)
         await getUser(userId).then((user) => {
-          dispatch('ActionSetToken', accessToken),
-            dispatch('ActionSetUser', user.data),
-            dispatch('ActionSetUserId', user.data.id),
-            dispatch('ActionSetIsAdmin', user.data),
-            dispatch('loginAuth', true)
+          dispatch('ActionSetToken', accessToken);
+          dispatch('ActionSetUser', user.data);
+          dispatch('ActionSetUserId', user.data.id);
+          dispatch('ActionSetIsAdmin', user.data);
+          dispatch('loginAuth', true);
+          dispatch('ActionSetLoadingMain', false);
         })
-        .catch(error => {
+          .catch(() => {
             dispatch("setSnackbar", {
               text: `Network error, please contact server administrator.`,
               color: "error",
             });
-        })
+          })
       }
     },
     ActionSetUser: ({ commit }, payload) => {
@@ -151,6 +215,8 @@ const store = new Vuex.Store({
     },
     ActionSetUserId: ({ commit }, payload) => commit('setUserId', payload),
     ActionSetIsAdmin: ({ commit }, payload) => commit('setIsAdmin', payload.roles.length > 0),
+    ActionSetLoadingMain: ({ commit }, payload) => commit('setLoadingMain', payload),
+    ActionSetLoadingMainError({ commit }, loadingMainError) { commit('setLoadingMainError', loadingMainError); },
     loginAuth: ({ commit }) => commit('login'),
     logoutAuth: ({ commit }) => commit('logout'),
     ActionSetToken: ({ commit }, payload) => commit('setToken', payload),
@@ -170,11 +236,11 @@ const store = new Vuex.Store({
       localStorage.setItem('refresh_token', access.refresh_token);
       localStorage.setItem('user_id', access.user_id);
       localStorage.setItem('now', access.now.toString());
-        Promise.all([
-          dispatch('loginAuth'),
-          dispatch('ActionSetToken', access.access_token),
-          dispatch('ActionSetUserId', access.user_id)
-        ]).then(() => {})
+      Promise.all([
+        dispatch('loginAuth'),
+        dispatch('ActionSetToken', access.access_token),
+        dispatch('ActionSetUserId', access.user_id)
+      ]).then(() => { })
     },
 
     doLogout: ({ dispatch }) => {

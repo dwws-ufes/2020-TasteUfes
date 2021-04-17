@@ -13,6 +13,16 @@
 .w-100 {
   width: 100%;
 }
+.h-100 {
+  height: 100vh;
+}
+
+.loading-main {
+  h3 {
+    color: $primary;
+    margin: 15px;
+  }
+}
 
 .card-form {
   .v-card {
