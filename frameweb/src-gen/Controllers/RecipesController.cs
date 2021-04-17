@@ -113,7 +113,7 @@ namespace TasteUfes.Controllers
 			
 				[HttpGet]
 			
-			public IActionResult RecommendRecipesByIngredients(IEnumerable ingredients)
+			public IActionResult RecommendRecipesByFoods(IEnumerable foods)
 			{
 				throw new NotImplementedException();
 			}

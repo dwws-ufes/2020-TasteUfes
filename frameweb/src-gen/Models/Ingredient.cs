@@ -16,7 +16,7 @@ namespace Models
 			
 			
 			
-			public int Quantity { get; set; }
+			public double Quantity { get; set; }
 	    
 	
 	    

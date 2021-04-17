@@ -36,6 +36,8 @@ namespace Models
 			
 			
 			
+				[NotMapped]
+			
 			public double ServingEnergy { get; set; }
 	    
 	

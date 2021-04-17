@@ -18,18 +18,14 @@ namespace TasteUfes.Controllers
 		
 			private readonly INutrientService _nutrientService;
 		
-			private readonly INutritionFactsService _nutritionFactsService;
 		
-		
-		public FoodsController(IFoodService foodService, INutrientService nutrientService, INutritionFactsService nutritionFactsService, IMapper mapper, INotificator notificator)
+		public FoodsController(IFoodService foodService, INutrientService nutrientService, IMapper mapper, INotificator notificator)
 			: base(mapper, notificator)
 		{
 			
 				_foodService = foodService;
 			
 				_nutrientService = nutrientService;
-			
-				_nutritionFactsService = nutritionFactsService;
 			
 		}
 		
@@ -80,6 +76,16 @@ namespace TasteUfes.Controllers
 				[HttpDelete]
 			
 			public IActionResult Delete(Guid id)
+			{
+				throw new NotImplementedException();
+			}
+		
+			
+
+			
+				[HttpGet]
+			
+			public IActionResult GetNutrients()
 			{
 				throw new NotImplementedException();
 			}

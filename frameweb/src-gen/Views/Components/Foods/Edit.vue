@@ -5,6 +5,8 @@
 						<v-text-field label="Name" hide-details="auto" class="form-control" required/>
 					
 				
+					
+				
 			</div>
 		</v-form>
 	

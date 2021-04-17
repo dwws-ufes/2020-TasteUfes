@@ -46,7 +46,18 @@ namespace Services
 				
 			
 
-			public IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable ingredients)
+			public IEnumerable<Recipe> RecommendRecipesByFoods(IEnumerable foods)
+			{
+				throw new NotImplementedException();
+			}
+		
+			
+
+			
+				
+			
+
+			public Recipe GetDetailed(Guid id)
 			{
 				throw new NotImplementedException();
 			}
