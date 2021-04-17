@@ -13,6 +13,7 @@ Models/Token.cs,79,32,72.93
 Models/User.cs,107,36,63.89
 Controllers/FoodsController.cs,94,52,58.85
 Controllers/RecipesController.cs,122,174,41.30
+Controllers/UsersController.cs,124,173,38.31
 Services/FoodService.cs,23,157,18.30
 Services/NutrientService.cs,23,15,69.40
 Services/RecipeService.cs,67,269,19.23
