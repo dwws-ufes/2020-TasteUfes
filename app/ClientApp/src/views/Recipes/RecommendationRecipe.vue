@@ -14,7 +14,7 @@
                   :items="foods"
                   item-text="name"
                   item-value="id"
-                  label="Select a food"
+                  label="Select a ingredient"
                   :rules="[(value) => !!value || 'Required.']"
                   multiple
                   clearable

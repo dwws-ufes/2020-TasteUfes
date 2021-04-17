@@ -1,10 +1,34 @@
 <template>
   <div class="list">
     <template v-if="!isTable">
-      <h1>Foods</h1>
-      <v-btn elevation="2" :to="{ name: 'CreateFood' }" color="primary" dark>
-        Create Food
-      </v-btn>
+      <v-row class="justify-space-between">
+        <v-col>
+          <h1>Ingredients</h1>
+        </v-col>
+        <v-col class="justify-flex-end d-flex">
+          <v-btn
+            elevation="2"
+            :to="{ name: 'CreateFood' }"
+            color="primary"
+            dark
+          >
+            <v-icon class="mr-1">mdi-food</v-icon>
+            Create
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row class="mb-2">
+        <v-col>
+          <v-text-field
+            v-model="search"
+            class="search"
+            append-icon="mdi-magnify"
+            label="Search Ingredient"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-data-table
         :loading="load"
         loading-text="Loading... Please wait"
@@ -47,7 +71,7 @@
       <div class="list">
         <div>
           <v-col class="pb-0">
-            <h1>Foods</h1>
+            <h1>Ingredients</h1>
           </v-col>
           <v-container>
             <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
@@ -64,50 +88,66 @@
               text
               type="warning"
             >
-              <v-card-text> No food found. </v-card-text>
+              <v-card-text> No ingredient found. </v-card-text>
             </v-alert>
-            <v-row v-else>
-              <v-col
-                v-for="food in visibleFoods"
-                :key="food.name"
-                cols="12"
-                xs="12"
-                sm="6"
-                lg="4"
-              >
-                <router-link
-                  class="text-decoration-none title-link"
-                  :to="{ name: 'DetailsFood', params: { id: food.id } }"
-                >
-                  <v-card>
-                    <v-card-title class="primary">{{ food.name }}</v-card-title>
-                    <div class="my-2">
-                      <v-container>
-                        <v-row v-if="food.nutrition_facts">
-                          <v-col>
-                            <b>Serving Size: </b
-                            >{{ food.nutrition_facts.serving_size
-                            }}{{
-                              getMeasureName(
-                                food.nutrition_facts.serving_size_unit
-                              )
-                            }}
-                          </v-col>
-                        </v-row>
-                        <v-row v-else>
-                          <v-col> - </v-col>
-                        </v-row>
-                      </v-container>
-                    </div>
-                  </v-card>
-                </router-link>
+            <div v-else>
+              <v-row class="mb-2">
+              <v-col>
+                <v-text-field
+                  v-model="search"
+                  class="search"
+                  append-icon="mdi-magnify"
+                  label="Search Ingredient"
+                  single-line
+                  hide-details
+                ></v-text-field>
               </v-col>
             </v-row>
+              <v-row>
+                <v-col
+                  v-for="food in visibleFoods"
+                  :key="food.name"
+                  cols="12"
+                  xs="12"
+                  sm="6"
+                  lg="4"
+                >
+                  <router-link
+                    class="text-decoration-none title-link"
+                    :to="{ name: 'DetailsFood', params: { id: food.id } }"
+                  >
+                    <v-card>
+                      <v-card-title class="primary">{{
+                        food.name
+                      }}</v-card-title>
+                      <div class="my-2">
+                        <v-container>
+                          <v-row v-if="food.nutrition_facts">
+                            <v-col>
+                              <b>Serving Size: </b
+                              >{{ food.nutrition_facts.serving_size
+                              }}{{
+                                getMeasureName(
+                                  food.nutrition_facts.serving_size_unit
+                                )
+                              }}
+                            </v-col>
+                          </v-row>
+                          <v-row v-else>
+                            <v-col> - </v-col>
+                          </v-row>
+                        </v-container>
+                      </div>
+                    </v-card>
+                  </router-link>
+                </v-col>
+              </v-row>
+              <v-pagination
+                v-model="page"
+                :length="Math.ceil(filterFood.length / perPage)"
+              ></v-pagination>
+            </div>
           </v-container>
-          <v-pagination
-            v-model="page"
-            :length="Math.ceil(foodList.length / perPage)"
-          ></v-pagination>
         </div>
       </div>
     </template>
@@ -123,7 +163,7 @@ import DeleteButton from "@/components/buttons/DeleteButton.vue";
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       page: 1,
       perPage: 12,
       load: true,
@@ -157,9 +197,15 @@ export default {
 
   computed: {
     visibleFoods() {
-      return this.foodList.slice(
+      return this.filterFood.slice(
         (this.page - 1) * this.perPage,
         this.page * this.perPage
+      );
+    },
+    filterFood() {
+      let search = this.search.toString().toLowerCase();
+      return this.foodList.filter((food) =>
+        Object.keys(food).some(() => food.name.toLowerCase().includes(search))
       );
     },
   },
@@ -212,7 +258,7 @@ export default {
       deleteFood(id)
         .then((result) => {
           this.$store.dispatch("setSnackbar", {
-            text: `Food ${ name } deleted.`,
+            text: `Ingredient ${name} deleted.`,
             color: "success",
           });
           let foodId = this.foodList.findIndex((food) => food.id === id);

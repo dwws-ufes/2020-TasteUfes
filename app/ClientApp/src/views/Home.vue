@@ -20,7 +20,7 @@
                       </v-tab>
                       <v-tab class="justify-start d-flex">
                         <v-icon color="primary" class="mr-1">mdi-food</v-icon>
-                        <span>Foods</span>
+                        <span>Ingredients</span>
                       </v-tab>
                     </v-list-item-group>
                   </v-navigation-drawer>

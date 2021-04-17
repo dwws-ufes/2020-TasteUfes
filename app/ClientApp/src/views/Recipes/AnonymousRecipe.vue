@@ -6,7 +6,7 @@
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
-              <h2>Food</h2>
+              <h2>Ingredient</h2>
               <v-btn
                 v-if="this.recipe.ingredients.length == 0"
                 class="mx-1 my-0"
@@ -48,7 +48,7 @@
                           :items="foods"
                           item-text="name"
                           item-value="id"
-                          label="Select a food*"
+                          label="Select a ingredient*"
                           :rules="[rules.required]"
                           return-value
                           @change="showFields(ingredient)"
@@ -59,7 +59,7 @@
                               v-model.number="ingredient.quantity"
                               :rules="[rules.required, rules.limitMin, rules.limitMax]"
                               type="number"
-                              label="Quantity Food*"
+                              label="Quantity Ingredient*"
                               hide-details="auto"
                               class="form-control"
                               v-if="ingredient.nutrition_facts_fields"
@@ -299,7 +299,6 @@ export default {
         );
         calculateAnonymous(this.recipe)
           .then((result) => {
-            console.log("Receita>: ", result.data);
             this.anonymous = result.data;
             this.anonymous.ingredients;
           })

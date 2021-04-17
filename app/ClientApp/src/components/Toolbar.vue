@@ -74,19 +74,19 @@ export default {
           ],
         },
         {
-          name: 'Food',
+          name: 'Ingredient',
           icon: null,
           show: this.isAdmin,
           options: [
             {
-              name: 'Create Food',
+              name: 'Create Ingredient',
               routeName: 'CreateFood',
               param: null,
               action: false,
               show: this.auth,
             },
             {
-              name: 'List Food',
+              name: 'List Ingredient',
               routeName: 'ListFood',
               param: null,
               action: false,
