@@ -6,7 +6,7 @@
       @submit.prevent="onSubmit"
       v-model="valid"
     >
-      <h1>Create Food</h1>
+      <h1>Create Ingredient</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
@@ -256,7 +256,7 @@ export default {
         createFood(this.food)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `Food ${ this.food.name } created.`,
+              text: `Ingredient ${ this.food.name } created.`,
               color: "success",
             });
             this.$router.push({ name: "ListFood" });

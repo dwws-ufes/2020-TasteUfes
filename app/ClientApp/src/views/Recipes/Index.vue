@@ -2,21 +2,41 @@
   <div class="recipe">
     <template v-if="!isTable">
       <div class="list">
-        <h1>Recipes</h1>
-        <v-btn
-          elevation="2"
-          :to="{ name: 'CreateRecipe' }"
-          color="primary"
-          dark
-        >
-          Create Recipe
-        </v-btn>
+        <v-row class="justify-space-between">
+          <v-col>
+            <h1>Recipes</h1>
+          </v-col>
+          <v-col class="justify-flex-end d-flex">
+            <v-btn
+              elevation="2"
+              :to="{ name: 'CreateRecipe' }"
+              color="primary"
+              dark
+            >
+              <v-icon class="mr-1">mdi-note-text</v-icon>
+              Create
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row class="mb-2">
+          <v-col>
+            <v-text-field
+              v-model="search"
+              class="search"
+              append-icon="mdi-magnify"
+              label="Search Recipe"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
         <v-data-table
           :loading="load"
           loading-text="Loading... Please wait"
           :headers="headers"
           :items="recipeListTable"
           :items-per-page="10"
+          :search="search"
           class="elevation-1"
         >
           <template v-slot:item.name="{ item }">
@@ -67,6 +87,18 @@
             <v-card-text> No recipe found. </v-card-text>
           </v-alert>
           <div v-else>
+            <v-row class="mb-2">
+              <v-col>
+                <v-text-field
+                  v-model="search"
+                  class="search"
+                  append-icon="mdi-magnify"
+                  label="Search Recipe"
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-row class="mb-5 min-height">
               <v-col
                 v-for="recipe in visibleRecipes"
@@ -107,7 +139,7 @@
             </v-row>
             <v-pagination
               v-model="page"
-              :length="Math.ceil(recipeList.length / perPage)"
+              :length="Math.ceil(filterRecipe.length / perPage)"
             ></v-pagination>
           </div>
         </v-container>
@@ -130,6 +162,7 @@ export default {
       perPage: 9,
       load: true,
       loadSkeleton: true,
+      search: "",
       headers: [
         {
           text: "Nº",
@@ -187,12 +220,18 @@ export default {
 
   computed: {
     visibleRecipes() {
-      return this.recipeList.slice(
+      return this.filterRecipe.slice(
         (this.page - 1) * this.perPage,
         this.page * this.perPage
       );
     },
     ...mapGetters(["isAdmin", "getUserId"]),
+    filterRecipe() {
+      let search = this.search.toString().toLowerCase();
+      return this.recipeList.filter(recipe =>
+        Object.keys(recipe).some(() => recipe.name.toLowerCase().includes(search))
+      );
+    },
   },
 
   methods: {
@@ -271,9 +310,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-// .min-height {
-//   min-height: 660px;
-// }
-</style>
