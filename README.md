@@ -28,8 +28,10 @@ A aplicação ficará disponível em
 `http://localhost:8080`
 
 ## :page_facing_up: Documentação da API
-A documentação da API encontra-se disponível em:
+Localmente, a documentação da API encontra-se disponível em:
 `http://localhost/swagger/index.html`.
+
+Enquanto que online em: https://dotnet-tasteufes.herokuapp.com/swagger/index.html.
 
 ---
 
