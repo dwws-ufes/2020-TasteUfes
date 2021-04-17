@@ -1,13 +1,38 @@
 <template>
   <div class="list">
-    <h1>Users</h1>
-    <v-btn elevation="2" :to="{ name: 'CreateUser' }" color="primary" dark
-      >Create User</v-btn
-    >
+    <v-row class="justify-space-between">
+      <v-col>
+        <h1>Users</h1>
+      </v-col>
+      <v-col class="justify-flex-end d-flex">
+        <v-btn
+          elevation="2"
+          :to="{ name: 'CreateUser' }"
+          color="primary"
+          dark
+        >
+          <v-icon class="mr-1">mdi-account-circle</v-icon>
+          Create
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row class="mb-2">
+      <v-col>
+        <v-text-field
+          v-model="search"
+          class="search"
+          append-icon="mdi-magnify"
+          label="Search User"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-col>
+    </v-row>
     <v-data-table
       :headers="headers"
       :items="userList"
       :items-per-page="10"
+      :search="search"
       class="elevation-1"
     >
       <template v-slot:item.name="{ item }">
@@ -44,6 +69,7 @@ export default {
   data() {
     return {
       load: true,
+      search: '',
       headers: [
         {
           text: "Nº",
@@ -113,7 +139,7 @@ export default {
       deleteUser(id)
         .then((result) => {
           this.$store.dispatch("setSnackbar", {
-            text: `User ${ name } deleted.`,
+            text: `User ${name} deleted.`,
             color: "success",
           });
           let userId = this.userList.findIndex((user) => user.id === id);

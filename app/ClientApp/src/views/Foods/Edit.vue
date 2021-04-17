@@ -6,7 +6,7 @@
       @submit.prevent="onSubmit"
       v-model="valid"
     >
-      <h1>Edit Food</h1>
+      <h1>Edit Ingredient</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
@@ -252,7 +252,7 @@ export default {
         updateFood(this.foodId, this.food)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `Food ${this.food.name} updated.`,
+              text: `Ingredient ${this.food.name} updated.`,
               color: "success",
             });
             this.$router.push({ name: "ListFood" });
