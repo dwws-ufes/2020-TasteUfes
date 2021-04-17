@@ -34,15 +34,6 @@ export default {
     token_type: localStorage.getItem("token_type"),
   }),
 
-  created() {
-    if (this.access_token != null) {
-      this.loadSession({
-        token_type: this.token_type,
-        access_token: this.access_token,
-      });
-    }
-  },
-
   methods: {
     ...mapActions(["loadSession", "doLogin", "doLogout"]),
   },

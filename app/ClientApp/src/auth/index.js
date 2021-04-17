@@ -137,11 +137,15 @@ const store = new Vuex.Store({
             dispatch('ActionSetUserId', user.data.id),
             dispatch('ActionSetIsAdmin', user.data),
             dispatch('loginAuth', true)
-
+        })
+        .catch(error => {
+            dispatch("setSnackbar", {
+              text: `Network error, please contact server administrator.`,
+              color: "error",
+            });
         })
       }
     },
-
     ActionSetUser: ({ commit }, payload) => {
       commit('setUser', payload)
     },
@@ -166,11 +170,11 @@ const store = new Vuex.Store({
       localStorage.setItem('refresh_token', access.refresh_token);
       localStorage.setItem('user_id', access.user_id);
       localStorage.setItem('now', access.now.toString());
-      Promise.all([
-        dispatch('loginAuth'),
-        dispatch('ActionSetToken', access.access_token),
-        dispatch('ActionSetUserId', access.user_id)
-      ]).then(() => {})
+        Promise.all([
+          dispatch('loginAuth'),
+          dispatch('ActionSetToken', access.access_token),
+          dispatch('ActionSetUserId', access.user_id)
+        ]).then(() => {})
     },
 
     doLogout: ({ dispatch }) => {
@@ -179,18 +183,6 @@ const store = new Vuex.Store({
       dispatch('logoutAuth');
       window._Vue.$router.push({ name: 'Home' }).catch(() => { });
     },
-
-    loadSession: ({ dispatch }, { token_type, access_token }) => {
-      if (access_token != null) {
-        Promise.all([
-          createAuthAPI(token_type, access_token),
-          dispatch('ActionSetToken', access_token),
-          dispatch('loginAuth'),
-        ]);
-      } else {
-        dispatch('doLogout');
-      }
-    }
   }
 });
 
