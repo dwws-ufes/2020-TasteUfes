@@ -31,18 +31,6 @@ namespace Models
 			public int Servings { get; set; }
 	    
 	
-	    
-			
-			
-			
-				// Adicione a regra UNIQUE via Fluent API
-			
-			
-				[NotMapped]
-			
-			public NutritionFacts? NutritionFacts { get; set; }
-	    
-	
 	
 	
 			

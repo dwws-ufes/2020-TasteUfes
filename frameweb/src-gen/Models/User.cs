@@ -92,6 +92,15 @@ namespace Models
 			
 		
 	
+			
+				/* !!! Caso essa entidade contenha mais de uma relação 1..1 entre User e Token,
+				o mapeamento delas deve ser feito através da Fluent API. */
+				[ForeignKey("TokenId")]
+				public Token Token { get; set; }
+				public Guid? TokenId { get; set; }
+			
+		
+	
 	
 	
 	}

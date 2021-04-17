@@ -25,5 +25,16 @@ namespace Data
 				throw new NotImplementedException();
 			}
 		
+			
+
+			
+				
+			
+
+			public User GetByUsername(string username)
+			{
+				throw new NotImplementedException();
+			}
+		
 	}
 }

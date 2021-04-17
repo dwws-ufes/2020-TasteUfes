@@ -18,5 +18,38 @@ namespace Services
 		
 		
 		
+			
+
+			
+				
+			
+
+			public User UpdatePassword(Guid id, string newPassword, string oldPassword)
+			{
+				throw new NotImplementedException();
+			}
+		
+			
+
+			
+				
+			
+
+			public User GetByUsername(string username)
+			{
+				throw new NotImplementedException();
+			}
+		
+			
+
+			
+				
+			
+
+			public void GetByCredentials(string username, string password)
+			{
+				throw new NotImplementedException();
+			}
+		
 	}
 }

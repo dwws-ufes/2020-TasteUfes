@@ -33,7 +33,15 @@ namespace Services
 				
 			
 
-			IEnumerable<Recipe> RecommendRecipesByIngredients(IEnumerable ingredients);
+			IEnumerable<Recipe> RecommendRecipesByFoods(IEnumerable foods);
+		
+			
+
+			
+				
+			
+
+			Recipe GetDetailed(Guid id);
 		
 	}
 }

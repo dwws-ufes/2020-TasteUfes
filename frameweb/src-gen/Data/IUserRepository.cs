@@ -19,5 +19,13 @@ namespace Data
 
 			User GetWithRecipes(Guid id);
 		
+			
+
+			
+				
+			
+
+			User GetByUsername(string username);
+		
 	}
 }
