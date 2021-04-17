@@ -732,6 +732,10 @@
     <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Create" resultMethod="//@compose.1/Controllers/FoodsController/GetNutrients">
       <resultDependencyConstraint result="null"/>
     </packagedElement>
+    <packagedElement xsi:type="frameweb:FrontControllerDependency" client="//@compose.1/Components.Users/Details" supplier="//@compose.1/Controllers/UserController" method="//@compose.1/Controllers/UserController/UpdatePassword"/>
+    <packagedElement xsi:type="frameweb:ResultDependency" client="//@compose.1/Controllers/UserController" supplier="//@compose.1/Components.Users/Details" resultMethod="//@compose.1/Controllers/UserController/UpdatePassword">
+      <resultDependencyConstraint result="null"/>
+    </packagedElement>
   </compose>
   <compose xsi:type="frameweb:PersistenceModel" name="Persistence Model">
     <packagedElement xsi:type="frameweb:PersistencePackage" name="Data">
