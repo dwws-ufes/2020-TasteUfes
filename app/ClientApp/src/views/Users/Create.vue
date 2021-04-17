@@ -53,7 +53,12 @@
 
             <v-text-field
               v-model="repeatPassword"
-              :rules="[rules.required, passwordConfirmationRule, rules.minPass, rules.maxPass]"
+              :rules="[
+                rules.required,
+                passwordConfirmationRule,
+                rules.minPass,
+                rules.maxPass,
+              ]"
               label="RepeatPassword*"
               :type="'password'"
               class="form-control"
@@ -129,8 +134,9 @@ export default {
       repeatPassword: "",
       rules: {
         required: (value) => !!value || "Required.",
-        minPass: (value) => (value).length >= 6 || 'Must be minimum length of 6.',
-        maxPass: (value) => (value).length <= 32 || 'Must be maximun length of 32.',
+        minPass: (value) => value.length >= 6 || "Must be minimum length of 6.",
+        maxPass: (value) =>
+          value.length <= 32 || "Must be maximun length of 32.",
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
@@ -177,7 +183,7 @@ export default {
                   ]).finally(() => {
                     this.doLogin(result.data);
                     this.$store.dispatch("setSnackbar", {
-                      text: `Welcome ${ this.user.first_name }.`,
+                      text: `Welcome ${this.user.first_name}.`,
                       color: "success",
                     });
                     this.$router.push({ name: "ListRecipe" });
@@ -195,12 +201,19 @@ export default {
                 });
             })
             .catch((error) => {
-              error.response.data.errors.map((error) => {
+              if (error.response) {
+                error.response.data.errors.map((error) => {
+                  this.$store.dispatch("setSnackbar", {
+                    text: `${error.message}`,
+                    color: "error",
+                  });
+                });
+              } else {
                 this.$store.dispatch("setSnackbar", {
-                  text: `${error.message}`,
+                  text: `Network error, please contact server administrator.`,
                   color: "error",
                 });
-              });
+              }
               this.submit = false;
             });
         }

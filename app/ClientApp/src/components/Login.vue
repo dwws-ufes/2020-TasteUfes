@@ -92,27 +92,44 @@ export default {
         login(this.user)
           .then((result) => {
             createAuthAPI(result.data.token_type, result.data.access_token);
-            getUser(result.data.user_id).then((user) => {
-              Promise.all([
-                this.$store.dispatch("ActionSetUser", user.data),
-                this.$store.dispatch("ActionSetIsAdmin", user.data),
-              ]).finally(() => {
-                this.doLogin(result.data);
-                this.dialog = false;
-                this.$store.dispatch("setSnackbar", {
-                  text: `Welcome ${user.data.first_name}.`,
-                  color: "success",
+            getUser(result.data.user_id)
+              .then((user) => {
+                Promise.all([
+                  this.$store.dispatch("ActionSetUser", user.data),
+                  this.$store.dispatch("ActionSetIsAdmin", user.data),
+                ]).finally(() => {
+                  this.doLogin(result.data);
+                  this.dialog = false;
+                  this.$store.dispatch("setSnackbar", {
+                    text: `Welcome ${user.data.first_name}.`,
+                    color: "success",
+                  });
                 });
+              })
+              .catch(() => {
+                error.response.data.errors.map((error) => {
+                  this.$store.dispatch("setSnackbar", {
+                    text: `${error.message}`,
+                    color: "error",
+                  });
+                });
+                this.submit = false;
               });
-            });
           })
           .catch((error) => {
-            error.response.data.errors.map((error) => {
+            if (error.response) {
+              error.response.data.errors.map((error) => {
+                this.$store.dispatch("setSnackbar", {
+                  text: `${error.message}`,
+                  color: "error",
+                });
+              });
+            } else {
               this.$store.dispatch("setSnackbar", {
-                text: `${error.message}`,
+                text: `Network error, please contact server administrator.`,
                 color: "error",
               });
-            });
+            }
             this.submit = false;
           });
       } else {
