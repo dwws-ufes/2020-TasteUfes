@@ -1,6 +1,12 @@
 import { authAPI, notAuthAPI, createAuthAPI, deleteAuthAPI } from '@/config/axios/index';
 
 // Functions
+async function healthCheck() {
+  return await notAuthAPI({
+    method: 'GET',
+    url: `/health`,
+  });
+}
 
 // --- User ---
 async function login(data) {
@@ -65,7 +71,7 @@ async function deleteUser(id) {
   });
 }
 
-async function getRoles(id) {
+async function getRoles() {
   return await authAPI({
     method: 'GET',
     url: `/roles`,
@@ -191,6 +197,8 @@ async function recommendationByFoods(foods) {
 }
 
 export {
+  healthCheck,
+
   login,
   updatePassword,
   registerUser,

@@ -1,5 +1,21 @@
 <template>
-  <v-app>
+  <v-app v-if="getLoadingMain">
+    <v-container class="loading-main">
+      <v-row class="justify-center align-center h-100 flex-column">
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+        <h3 v-if="getLoadingMainError">
+          {{ loadingName }}
+        </h3>
+        <h3 v-else>Now loading...</h3>
+      </v-row>
+    </v-container>
+  </v-app>
+  <v-app v-else>
     <Toolbar />
     <v-main>
       <Snackbar />
@@ -17,7 +33,7 @@
 import Toolbar from "@/components/Toolbar.vue";
 import Snackbar from "@/components/Snackbar.vue";
 import Footbar from "@/components/Footbar.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { refreshAuthentication } from "@/api";
 
 export default {
@@ -33,6 +49,18 @@ export default {
     access_token: localStorage.getItem("access_token"),
     token_type: localStorage.getItem("token_type"),
   }),
+
+  computed: {
+    ...mapGetters([
+      "getLoadingMain",
+      "getLoadingMainError",
+      "getQuotes",
+      "getRandomizeQuote",
+    ]),
+    loadingName() {
+      return this.getQuotes[this.getRandomizeQuote];
+    },
+  },
 
   methods: {
     ...mapActions(["loadSession", "doLogin", "doLogout"]),
