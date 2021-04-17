@@ -11,6 +11,14 @@ async function login(data) {
   });
 }
 
+async function updatePassword(id, passwords) {
+  return await authAPI({
+    method: 'PUT',
+    url: `/users/${id}/update-password`,
+    data: passwords,
+  });
+}
+
 async function registerUser(user) {
   return await notAuthAPI({
     method: 'POST',
@@ -184,6 +192,7 @@ async function recommendationByFoods(foods) {
 
 export {
   login,
+  updatePassword,
   registerUser,
 
   createUser,
