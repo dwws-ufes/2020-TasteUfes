@@ -167,12 +167,14 @@ const store = new Vuex.Store({
         healthCheck()
           .then(() => {
             dispatch('loadApplication');
+            dispatch('ActionSetLoadingMain', false);
             resolve();
           }).
           catch(() => {
             dispatch('ActionSetLoadingMainError', true);
             dispatch('tryAgain')
               .then(() => {
+                dispatch('ActionSetLoadingMain', false);
                 resolve();
               })
               .catch(() => {
