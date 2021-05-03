@@ -163,7 +163,15 @@ namespace TasteUfes.Controllers
             }
             catch (Exception)
             {
-                return Double.Parse(node.AsValuedNode().AsString());
+                var doubleValue = 0.0;
+                var tryParse = Double.TryParse(node.AsValuedNode().AsString(), out doubleValue);
+
+                if (tryParse)
+                {
+                    return doubleValue;
+                }
+
+                return 0.0;
             }
         }
     }
