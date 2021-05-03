@@ -10,6 +10,26 @@
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
+            <v-autocomplete
+              :search-input.sync="search"
+              v-model="searchLDFood"
+              :items="LDFoods"
+              item-text="name"
+              class="search"
+              append-outer-icon="mdi-magnify"
+              label="Search Ingredient"
+              hide-details
+              return-object
+              :loading="loadSearch"
+              no-data-text="No food found"
+              hide-no-data
+              @keyup="getFoodsFromLD"
+              @change="completeFood"
+            ></v-autocomplete>
+          </v-container>
+        </v-card>
+        <v-card class="mx-auto" elevation="0" outlined>
+          <v-container>
             <v-text-field
               v-model="food.name"
               :rules="[rules.required]"
@@ -80,7 +100,10 @@
               <h2>Nutritients</h2>
               <div>
                 <v-btn
-                  v-if="this.food.nutrition_facts.nutrition_facts_nutrients.length == 0"
+                  v-if="
+                    this.food.nutrition_facts.nutrition_facts_nutrients
+                      .length == 0
+                  "
                   class="mx-0 my-0"
                   fab
                   x-small
@@ -135,7 +158,7 @@
                             type="number"
                             label="Amount per serving (g)*"
                             :rules="[
-                              rules.required,
+                              rules.valRequired,
                               rules.limitMax,
                               rules.limitMin,
                             ]"
@@ -149,7 +172,11 @@
                 </v-container>
               </v-card>
             </div>
-            <v-row v-if="this.food.nutrition_facts.nutrition_facts_nutrients.length > 0">
+            <v-row
+              v-if="
+                this.food.nutrition_facts.nutrition_facts_nutrients.length > 0
+              "
+            >
               <v-col class="d-flex justify-end">
                 <v-btn
                   class="mx-1 my-0"
@@ -193,31 +220,60 @@
 </template>
 
 <script>
-import { createFood, getNutrients } from "@/api";
+import { createFood, getNutrients, getLDFood } from "@/api";
 import { store } from "@/auth";
 
 export default {
   name: "CreateFood",
   data() {
     return {
+      search: "",
+      searchLDFood: "",
       valid: false,
       submit: false,
+      loadSearch: false,
       nutritionFacts: false,
       food: {
         name: "",
         nutrition_facts: null,
       },
+      LDFoods: [],
       nutrition_facts_measures: [],
       nutrients: [],
       rules: {
         required: (value) => !!value || "Required.",
+        valRequired: (value) => !!value || value >= 0 || "Required value.",
         limitMax: (value) => value < 10000 || "Value too big",
-        limitMin: (value) => value > 0 || "Value must not be negative or 0",
+        limitMin: (value) => value >= 0 || "Value must not be negative or 0",
       },
     };
   },
 
   methods: {
+    getFoodsFromLD() {
+      if (this.search && this.search.length == 3) {
+        this.loadSearch = true;
+        getLDFood(this.search)
+          .then((result) => {
+            this.LDFoods = result.data;
+            this.loadSearch = false;
+          })
+          .catch((error) => {
+            this.loadSearch = false;
+          });
+      }
+      if (this.search.length < 3) {
+        this.LDFoods = [];
+      }
+    },
+
+    completeFood() {
+      this.food = this.searchLDFood;
+      this.food.nutrition_facts
+        ? (this.nutritionFacts = true)
+        : (this.nutritionFacts = false);
+    },
+
     changeNutritionFacts: function () {
       if (!this.nutritionFacts) {
         this.food = {
@@ -256,7 +312,7 @@ export default {
         createFood(this.food)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `Ingredient ${ this.food.name } created.`,
+              text: `Ingredient ${this.food.name} created.`,
               color: "success",
             });
             this.$router.push({ name: "ListFood" });

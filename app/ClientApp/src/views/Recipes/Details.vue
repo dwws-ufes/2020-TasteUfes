@@ -59,7 +59,10 @@
                       params: { id: ingredient.food.id },
                     }"
                   >
-                    <b>{{ ingredient.food.name }}:</b>
+                    <b
+                      >{{ ingredient.food.name }}:
+                      <v-icon class="d-inline" small>mdi-open-in-new</v-icon></b
+                    >
                   </router-link>
                   {{ formatNumber(ingredient.quantity)
                   }}{{ getMeasureName(ingredient.quantity_unit) }}

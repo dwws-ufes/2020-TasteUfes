@@ -134,7 +134,7 @@
                             type="number"
                             label="Amount per serving (g)*"
                             :rules="[
-                              rules.required,
+                              rules.valRequired,
                               rules.limitMax,
                               rules.limitMin,
                             ]"
@@ -201,8 +201,9 @@ export default {
       nutrients: [],
       rules: {
         required: (value) => !!value || "Required.",
+        valRequired: (value) => (!!value || value >= 0) || "Required value.",
         limitMax: (value) => value < 10000 || "Value too big",
-        limitMin: (value) => value > 0 || "Value must not be negative or 0",
+        limitMin: (value) => value >= 0 || "Value must not be negative or 0",
       },
     };
   },

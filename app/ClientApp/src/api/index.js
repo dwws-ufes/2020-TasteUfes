@@ -147,6 +147,13 @@ async function getFood(id) {
   });
 }
 
+async function getLDFood(name) {
+  return await notAuthAPI({
+    method: 'GET',
+    url: `/foods/ld/${name}`,
+  });
+}
+
 async function updateFood(id, food) {
   return await authAPI({
     method: 'PUT',
@@ -223,6 +230,7 @@ export {
   createFood,
   getFoods,
   getFood,
+  getLDFood,
   updateFood,
   deleteFood,
 
