@@ -18,6 +18,7 @@ namespace TasteUfes.Data
             return _context.Foods
                 .AsNoTracking()
                 .Include(f => f.NutritionFacts)
+                .ThenInclude(n => n.NutritionFactsNutrients)
                 .ToList();
         }
 
