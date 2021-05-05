@@ -215,46 +215,57 @@ namespace TasteUfes.Controllers
                 }
                 else
                 {
-                    t.Add(new Triple(foodSbj, dboServingSize, g.CreateLiteralNode(foodServingSize)));
+                    var dataType = GetDataTypeMeasure(food.NutritionFacts.ServingSizeUnit);
+                    var literal = g.CreateLiteralNode(foodServingSize, dataType);
+                    t.Add(new Triple(foodSbj, dboServingSize, literal));
                 }
 
                 // Fat
                 var dbpFat = g.CreateUriNode("dbp:fat");
-                var foodFat = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == totalFat.Id)?.AmountPerServing.ToString();
+                var foodFat = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == totalFat.Id);
+                var foodFatStr = foodFat?.AmountPerServing.ToString();
 
-                if (String.IsNullOrEmpty(foodFat))
+                if (String.IsNullOrEmpty(foodFatStr))
                 {
                     t.Add(new Triple(foodSbj, dbpFat, g.CreateBlankNode()));
                 }
                 else
                 {
-                    t.Add(new Triple(foodSbj, dbpFat, g.CreateLiteralNode(foodFat)));
+                    var dataType = GetDataTypeMeasure(foodFat.AmountPerServingUnit);
+                    var literal = g.CreateLiteralNode(foodFatStr, dataType);
+                    t.Add(new Triple(foodSbj, dbpFat, literal));
                 }
 
                 // Carbohydrate
                 var dbpCarbohydrate = g.CreateUriNode("dbp:carbohydrate");
-                var foodCarbohydrate = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == carbohydrate.Id)?.AmountPerServing.ToString();
+                var foodCarbohydrate = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == carbohydrate.Id);
+                var foodCarbohydrateStr = foodCarbohydrate?.AmountPerServing.ToString();
 
-                if (String.IsNullOrEmpty(foodFat))
+                if (String.IsNullOrEmpty(foodCarbohydrateStr))
                 {
                     t.Add(new Triple(foodSbj, dbpCarbohydrate, g.CreateBlankNode()));
                 }
                 else
                 {
-                    t.Add(new Triple(foodSbj, dbpCarbohydrate, g.CreateLiteralNode(foodCarbohydrate)));
+                    var dataType = GetDataTypeMeasure(foodCarbohydrate.AmountPerServingUnit);
+                    var literal = g.CreateLiteralNode(foodCarbohydrateStr, dataType);
+                    t.Add(new Triple(foodSbj, dbpCarbohydrate, literal));
                 }
 
                 // Protein
                 var dbpProtein = g.CreateUriNode("dbp:protein");
-                var foodProtein = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == protein.Id)?.AmountPerServing.ToString();
+                var foodProtein = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == protein.Id);
+                var foodProteinStr = foodProtein?.AmountPerServing.ToString();
 
-                if (String.IsNullOrEmpty(foodFat))
+                if (String.IsNullOrEmpty(foodProteinStr))
                 {
                     t.Add(new Triple(foodSbj, dbpProtein, g.CreateBlankNode()));
                 }
                 else
                 {
-                    t.Add(new Triple(foodSbj, dbpProtein, g.CreateLiteralNode(foodProtein)));
+                    var dataType = GetDataTypeMeasure(foodProtein.AmountPerServingUnit);
+                    var literal = g.CreateLiteralNode(foodProteinStr, dataType);
+                    t.Add(new Triple(foodSbj, dbpProtein, literal));
                 }
             }
 
@@ -264,6 +275,25 @@ namespace TasteUfes.Controllers
             var stringWriter = StringWriter.Write(g, rdfXmlWriter);
 
             return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);
+        }
+
+        private Uri GetDataTypeMeasure(Measures measure)
+        {
+            switch (measure)
+            {
+                case Measures.g:
+                    return new Uri("http://dbpedia.org/datatype/gram");
+                case Measures.mg:
+                    return new Uri("http://dbpedia.org/datatype/milligram");
+                case Measures.kg:
+                    return new Uri("http://dbpedia.org/datatype/kilogram");
+                case Measures.L:
+                    return new Uri("http://dbpedia.org/datatype/litre");
+                case Measures.ml:
+                    return new Uri("http://dbpedia.org/datatype/millilitre");
+                default:
+                    return new Uri(string.Empty);
+            }
         }
     }
 }
