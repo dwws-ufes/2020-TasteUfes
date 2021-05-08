@@ -1,14 +1,14 @@
 <template>
   <v-container class="details">
     <v-row justify="center">
-      <v-col cols="12" sm="12" d-flex justify-center class="py-0">
+      <v-col cols="12" md="12" d-flex justify-center class="py-0">
         <div class="d-flex">
           <span class="back-btn" @click="$router.go(-1)">
             <v-icon>mdi-chevron-left</v-icon> Back
           </span>
         </div>
       </v-col>
-      <v-col cols="12" sm="8" d-flex justify-center>
+      <v-col cols="12" md="8" d-flex justify-center>
         <v-sheet v-if="load" :color="`grey lighten-4`" class="pa-3">
           <v-skeleton-loader
             class="mx-auto"
@@ -90,16 +90,22 @@
           </v-list-item>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="4">
-        <v-card class="mb-5">
-          <UserCard :user="this.recipe.user" :username="null" />
-        </v-card>
-        <v-card>
-          <NutritionFactsTable
-            :data="this.recipe.nutrition_facts"
-            :servings="this.recipe.servings"
-          />
-        </v-card>
+      <v-col cols="12" md="4">
+        <v-row>
+          <v-col cols="12" order="last" order-md="first">
+            <v-card>
+              <UserCard :user="this.recipe.user" :username="null" />
+            </v-card>
+          </v-col>
+          <v-col cols="12" order="first" order-md="last">
+            <v-card>
+              <NutritionFactsTable
+                :data="this.recipe.nutrition_facts"
+                :servings="this.recipe.servings"
+              />
+            </v-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
