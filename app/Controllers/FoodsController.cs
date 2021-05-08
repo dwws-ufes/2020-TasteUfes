@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -173,9 +174,10 @@ namespace TasteUfes.Controllers
         }
 
         [HttpGet("ld/rdf")]
-        public ActionResult GetLD([FromServices] INutrientService nutrientService)
+        public ActionResult GetLD([FromServices] INutrientService nutrientService, [FromServices] IConfiguration configuration)
         {
             var foods = Service.GetAll();
+            var foodsUriPrefix = configuration["APP_HOST"] + configuration["APP_FOOD_PATH"];
             var nutrients = nutrientService.GetAll();
 
             var totalFat = nutrients
@@ -193,7 +195,7 @@ namespace TasteUfes.Controllers
 
             foreach (var food in foods)
             {
-                var foodSbj = g.CreateBlankNode();
+                var foodSbj = g.CreateUriNode(new Uri(foodsUriPrefix + food.Id));
 
                 // Type
                 var rdfType = g.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
@@ -271,8 +273,7 @@ namespace TasteUfes.Controllers
 
             g.Assert(t);
 
-            var rdfXmlWriter = new RdfXmlWriter();
-            var stringWriter = StringWriter.Write(g, rdfXmlWriter);
+            var stringWriter = StringWriter.Write(g, new RdfXmlWriter());
 
             return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);
         }
