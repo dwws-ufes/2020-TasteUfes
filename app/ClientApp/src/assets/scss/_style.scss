@@ -1,3 +1,7 @@
+body {
+  width: 100%;
+}
+
 .theme--light.v-btn--active::before {
   opacity: 0 !important;
 }
@@ -36,7 +40,7 @@
 }
 .container-main {
   .row-main {
-    padding: 2em;
+    padding: 2em 1em;
     display: flex;
     justify-content: center;
 
@@ -66,6 +70,10 @@
         margin: 0.8em;
       }
     }
+
+    @media (min-width: $breakpoint-cel) {
+      padding: 2em;
+    }
   }
 }
 .primary {
@@ -87,4 +95,8 @@
 .search {
   padding-top: 0px;
   margin-top: 0px;
+}
+
+.border-primary {
+  border-color: $primary !important;
 }
