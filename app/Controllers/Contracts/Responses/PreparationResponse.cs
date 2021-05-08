@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Responses
 {
-    public class PreparationResource : EntityResource
+    public class PreparationResponse : EntityResponse
     {
         [Required]
         [JsonConverter(typeof(JsonTimeSpanConverter))]
@@ -13,6 +13,6 @@ namespace TasteUfes.Resources
         public TimeSpan PreparationTime { get; set; }
 
         [JsonPropertyName("steps")]
-        public IEnumerable<PreparationStepResource> Steps { get; set; }
+        public IEnumerable<PreparationStepResponse> Steps { get; set; }
     }
 }

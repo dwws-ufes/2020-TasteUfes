@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Responses
 {
-    public class RecipeResource : EntityResource
+    public class RecipeResponse : EntityResponse
     {
         [Required]
         [StringLength(256)]
@@ -19,19 +19,19 @@ namespace TasteUfes.Resources
         public int Servings { get; set; }
 
         [JsonPropertyName("preparation")]
-        public PreparationResource Preparation { get; set; }
+        public PreparationResponse Preparation { get; set; }
 
         [JsonPropertyName("ingredients")]
-        public IEnumerable<IngredientResource> Ingredients { get; set; }
+        public IEnumerable<IngredientResponse> Ingredients { get; set; }
 
         [JsonPropertyName("user")]
-        public UserResource User { get; set; }
+        public UserResponse User { get; set; }
 
         [Required]
         [JsonPropertyName("user_id")]
         public Guid UserId { get; set; }
 
         [JsonPropertyName("nutrition_facts")]
-        public NutritionFactsResource NutritionFacts { get; set; }
+        public NutritionFactsResponse NutritionFacts { get; set; }
     }
 }

@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -63,6 +66,16 @@ namespace TasteUfes
 
             // app.UseHsts();
             // app.UseHttpsRedirection();
+
+            var defaultCulture = new CultureInfo("en-US");
+            var supportedCultures = new[] { defaultCulture, new CultureInfo("pt-BR") };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultCulture),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseRouting();
 

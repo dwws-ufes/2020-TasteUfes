@@ -4,15 +4,16 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TasteUfes.Controllers.Contracts.Requests;
+using TasteUfes.Controllers.Contracts.Responses;
 using TasteUfes.Models;
-using TasteUfes.Resources;
 using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
 
 namespace TasteUfes.Controllers
 {
     [Authorize]
-    public class RecipesController : EntityApiControllerV1<Recipe, RecipeResource>
+    public class RecipesController : EntityApiControllerV1<Recipe, RecipeRequest, RecipeResponse>
     {
         private readonly IRecipeService _recipeService;
         private readonly IUserService _userService;
@@ -27,7 +28,7 @@ namespace TasteUfes.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public override ActionResult<RecipeResource> Get([FromRoute] Guid id)
+        public override ActionResult<RecipeResponse> Get([FromRoute] Guid id)
         {
             var recipe = _recipeService.GetDetailed(id);
 
@@ -37,15 +38,15 @@ namespace TasteUfes.Controllers
             if (recipe == null)
                 return NotFound();
 
-            return Mapper.Map<RecipeResource>(recipe);
+            return Mapper.Map<RecipeResponse>(recipe);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public override ActionResult<IEnumerable<RecipeResource>> Get() => base.Get();
+        public override ActionResult<IEnumerable<RecipeResponse>> Get() => base.Get();
 
         [HttpPost]
-        public override ActionResult<RecipeResource> Post([FromBody] RecipeResource resource)
+        public override ActionResult<RecipeResponse> Post([FromBody] RecipeRequest resource)
         {
             ModelState.Remove("UserId");
 
@@ -63,7 +64,7 @@ namespace TasteUfes.Controllers
         }
 
         [HttpPut("{id}")]
-        public override ActionResult<RecipeResource> Put([FromRoute] Guid id, [FromBody] RecipeResource resource)
+        public override ActionResult<RecipeResponse> Put([FromRoute] Guid id, [FromBody] RecipeRequest resource)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
@@ -118,7 +119,7 @@ namespace TasteUfes.Controllers
 
         [HttpGet("{id}/recalculate-per-servings/{servings}")]
         [AllowAnonymous]
-        public ActionResult<RecipeResource> RecalculateRecipePerServing(Guid id, int servings)
+        public ActionResult<RecipeResponse> RecalculateRecipePerServing(Guid id, int servings)
         {
             if (!_recipeService.Exists(id))
                 return NotFound();
@@ -128,12 +129,12 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return NotFound(Errors());
 
-            return Ok(Mapper.Map<RecipeResource>(recipe));
+            return Ok(Mapper.Map<RecipeResponse>(recipe));
         }
 
         [HttpPost("calculate-anonymous")]
         [AllowAnonymous]
-        public ActionResult<AnonymousRecipeResource> CalculateAnonymousRecipe(AnonymousRecipeResource resource)
+        public ActionResult<AnonymousRecipeResponse> CalculateAnonymousRecipe(AnonymousRecipeRequest resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(Errors(resource));
@@ -147,12 +148,12 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Ok(Mapper.Map<AnonymousRecipeResource>(anonymous));
+            return Ok(Mapper.Map<AnonymousRecipeResponse>(anonymous));
         }
 
         [HttpPost("recommend-by-foods")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RecipeResource>> RecommendRecipesByFoods(IEnumerable<FoodResource> resource)
+        public ActionResult<IEnumerable<RecipeResponse>> RecommendRecipesByFoods(IEnumerable<FoodRequest> resource)
         {
             foreach (var name in ModelState.Keys.Where(k => k.EndsWith("Name")))
             {
@@ -167,7 +168,7 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Ok(Mapper.Map<IEnumerable<RecipeResource>>(recipes));
+            return Ok(Mapper.Map<IEnumerable<RecipeResponse>>(recipes));
         }
     }
 }

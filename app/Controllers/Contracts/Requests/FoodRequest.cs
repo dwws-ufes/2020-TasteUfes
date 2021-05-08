@@ -2,15 +2,15 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Requests
 {
-    public class FoodResource : EntityResource
+    public class FoodRequest : EntityRequest
     {
         [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
         [JsonPropertyName("nutrition_facts")]
-        public NutritionFactsResource NutritionFacts { get; set; }
+        public NutritionFactsRequest NutritionFacts { get; set; }
     }
 }

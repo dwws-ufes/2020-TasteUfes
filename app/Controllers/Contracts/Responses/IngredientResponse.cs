@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using TasteUfes.Models;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Responses
 {
-    public class IngredientResource : EntityResource
+    public class IngredientResponse : EntityResponse
     {
         [Required]
         [Range(0.01, Int16.MaxValue)]
@@ -17,7 +17,7 @@ namespace TasteUfes.Resources
         public Measures QuantityUnit { get; set; }
 
         [JsonPropertyName("food")]
-        public FoodResource Food { get; set; }
+        public FoodResponse Food { get; set; }
 
         [Required]
         [JsonPropertyName("food_id")]
