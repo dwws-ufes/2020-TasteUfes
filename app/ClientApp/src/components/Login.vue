@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="white" light v-bind="attrs" v-on="on"> Sign In </v-btn>
+        <v-btn :color="buttonColor" light v-bind="attrs" v-on="on"> Sign In </v-btn>
       </template>
       <v-card>
         <v-container>
@@ -84,6 +84,10 @@ export default {
     };
   },
 
+  props: {
+    buttonColor: String,
+  },
+
   methods: {
     ...mapActions(["doLogin"]),
     onSubmit() {
@@ -99,6 +103,9 @@ export default {
                   this.$store.dispatch("ActionSetIsAdmin", user.data),
                 ]).finally(() => {
                   this.doLogin(result.data);
+                  if (this.$vuetify.breakpoint.xs) {
+                    this.$emit("closeMenu");
+                  }
                   this.dialog = false;
                   this.$store.dispatch("setSnackbar", {
                     text: `Welcome ${user.data.first_name}.`,
