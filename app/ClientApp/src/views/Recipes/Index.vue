@@ -72,8 +72,12 @@
         <v-container>
           <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
             <v-container>
+                <v-skeleton-loader class="mx-auto mb-4" type="text" />
               <v-row>
-                <v-skeleton-loader class="mx-auto w-100" type="image" />
+                <v-col v-for="index in 9" :key="index" 
+                cols="12" xs="12" sm="6" lg="4">
+                  <v-skeleton-loader class="mx-auto" type="image" />
+                </v-col>
               </v-row>
             </v-container>
           </v-sheet>
@@ -228,8 +232,10 @@ export default {
     ...mapGetters(["isAdmin", "getUserId"]),
     filterRecipe() {
       let search = this.search.toString().toLowerCase();
-      return this.recipeList.filter(recipe =>
-        Object.keys(recipe).some(() => recipe.name.toLowerCase().includes(search))
+      return this.recipeList.filter((recipe) =>
+        Object.keys(recipe).some(() =>
+          recipe.name.toLowerCase().includes(search)
+        )
       );
     },
   },
