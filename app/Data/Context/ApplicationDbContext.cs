@@ -14,6 +14,7 @@ namespace TasteUfes.Data.Context
         {
             // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             // ChangeTracker.AutoDetectChangesEnabled = false;
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
