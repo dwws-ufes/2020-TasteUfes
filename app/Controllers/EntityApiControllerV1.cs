@@ -13,6 +13,7 @@ namespace TasteUfes.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Route("{culture=en-US}/api/v1/[controller]")]
     public class EntityApiControllerV1<TEntity, TEntityRequest, TEntityResponse> : ControllerBase
         where TEntity : Entity, new()
         where TEntityRequest : EntityRequest, new()
@@ -99,15 +100,19 @@ namespace TasteUfes.Controllers
         }
 
         private string ToSnake(string str)
-            => string.Concat(str.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
+            => string.Concat(str.Select((x, i) => (i > 0 && (str[i - 1] != '.') && char.IsUpper(x)) ? ("_" + x.ToString()) : x.ToString())).ToLower();
 
         protected dynamic Errors(object data = null)
         {
-            foreach (var values in ModelState.Values)
+            var modelStateErrors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .ToDictionary(p => p.Key, p => p.Value.Errors.Select(x => x.ErrorMessage));
+
+            foreach (var err in modelStateErrors)
             {
-                foreach (var err in values.Errors)
+                foreach (var subErr in err.Value)
                 {
-                    AddError(string.Empty, err.ErrorMessage);
+                    AddError(err.Key, subErr);
                 }
             }
 

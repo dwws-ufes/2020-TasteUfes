@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,8 @@ namespace TasteUfes.Controllers
         private readonly IUserService _userService;
 
         public UsersController(ITokenService tokenService,
-            IUserService userService, IMapper mapper, INotificator notificator) : base(userService, mapper, notificator)
+            IUserService userService, IMapper mapper, INotificator notificator)
+            : base(userService, mapper, notificator)
         {
             _tokenService = tokenService;
             _userService = userService;
@@ -165,6 +165,7 @@ namespace TasteUfes.Controllers
         }
 
         [HttpGet("~/api/v1/roles")]
+        [HttpGet("~/{culture=en-US}/api/v1/roles")]
         [AllowAnonymous]
         public ActionResult<IEnumerable<RoleResponse>> GetRoles([FromServices] IRoleService roleService)
         {

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +48,8 @@ namespace TasteUfes
             services.AddControllers();
             services.AddHealthChecks();
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.Configure<ApiBehaviorOptions>(options =>
                 options.SuppressModelStateInvalidFilter = true);
 
@@ -67,16 +68,6 @@ namespace TasteUfes
             // app.UseHsts();
             // app.UseHttpsRedirection();
 
-            var defaultCulture = new CultureInfo("en-US");
-            var supportedCultures = new[] { defaultCulture, new CultureInfo("pt-BR") };
-
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(defaultCulture),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
-
             app.UseRouting();
 
             app.UseCors("TastePolicy");
@@ -91,6 +82,25 @@ namespace TasteUfes
             });
 
             app.UseHealthChecks("/api/v1/health");
+
+            var requestLocalization = new RequestLocalizationOptions
+            {
+                SupportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-BR")
+                },
+                SupportedUICultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-BR")
+                },
+                DefaultRequestCulture = new RequestCulture("en-US")
+            };
+
+            requestLocalization.RequestCultureProviders.Insert(0, new UrlRequestCultureProvider());
+
+            app.UseRequestLocalization(requestLocalization);
 
             app.UseEndpoints(endpoints =>
             {

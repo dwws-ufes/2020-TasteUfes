@@ -1,12 +1,10 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace TasteUfes.Controllers.Contracts.Requests
 {
     public class FoodRequest : EntityRequest
     {
-        [Required]
+        // [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
