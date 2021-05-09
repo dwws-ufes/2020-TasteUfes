@@ -60,7 +60,7 @@ namespace TasteUfes.Controllers
         [HttpGet("ld/rdf")]
         public ActionResult GetGraph([FromServices] IFoodService foodService, [FromServices] IConfiguration configuration)
         {
-            var foodUriPrefix = configuration["APP_HOST"] + configuration["APP_FOOD_PATH"];
+            var foodUriPrefix = $"{configuration["Spa:Host"]}/{configuration["Spa:FoodDetailsPath"]}/";
             var foodGraph = foodService.GetGraph(foodUriPrefix);
             var stringWriter = StringWriter.Write(foodGraph, new RdfXmlWriter());
 
