@@ -76,8 +76,18 @@
           <v-container>
             <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
               <v-container>
+                <v-skeleton-loader class="mx-auto mb-4" type="text" />
                 <v-row>
-                  <v-skeleton-loader class="mx-auto w-100" type="image" />
+                  <v-col
+                    v-for="index in 9"
+                    :key="index"
+                    cols="12"
+                    xs="12"
+                    sm="6"
+                    lg="4"
+                  >
+                    <v-skeleton-loader class="mx-auto" type="image" />
+                  </v-col>
                 </v-row>
               </v-container>
             </v-sheet>
@@ -92,17 +102,17 @@
             </v-alert>
             <div v-else>
               <v-row class="mb-2">
-              <v-col>
-                <v-text-field
-                  v-model="search"
-                  class="search"
-                  append-icon="mdi-magnify"
-                  label="Search Ingredient"
-                  single-line
-                  hide-details
-                ></v-text-field>
-              </v-col>
-            </v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="search"
+                    class="search"
+                    append-icon="mdi-magnify"
+                    label="Search Ingredient"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col
                   v-for="food in visibleFoods"

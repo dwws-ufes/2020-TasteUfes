@@ -177,9 +177,10 @@ export default {
     },
 
     closeMenu() {
-      this.menuToogle = false;
-      this.openMenuMobile();
-
+      if(this.$vuetify.breakpoint.xs){
+        this.menuToogle = false;
+        this.openMenuMobile();
+      }
     }
   },
 };
