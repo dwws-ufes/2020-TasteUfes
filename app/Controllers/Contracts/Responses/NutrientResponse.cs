@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Responses
 {
-    public class NutrientResource : EntityResource
+    public class NutrientResponse : EntityResponse
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }

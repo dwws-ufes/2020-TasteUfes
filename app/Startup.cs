@@ -1,5 +1,7 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +48,8 @@ namespace TasteUfes
             services.AddControllers();
             services.AddHealthChecks();
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.Configure<ApiBehaviorOptions>(options =>
                 options.SuppressModelStateInvalidFilter = true);
 
@@ -78,6 +82,25 @@ namespace TasteUfes
             });
 
             app.UseHealthChecks("/api/v1/health");
+
+            var requestLocalization = new RequestLocalizationOptions
+            {
+                SupportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-BR")
+                },
+                SupportedUICultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-BR")
+                },
+                DefaultRequestCulture = new RequestCulture("en-US")
+            };
+
+            requestLocalization.RequestCultureProviders.Insert(0, new UrlRequestCultureProvider());
+
+            app.UseRequestLocalization(requestLocalization);
 
             app.UseEndpoints(endpoints =>
             {

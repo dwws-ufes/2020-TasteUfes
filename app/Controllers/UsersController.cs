@@ -1,24 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TasteUfes.Controllers.Contracts.Requests;
+using TasteUfes.Controllers.Contracts.Responses;
 using TasteUfes.Models;
-using TasteUfes.Resources;
 using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
 
 namespace TasteUfes.Controllers
 {
     [Authorize]
-    public class UsersController : EntityApiControllerV1<User, UserResource>
+    public class UsersController : EntityApiControllerV1<User, UserRequest, UserResponse>
     {
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
 
         public UsersController(ITokenService tokenService,
-            IUserService userService, IMapper mapper, INotificator notificator) : base(userService, mapper, notificator)
+            IUserService userService, IMapper mapper, INotificator notificator)
+            : base(userService, mapper, notificator)
         {
             _tokenService = tokenService;
             _userService = userService;
@@ -26,7 +27,7 @@ namespace TasteUfes.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public override ActionResult<UserResource> Post([FromBody] UserResource resource)
+        public override ActionResult<UserResponse> Post([FromBody] UserRequest resource)
         {
             if (!ModelState.IsValid)
             {
@@ -38,13 +39,13 @@ namespace TasteUfes.Controllers
                 return Forbid();
 
             if (!User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
-                resource.Roles = new List<RoleResource>();
+                resource.Roles = new List<RoleRequest>();
 
             return base.Post(resource);
         }
 
         [HttpPut("{id}")]
-        public override ActionResult<UserResource> Put([FromRoute] Guid id, [FromBody] UserResource resource)
+        public override ActionResult<UserResponse> Put([FromRoute] Guid id, [FromBody] UserRequest resource)
         {
             ModelState.Remove("Password");
 
@@ -70,14 +71,14 @@ namespace TasteUfes.Controllers
             // Caso o usuário não seja admin, ele não tem permissão para
             // atualizar as roles.
             if (!User.IsInRole("Admin"))
-                resource.Roles = Mapper.Map<IEnumerable<RoleResource>>(user.Roles);
+                resource.Roles = Mapper.Map<IEnumerable<RoleRequest>>(user.Roles);
 
             var updated = _userService.Update(Mapper.Map<User>(resource));
 
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Ok(Mapper.Map<UserResource>(updated));
+            return Ok(Mapper.Map<UserResponse>(updated));
         }
 
         [HttpDelete("{id}")]
@@ -85,7 +86,7 @@ namespace TasteUfes.Controllers
         public override IActionResult Delete([FromRoute] Guid id) => base.Delete(id);
 
         [HttpPut("{id}/update-password")]
-        public ActionResult<UserResource> UpdatePassword([FromRoute] Guid id, [FromBody] UserPasswordResource resource)
+        public ActionResult<UserResponse> UpdatePassword([FromRoute] Guid id, [FromBody] UserPasswordRequest resource)
         {
             if (!ModelState.IsValid)
             {
@@ -108,12 +109,12 @@ namespace TasteUfes.Controllers
                 return BadRequest(Errors(resource));
             }
 
-            return Mapper.Map<UserResource>(user);
+            return Mapper.Map<UserResponse>(user);
         }
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public ActionResult<TokenResource> Login([FromBody] UserLoginResource resource)
+        public ActionResult<TokenResponse> Login([FromBody] UserLoginRequest resource)
         {
             if (!ModelState.IsValid)
             {
@@ -131,7 +132,7 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return new TokenResource
+            return new TokenResponse
             {
                 UserId = token.UserId,
                 TokenType = token.TokenType,
@@ -143,7 +144,7 @@ namespace TasteUfes.Controllers
 
         [HttpPost("refresh-token")]
         [AllowAnonymous]
-        public ActionResult<TokenResource> RefreshToken([FromBody] RefreshTokenResource resource)
+        public ActionResult<TokenResponse> RefreshToken([FromBody] RefreshTokenRequest resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(Errors(resource));
@@ -153,7 +154,7 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return new TokenResource
+            return new TokenResponse
             {
                 UserId = token.UserId,
                 TokenType = token.TokenType,
@@ -164,10 +165,11 @@ namespace TasteUfes.Controllers
         }
 
         [HttpGet("~/api/v1/roles")]
+        [HttpGet("~/{culture=en-US}/api/v1/roles")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RoleResource>> GetRoles([FromServices] IRoleService roleService)
+        public ActionResult<IEnumerable<RoleResponse>> GetRoles([FromServices] IRoleService roleService)
         {
-            return Ok(Mapper.Map<IEnumerable<RoleResource>>(roleService.GetAll()));
+            return Ok(Mapper.Map<IEnumerable<RoleResponse>>(roleService.GetAll()));
         }
     }
 }

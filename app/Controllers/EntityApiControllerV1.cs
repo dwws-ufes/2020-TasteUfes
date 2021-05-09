@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TasteUfes.Controllers.Contracts.Requests;
+using TasteUfes.Controllers.Contracts.Responses;
 using TasteUfes.Models;
-using TasteUfes.Resources;
 using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
 
@@ -12,9 +13,11 @@ namespace TasteUfes.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class EntityApiControllerV1<TEntity, TEntityResource> : ControllerBase
+    [Route("{culture=en-US}/api/v1/[controller]")]
+    public class EntityApiControllerV1<TEntity, TEntityRequest, TEntityResponse> : ControllerBase
         where TEntity : Entity, new()
-        where TEntityResource : EntityResource, new()
+        where TEntityRequest : EntityRequest, new()
+        where TEntityResponse : EntityResponse, new()
     {
         protected readonly IEntityService<TEntity> Service;
         protected readonly IMapper Mapper;
@@ -28,24 +31,24 @@ namespace TasteUfes.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult<IEnumerable<TEntityResource>> Get()
+        public virtual ActionResult<IEnumerable<TEntityResponse>> Get()
         {
-            return Ok(Mapper.Map<IEnumerable<TEntityResource>>(Service.GetAll()));
+            return Ok(Mapper.Map<IEnumerable<TEntityResponse>>(Service.GetAll()));
         }
 
         [HttpGet("{id}")]
-        public virtual ActionResult<TEntityResource> Get([FromRoute] Guid id)
+        public virtual ActionResult<TEntityResponse> Get([FromRoute] Guid id)
         {
             var entity = Service.Get(id);
 
             if (entity == null)
                 return NotFound(id);
 
-            return Ok(Mapper.Map<TEntityResource>(entity));
+            return Ok(Mapper.Map<TEntityResponse>(entity));
         }
 
         [HttpPost]
-        public virtual ActionResult<TEntityResource> Post([FromBody] TEntityResource resource)
+        public virtual ActionResult<TEntityResponse> Post([FromBody] TEntityRequest resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(Errors(resource));
@@ -57,11 +60,11 @@ namespace TasteUfes.Controllers
             if (Notificator.HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Created(string.Empty, Mapper.Map<TEntityResource>(entity));
+            return Created(string.Empty, Mapper.Map<TEntityResponse>(entity));
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult<TEntityResource> Put([FromRoute] Guid id, [FromBody] TEntityResource resource)
+        public virtual ActionResult<TEntityResponse> Put([FromRoute] Guid id, [FromBody] TEntityRequest resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(Errors(resource));
@@ -74,7 +77,7 @@ namespace TasteUfes.Controllers
             if (HasErrors())
                 return BadRequest(Errors(resource));
 
-            return Ok(Mapper.Map<TEntityResource>(entity));
+            return Ok(Mapper.Map<TEntityResponse>(entity));
         }
 
         [HttpDelete("{id}")]
@@ -97,19 +100,23 @@ namespace TasteUfes.Controllers
         }
 
         private string ToSnake(string str)
-            => string.Concat(str.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
+            => string.Concat(str.Select((x, i) => (i > 0 && (str[i - 1] != '.') && char.IsUpper(x)) ? ("_" + x.ToString()) : x.ToString())).ToLower();
 
         protected dynamic Errors(object data = null)
         {
-            foreach (var values in ModelState.Values)
+            var modelStateErrors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .ToDictionary(p => p.Key, p => p.Value.Errors.Select(x => x.ErrorMessage));
+
+            foreach (var err in modelStateErrors)
             {
-                foreach (var err in values.Errors)
+                foreach (var subErr in err.Value)
                 {
-                    AddError(string.Empty, err.ErrorMessage);
+                    AddError(err.Key, subErr);
                 }
             }
 
-            var errors = Notificator.GetErrors().Select(err => new ErrorResource
+            var errors = Notificator.GetErrors().Select(err => new ErrorResponse
             {
                 Property = ToSnake(err.Property),
                 Message = err.Message
