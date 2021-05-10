@@ -100,3 +100,9 @@ body {
 .border-primary {
   border-color: $primary !important;
 }
+
+@media (min-width: $breakpoint-full){
+  .container {
+      max-width: 1185px;
+  }
+}

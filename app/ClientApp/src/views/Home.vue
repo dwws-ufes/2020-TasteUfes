@@ -1,7 +1,8 @@
 <template>
   <div class="home w-100">
     <v-container>
-      <v-row>
+      <!-- Mobile -->
+      <v-row v-if="this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs">
         <v-card-title class="primary border-radius w-100">
           <h3 class="menu-title">Menu</h3>
         </v-card-title>
@@ -23,6 +24,43 @@
             <Foods :isTable="true" />
           </v-tab-item>
         </v-tabs-items>
+      </v-row>
+      
+      <!-- Desktop -->
+      <v-row v-else>
+        <v-tabs vertical hide-slider>
+          <v-col>
+            <v-card>
+              <v-list class="py-0">
+                <v-card-title class="primary border-radius">
+                  <h3 class="menu-title">Menu</h3>
+                </v-card-title>
+                <keep-alive>
+                  <v-navigation-drawer permanent>
+                    <v-list-item-group color="primary">
+                      <v-tab class="justify-start d-flex">
+                        <v-icon color="primary" class="mr-1"
+                          >mdi-note-text</v-icon
+                        >
+                        <span>Recipes</span>
+                      </v-tab>
+                      <v-tab class="justify-start d-flex">
+                        <v-icon color="primary" class="mr-1">mdi-food</v-icon>
+                        <span>Ingredients</span>
+                      </v-tab>
+                    </v-list-item-group>
+                  </v-navigation-drawer>
+                </keep-alive>
+              </v-list>
+            </v-card>
+          </v-col>
+          <v-tab-item>
+            <Recipes :isTable="true" />
+          </v-tab-item>
+          <v-tab-item>
+            <Foods :isTable="true" />
+          </v-tab-item>
+        </v-tabs>
       </v-row>
     </v-container>
   </div>
