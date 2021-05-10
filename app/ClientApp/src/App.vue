@@ -16,6 +16,7 @@
     </v-container>
   </v-app>
   <v-app v-else>
+    <Overlay />
     <Toolbar />
     <v-main>
       <Snackbar />
@@ -33,6 +34,7 @@
 import Toolbar from "@/components/Toolbar.vue";
 import Snackbar from "@/components/Snackbar.vue";
 import Footbar from "@/components/Footbar.vue";
+import Overlay from "@/components/Overlay.vue";
 import { mapActions, mapGetters } from "vuex";
 import { refreshAuthentication } from "@/api";
 
@@ -43,6 +45,7 @@ export default {
     Toolbar,
     Snackbar,
     Footbar,
+    Overlay,
   },
 
   data: () => ({
