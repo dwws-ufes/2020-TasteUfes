@@ -20,6 +20,7 @@ const store = new Vuex.Store({
     snackbar: {},
     loadingMain: true,
     loadingMainError: false,
+    overlay: true,
     randomizeQuote: 0,
     quotes: [
       "We're poor and waiting for server to wake up...",
@@ -122,6 +123,7 @@ const store = new Vuex.Store({
     setSnackbar: (state, snackbar) => state.snackbar = snackbar,
     setLoadingMain: (state, loadingMain) => state.loadingMain = loadingMain,
     setLoadingMainError: (state, loadingMainError) => state.loadingMainError = loadingMainError,
+    setOverlay: (state, overlay) => state.overlay = overlay,
     setRandomizeQuote: (state, randomizeQuote) => state.randomizeQuote = randomizeQuote,
   },
 
@@ -132,6 +134,7 @@ const store = new Vuex.Store({
     getUser: state => state.user,
     getLoadingMain: state => state.loadingMain,
     getLoadingMainError: state => state.loadingMainError,
+    getOverlay: state => state.overlay,
     getQuotes: state => state.quotes,
     getRandomizeQuote: state => state.randomizeQuote,
   },
@@ -203,6 +206,7 @@ const store = new Vuex.Store({
           dispatch('ActionSetIsAdmin', user.data);
           dispatch('loginAuth', true);
           dispatch('ActionSetLoadingMain', false);
+          dispatch('ActionSetOverlay', false);
         })
           .catch(() => {
             dispatch("setSnackbar", {
@@ -222,6 +226,7 @@ const store = new Vuex.Store({
     loginAuth: ({ commit }) => commit('login'),
     logoutAuth: ({ commit }) => commit('logout'),
     ActionSetToken: ({ commit }, payload) => commit('setToken', payload),
+    ActionSetOverlay: ({ commit }, payload) => commit('setOverlay', payload),
     async doLogin({ dispatch }, payload) {
       let now = new Date().getTime();
       let access = {
@@ -239,9 +244,7 @@ const store = new Vuex.Store({
       localStorage.setItem('user_id', access.user_id);
       localStorage.setItem('now', access.now.toString());
       Promise.all([
-        dispatch('loginAuth'),
-        dispatch('ActionSetToken', access.access_token),
-        dispatch('ActionSetUserId', access.user_id)
+        dispatch('loadApplication'),
       ]).then(() => { })
     },
 
@@ -249,6 +252,7 @@ const store = new Vuex.Store({
       localStorage.clear();
       deleteAuthAPI();
       dispatch('logoutAuth');
+      dispatch('ActionSetOverlay', false);
       window._Vue.$router.push({ name: 'Home' }).catch(() => { });
     },
   }

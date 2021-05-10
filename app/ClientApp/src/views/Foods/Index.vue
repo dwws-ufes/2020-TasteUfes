@@ -234,6 +234,7 @@ export default {
     this.getData();
     setTimeout(() => {
       this.loadSkeleton = false;
+      this.$store.dispatch("ActionSetOverlay", false);
     }, 300);
   },
 

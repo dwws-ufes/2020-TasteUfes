@@ -25,7 +25,7 @@
           </v-tab-item>
         </v-tabs-items>
       </v-row>
-      
+
       <!-- Desktop -->
       <v-row v-else>
         <v-tabs vertical hide-slider>
@@ -73,6 +73,7 @@ import AnonymousRecipe from "@/views/Recipes/AnonymousRecipe.vue";
 import RecommendationRecipe from "@/views/Recipes/RecommendationRecipe.vue";
 import Recipes from "@/views/Recipes/Index.vue";
 import Foods from "@/views/Foods/Index.vue";
+import Overlay from "@/components/Overlay.vue";
 
 export default {
   name: "Home",
@@ -87,6 +88,7 @@ export default {
     RecommendationRecipe,
     Recipes,
     Foods,
+    Overlay,
   },
 };
 </script>
