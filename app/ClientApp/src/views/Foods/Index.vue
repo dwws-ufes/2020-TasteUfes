@@ -321,7 +321,6 @@ export default {
       console.log(ids)
       getRDFById(ids)
         .then((response) => {
-          console.log(response.data);
           var fileURL = window.URL.createObjectURL(
             new Blob([response.data])
           );
