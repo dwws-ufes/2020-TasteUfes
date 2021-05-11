@@ -14,5 +14,7 @@ namespace TasteUfes.Services.Interfaces
         IGraph GetNode(Guid id, string foodUriPrefix);
 
         IGraph GetGraph(string foodUriPrefix);
+
+        IGraph GetGraphByIds(List<Guid> foodIds, string foodUriPrefix);
     }
 }

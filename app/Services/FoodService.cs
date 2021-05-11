@@ -333,6 +333,34 @@ namespace TasteUfes.Services
             return g;
         }
 
+        public IGraph GetGraphByIds(List<Guid> foodIds, string foodUriPrefix)
+        {
+            var foods = UnitOfWork.Foods.Search(f => foodIds.Contains(f.Id));
+            var nutrients = UnitOfWork.Repository<Nutrient>().GetAll();
+
+            var fat = nutrients
+                .FirstOrDefault(n => n.Name == "Total Fat");
+            var carbohydrate = nutrients
+                .FirstOrDefault(n => n.Name == "Carbohydrate");
+            var protein = nutrients
+                .FirstOrDefault(n => n.Name == "Protein");
+
+            var g = new Graph();
+            g.NamespaceMap.AddNamespace("dbp", new Uri("https://dbpedia.org/property/"));
+            g.NamespaceMap.AddNamespace("dbo", new Uri("https://dbpedia.org/ontology/"));
+
+            var t = new List<Triple>();
+
+            foreach (var food in foods)
+            {
+                t.AddRange(MapFoodEntityToNode(g, food, fat, carbohydrate, protein, foodUriPrefix));
+            }
+
+            g.Assert(t);
+
+            return g;
+        }
+
         private List<Triple> MapFoodEntityToNode(IGraph g, Food food,
             Nutrient fat, Nutrient carbohydrate, Nutrient protein, string foodUriPrefix)
         {
