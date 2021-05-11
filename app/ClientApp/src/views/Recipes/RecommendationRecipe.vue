@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="justify-center">
-      <v-col col="12" sm="8">
+      <v-col cols="12" sm="8">
         <v-card class="card-list">
           <v-container>
             <v-card-title>
@@ -49,7 +49,7 @@
           </v-container>
         </v-card>
       </v-col>
-      <v-col col="12" sm="8">
+      <v-col cols="12" sm="8">
         <v-container>
           <v-row>
             <v-col>

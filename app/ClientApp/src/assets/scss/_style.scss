@@ -21,6 +21,10 @@ body {
   height: 100vh;
 }
 
+.align-flex-end {
+  align-items: flex-end;
+}
+
 .loading-main {
   h3 {
     color: $primary;
