@@ -62,6 +62,16 @@ namespace TasteUfes.Controllers
             return Ok(Mapper.Map<IEnumerable<FoodResponse>>(foodService.GetAllLD(foodName)));
         }
 
+        [HttpGet("ld/rdf")]
+        public ActionResult GetGraph([FromServices] IConfiguration configuration)
+        {
+            var foodUriPrefix = $"{configuration["Spa:Host"]}/{configuration["Spa:FoodDetailsPath"]}/";
+            var foodGraph = _foodService.GetGraph(foodUriPrefix);
+            var stringWriter = StringWriter.Write(foodGraph, new RdfXmlWriter());
+
+            return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);
+        }
+
         [HttpGet("ld/rdf/{id}")]
         public ActionResult GetNode([FromRoute] Guid id, [FromServices] IConfiguration configuration)
         {
@@ -76,11 +86,11 @@ namespace TasteUfes.Controllers
             return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);
         }
 
-        [HttpGet("ld/rdf")]
-        public ActionResult GetGraph([FromServices] IConfiguration configuration)
+        [HttpPost("ld/rdf")]
+        public ActionResult GetGraphByIds([FromBody] List<Guid> foodIds, [FromServices] IConfiguration configuration)
         {
             var foodUriPrefix = $"{configuration["Spa:Host"]}/{configuration["Spa:FoodDetailsPath"]}/";
-            var foodGraph = _foodService.GetGraph(foodUriPrefix);
+            var foodGraph = _foodService.GetGraphByIds(foodIds, foodUriPrefix);
             var stringWriter = StringWriter.Write(foodGraph, new RdfXmlWriter());
 
             return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);

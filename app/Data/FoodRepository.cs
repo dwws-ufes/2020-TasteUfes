@@ -5,6 +5,7 @@ using TasteUfes.Data.Interfaces;
 using TasteUfes.Data.Context;
 using TasteUfes.Models;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace TasteUfes.Data
 {
@@ -29,6 +30,17 @@ namespace TasteUfes.Data
                 .ThenInclude(n => n.NutritionFactsNutrients)
                 .ThenInclude(n => n.Nutrient)
                 .FirstOrDefault(f => f.Id == id);
+        }
+
+        public override IEnumerable<Food> Search(Expression<Func<Food, bool>> predicate)
+        {
+            return _context.Set<Food>()
+                .AsNoTracking()
+                .Include(f => f.NutritionFacts)
+                .ThenInclude(n => n.NutritionFactsNutrients)
+                .ThenInclude(n => n.Nutrient)
+                .Where(predicate)
+                .ToList();
         }
     }
 }
