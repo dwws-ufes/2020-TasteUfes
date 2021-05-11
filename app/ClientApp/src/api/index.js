@@ -147,6 +147,14 @@ async function getFood(id) {
   });
 }
 
+async function getRDFById(ids) {
+  return await notAuthAPI({
+    method: 'POST',
+    url: `/foods/ld/rdf`,
+    data: ids,
+  });
+}
+
 async function getLDFood(name) {
   return await notAuthAPI({
     method: 'GET',
@@ -230,6 +238,7 @@ export {
   createFood,
   getFoods,
   getFood,
+  getRDFById,
   getLDFood,
   updateFood,
   deleteFood,

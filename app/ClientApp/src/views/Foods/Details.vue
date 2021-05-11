@@ -1,14 +1,17 @@
 <template>
   <v-container class="details">
     <v-row justify="center">
-      <v-col cols="12" sm="4" d-flex justify-center>
-        <div class="d-flex" v-if="isAdmin">
+      <v-col cols="12" sm="8" xs="12" d-flex justify-center>
+        <div class="d-flex justify-content-between" v-if="isAdmin">
           <router-link
-            class="text-decoration-none d-flex"
+            class="text-decoration-none d-flex align-center"
             :to="{ name: 'ListFood' }"
           >
             <v-icon>mdi-chevron-left</v-icon> Back
           </router-link>
+          <v-btn outlined color="primary" @click="redirect">
+            Generate RDF
+          </v-btn>
         </div>
         <v-card>
           <v-container class="primary">
@@ -42,6 +45,7 @@ export default {
       food: {
         nutrition_facts: [],
       },
+      linkRDF: process.env.VUE_APP_API_URL + "foods/ld/rdf/" + this.$route.params.id,
     };
   },
 
@@ -67,6 +71,10 @@ export default {
             });
           });
         });
+    },
+
+    redirect() {
+      window.open(this.linkRDF, "_blank");
     },
   },
 

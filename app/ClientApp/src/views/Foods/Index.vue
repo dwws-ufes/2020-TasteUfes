@@ -5,7 +5,7 @@
         <v-col>
           <h1>Ingredients</h1>
         </v-col>
-        <v-col class="justify-flex-end d-flex">
+        <v-col class="align-flex-end d-flex flex-column">
           <v-btn
             elevation="2"
             :to="{ name: 'CreateFood' }"
@@ -14,6 +14,18 @@
           >
             <v-icon class="mr-1">mdi-food</v-icon>
             Create
+          </v-btn>
+          <v-btn
+            v-if="!selected.length"
+            outlined
+            color="primary"
+            @click="redirect"
+          >
+            Generate RDF
+            <v-icon class="d-inline" small>mdi-open-in-new</v-icon>
+          </v-btn>
+          <v-btn v-else outlined color="primary" @click="download">
+            Download RDF
           </v-btn>
         </v-col>
       </v-row>
@@ -30,12 +42,14 @@
         </v-col>
       </v-row>
       <v-data-table
+        v-model="selected"
         :loading="load"
         loading-text="Loading... Please wait"
         :headers="headers"
         :items="foodList"
         :items-per-page="10"
         :search="search"
+        show-select
         class="elevation-1"
       >
         <template v-slot:item.name="{ item }">
@@ -165,7 +179,7 @@
 </template>
 
 <script>
-import { getFoods, deleteFood } from "@/api";
+import { getFoods, deleteFood, getRDFById } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -178,6 +192,8 @@ export default {
       perPage: 12,
       load: true,
       loadSkeleton: true,
+      selected: [],
+      linkRDF: process.env.VUE_APP_API_URL + "foods/ld/rdf",
       headers: [
         {
           text: "Nº",
@@ -238,6 +254,10 @@ export default {
     }, 300);
   },
 
+  mounted() {
+    document.querySelector("th").classList.add("primary");
+  },
+
   methods: {
     getData: function () {
       getFoods()
@@ -289,6 +309,43 @@ export default {
     changeLoading() {
       this.load = !this.load;
     },
+
+    redirect() {
+      window.open(this.linkRDF, "_blank");
+    },
+
+    download() {
+      let ids = this.selected.map((ingredient) => {
+        return ingredient.id;
+      })
+      console.log(ids)
+      getRDFById(ids)
+        .then((response) => {
+          console.log(response.data);
+          var fileURL = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          var fileLink = document.createElement("a");
+          fileLink.href = fileURL;
+          fileLink.setAttribute("download", "ingredients.rdf");
+          document.body.appendChild(fileLink);
+          fileLink.click();
+        })
+        .catch((error) => {
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
+        });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+th:first-of-type {
+  background-color: $primary;
+}
+</style>

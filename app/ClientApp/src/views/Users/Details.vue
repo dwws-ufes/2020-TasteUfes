@@ -1,7 +1,7 @@
 <template>
   <v-container class="details">
     <v-row justify="center">
-      <v-col cols="12" sm="4" d-flex justify-center>
+      <v-col cols="12" sm="8" xs="12" d-flex justify-center>
         <div class="d-flex">
           <span class="back-btn" @click="$router.go(-1)"
             ><v-icon>mdi-chevron-left</v-icon> Back</span
