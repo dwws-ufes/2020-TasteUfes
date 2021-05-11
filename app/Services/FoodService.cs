@@ -278,12 +278,39 @@ namespace TasteUfes.Services
             }
         }
 
+        public IGraph GetNode(Guid id, string foodUriPrefix)
+        {
+            var food = Get(id);
+
+            if (Notificator.HasErrors())
+                return null;
+
+            var nutrients = UnitOfWork.Repository<Nutrient>().GetAll();
+
+            var fat = nutrients
+                .FirstOrDefault(n => n.Name == "Total Fat");
+            var carbohydrate = nutrients
+                .FirstOrDefault(n => n.Name == "Carbohydrate");
+            var protein = nutrients
+                .FirstOrDefault(n => n.Name == "Protein");
+
+            var g = new Graph();
+            g.NamespaceMap.AddNamespace("dbp", new Uri("https://dbpedia.org/property/"));
+            g.NamespaceMap.AddNamespace("dbo", new Uri("https://dbpedia.org/ontology/"));
+
+            var t = MapFoodEntityToNode(g, food, fat, carbohydrate, protein, foodUriPrefix);
+
+            g.Assert(t);
+
+            return g;
+        }
+
         public IGraph GetGraph(string foodUriPrefix)
         {
             var foods = GetAll();
             var nutrients = UnitOfWork.Repository<Nutrient>().GetAll();
 
-            var totalFat = nutrients
+            var fat = nutrients
                 .FirstOrDefault(n => n.Name == "Total Fat");
             var carbohydrate = nutrients
                 .FirstOrDefault(n => n.Name == "Carbohydrate");
@@ -298,85 +325,95 @@ namespace TasteUfes.Services
 
             foreach (var food in foods)
             {
-                var foodSbj = g.CreateUriNode(new Uri(foodUriPrefix + food.Id));
-
-                // Type
-                var rdfType = g.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
-                var dboFood = g.CreateUriNode("dbo:Food");
-                t.Add(new Triple(foodSbj, rdfType, dboFood));
-
-                // Name
-                var rdfsLabel = g.CreateUriNode("rdfs:label");
-                var foodName = g.CreateLiteralNode(food.Name);
-                t.Add(new Triple(foodSbj, rdfsLabel, foodName));
-
-                // ServingSize
-                var dboServingSize = g.CreateUriNode("dbo:servingSize");
-                var foodServingSize = food.NutritionFacts?.ServingSize.ToString();
-
-                if (String.IsNullOrEmpty(foodServingSize))
-                {
-                    t.Add(new Triple(foodSbj, dboServingSize, g.CreateBlankNode()));
-                }
-                else
-                {
-                    var dataType = GetDataTypeMeasure(food.NutritionFacts.ServingSizeUnit);
-                    var literal = g.CreateLiteralNode(foodServingSize, dataType);
-                    t.Add(new Triple(foodSbj, dboServingSize, literal));
-                }
-
-                // Fat
-                var dbpFat = g.CreateUriNode("dbp:fat");
-                var foodFat = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == totalFat.Id);
-                var foodFatStr = foodFat?.AmountPerServing.ToString();
-
-                if (String.IsNullOrEmpty(foodFatStr))
-                {
-                    t.Add(new Triple(foodSbj, dbpFat, g.CreateBlankNode()));
-                }
-                else
-                {
-                    var dataType = GetDataTypeMeasure(foodFat.AmountPerServingUnit);
-                    var literal = g.CreateLiteralNode(foodFatStr, dataType);
-                    t.Add(new Triple(foodSbj, dbpFat, literal));
-                }
-
-                // Carbohydrate
-                var dbpCarbohydrate = g.CreateUriNode("dbp:carbohydrate");
-                var foodCarbohydrate = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == carbohydrate.Id);
-                var foodCarbohydrateStr = foodCarbohydrate?.AmountPerServing.ToString();
-
-                if (String.IsNullOrEmpty(foodCarbohydrateStr))
-                {
-                    t.Add(new Triple(foodSbj, dbpCarbohydrate, g.CreateBlankNode()));
-                }
-                else
-                {
-                    var dataType = GetDataTypeMeasure(foodCarbohydrate.AmountPerServingUnit);
-                    var literal = g.CreateLiteralNode(foodCarbohydrateStr, dataType);
-                    t.Add(new Triple(foodSbj, dbpCarbohydrate, literal));
-                }
-
-                // Protein
-                var dbpProtein = g.CreateUriNode("dbp:protein");
-                var foodProtein = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == protein.Id);
-                var foodProteinStr = foodProtein?.AmountPerServing.ToString();
-
-                if (String.IsNullOrEmpty(foodProteinStr))
-                {
-                    t.Add(new Triple(foodSbj, dbpProtein, g.CreateBlankNode()));
-                }
-                else
-                {
-                    var dataType = GetDataTypeMeasure(foodProtein.AmountPerServingUnit);
-                    var literal = g.CreateLiteralNode(foodProteinStr, dataType);
-                    t.Add(new Triple(foodSbj, dbpProtein, literal));
-                }
+                t.AddRange(MapFoodEntityToNode(g, food, fat, carbohydrate, protein, foodUriPrefix));
             }
 
             g.Assert(t);
 
             return g;
+        }
+
+        private List<Triple> MapFoodEntityToNode(IGraph g, Food food,
+            Nutrient fat, Nutrient carbohydrate, Nutrient protein, string foodUriPrefix)
+        {
+            var t = new List<Triple>();
+
+            var foodSbj = g.CreateUriNode(new Uri(foodUriPrefix + food.Id));
+
+            // Type
+            var rdfType = g.CreateUriNode(new Uri(RdfSpecsHelper.RdfType));
+            var dboFood = g.CreateUriNode("dbo:Food");
+            t.Add(new Triple(foodSbj, rdfType, dboFood));
+
+            // Name
+            var rdfsLabel = g.CreateUriNode("rdfs:label");
+            var foodName = g.CreateLiteralNode(food.Name);
+            t.Add(new Triple(foodSbj, rdfsLabel, foodName));
+
+            // ServingSize
+            var dboServingSize = g.CreateUriNode("dbo:servingSize");
+            var foodServingSize = food.NutritionFacts?.ServingSize.ToString();
+
+            if (String.IsNullOrEmpty(foodServingSize))
+            {
+                t.Add(new Triple(foodSbj, dboServingSize, g.CreateBlankNode()));
+            }
+            else
+            {
+                var dataType = GetDataTypeMeasure(food.NutritionFacts.ServingSizeUnit);
+                var literal = g.CreateLiteralNode(foodServingSize, dataType);
+                t.Add(new Triple(foodSbj, dboServingSize, literal));
+            }
+
+            // Fat
+            var dbpFat = g.CreateUriNode("dbp:fat");
+            var foodFat = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == fat.Id);
+            var foodFatStr = foodFat?.AmountPerServing.ToString();
+
+            if (String.IsNullOrEmpty(foodFatStr))
+            {
+                t.Add(new Triple(foodSbj, dbpFat, g.CreateBlankNode()));
+            }
+            else
+            {
+                var dataType = GetDataTypeMeasure(foodFat.AmountPerServingUnit);
+                var literal = g.CreateLiteralNode(foodFatStr, dataType);
+                t.Add(new Triple(foodSbj, dbpFat, literal));
+            }
+
+            // Carbohydrate
+            var dbpCarbohydrate = g.CreateUriNode("dbp:carbohydrate");
+            var foodCarbohydrate = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == carbohydrate.Id);
+            var foodCarbohydrateStr = foodCarbohydrate?.AmountPerServing.ToString();
+
+            if (String.IsNullOrEmpty(foodCarbohydrateStr))
+            {
+                t.Add(new Triple(foodSbj, dbpCarbohydrate, g.CreateBlankNode()));
+            }
+            else
+            {
+                var dataType = GetDataTypeMeasure(foodCarbohydrate.AmountPerServingUnit);
+                var literal = g.CreateLiteralNode(foodCarbohydrateStr, dataType);
+                t.Add(new Triple(foodSbj, dbpCarbohydrate, literal));
+            }
+
+            // Protein
+            var dbpProtein = g.CreateUriNode("dbp:protein");
+            var foodProtein = food.NutritionFacts?.NutritionFactsNutrients.FirstOrDefault(n => n.NutrientId == protein.Id);
+            var foodProteinStr = foodProtein?.AmountPerServing.ToString();
+
+            if (String.IsNullOrEmpty(foodProteinStr))
+            {
+                t.Add(new Triple(foodSbj, dbpProtein, g.CreateBlankNode()));
+            }
+            else
+            {
+                var dataType = GetDataTypeMeasure(foodProtein.AmountPerServingUnit);
+                var literal = g.CreateLiteralNode(foodProteinStr, dataType);
+                t.Add(new Triple(foodSbj, dbpProtein, literal));
+            }
+
+            return t;
         }
 
         private Uri GetDataTypeMeasure(Measures measure)

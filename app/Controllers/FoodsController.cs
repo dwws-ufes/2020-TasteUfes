@@ -15,8 +15,13 @@ namespace TasteUfes.Controllers
 {
     public class FoodsController : EntityApiControllerV1<Food, FoodRequest, FoodResponse>
     {
+        private readonly IFoodService _foodService;
+
         public FoodsController(IFoodService foodService, IMapper mapper, INotificator notificator)
-            : base(foodService, mapper, notificator) { }
+            : base(foodService, mapper, notificator)
+        {
+            _foodService = foodService;
+        }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -57,11 +62,25 @@ namespace TasteUfes.Controllers
             return Ok(Mapper.Map<IEnumerable<FoodResponse>>(foodService.GetAllLD(foodName)));
         }
 
-        [HttpGet("ld/rdf")]
-        public ActionResult GetGraph([FromServices] IFoodService foodService, [FromServices] IConfiguration configuration)
+        [HttpGet("ld/rdf/{id}")]
+        public ActionResult GetNode([FromRoute] Guid id, [FromServices] IConfiguration configuration)
         {
             var foodUriPrefix = $"{configuration["Spa:Host"]}/{configuration["Spa:FoodDetailsPath"]}/";
-            var foodGraph = foodService.GetGraph(foodUriPrefix);
+            var foodGraph = _foodService.GetNode(id, foodUriPrefix);
+
+            if (HasErrors())
+                return NotFound(Errors(id));
+
+            var stringWriter = StringWriter.Write(foodGraph, new RdfXmlWriter());
+
+            return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);
+        }
+
+        [HttpGet("ld/rdf")]
+        public ActionResult GetGraph([FromServices] IConfiguration configuration)
+        {
+            var foodUriPrefix = $"{configuration["Spa:Host"]}/{configuration["Spa:FoodDetailsPath"]}/";
+            var foodGraph = _foodService.GetGraph(foodUriPrefix);
             var stringWriter = StringWriter.Write(foodGraph, new RdfXmlWriter());
 
             return Content(stringWriter.ToString(), "text/xml", System.Text.Encoding.UTF8);
