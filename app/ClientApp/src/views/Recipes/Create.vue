@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="2" class="card-form">
+  <v-card :width="width" elevation="2" class="card-form"> 
     <v-form
       ref="form"
       lazy-validation
@@ -279,7 +279,17 @@ export default {
       },
     };
   },
-
+  computed: {
+      width () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 300
+          case 'sm': return 400
+          case 'md': return 500
+          case 'lg': return 600
+          case 'xl': return 800
+        }
+      },
+    },
   methods: {
     addFoodField: function () {
       this.recipe.ingredients.push({});
