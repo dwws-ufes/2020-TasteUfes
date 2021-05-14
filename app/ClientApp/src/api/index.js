@@ -1,10 +1,11 @@
 import { authAPI, notAuthAPI, createAuthAPI, deleteAuthAPI } from '@/config/axios/index';
+import axios from 'axios';
 
 // Functions
 async function healthCheck() {
-  return await notAuthAPI({
+  return await axios.create({
     method: 'GET',
-    url: `/health`,
+    url: process.env.VUE_HEALTH_CHECK,
   });
 }
 

@@ -5,15 +5,15 @@
         <v-icon medium v-bind="attrs" v-on="on" secondary> mdi-delete </v-icon>
       </template>
       <v-card>
-        <v-card-title class="headline">Delete</v-card-title>
+        <v-card-title class="headline">{{ $vuetify.lang.t('$vuetify.delete') }}</v-card-title>
         <v-card-text
-          >Are you sure you want to delete <b>{{ name }}</b
+          >{{ $vuetify.lang.t('$vuetify.want_delete') }} <b>{{ name }}</b
           >?</v-card-text
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="closeDelete">Cancel</v-btn>
-          <v-btn color="red" text @click="deleteItem(id)">OK</v-btn>
+          <v-btn text @click="closeDelete">{{ $vuetify.lang.t('$vuetify.no') }}</v-btn>
+          <v-btn color="red" text @click="deleteItem(id)">{{ $vuetify.lang.t('$vuetify.yes') }}</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>

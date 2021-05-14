@@ -3,7 +3,7 @@
     <template v-if="!isTable">
       <v-row class="justify-space-between">
         <v-col>
-          <h1>Ingredients</h1>
+          <h1>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h1>
         </v-col>
         <v-col class="align-flex-end d-flex flex-column">
           <v-btn
@@ -13,7 +13,7 @@
             dark
           >
             <v-icon class="mr-1">mdi-food</v-icon>
-            Create
+            {{ $vuetify.lang.t('$vuetify.create') }}
           </v-btn>
           <v-btn
             v-if="!selected.length"
@@ -21,11 +21,11 @@
             color="primary"
             @click="redirect"
           >
-            Generate RDF
+            {{ $vuetify.lang.t('$vuetify.generate') }} RDF
             <v-icon class="d-inline" small>mdi-open-in-new</v-icon>
           </v-btn>
           <v-btn v-else outlined color="primary" @click="download">
-            Download RDF
+            {{ $vuetify.lang.t('$vuetify.download') }} RDF
           </v-btn>
         </v-col>
       </v-row>
@@ -35,7 +35,7 @@
             v-model="search"
             class="search"
             append-icon="mdi-magnify"
-            label="Search Ingredient"
+            :label="$vuetify.lang.t('$vuetify.search') + ' ' + $vuetify.lang.t('$vuetify.ingredient')"
             single-line
             hide-details
           ></v-text-field>
@@ -44,7 +44,7 @@
       <v-data-table
         v-model="selected"
         :loading="load"
-        loading-text="Loading... Please wait"
+        :loading-text="$vuetify.lang.t('$vuetify.loading_wait')"
         :headers="headers"
         :items="foodList"
         :items-per-page="10"
@@ -85,7 +85,7 @@
       <div class="list">
         <div>
           <v-col class="pb-0">
-            <h1>Ingredients</h1>
+            <h1>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h1>
           </v-col>
           <v-container>
             <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
@@ -112,7 +112,7 @@
               text
               type="warning"
             >
-              <v-card-text> No ingredient found. </v-card-text>
+              <v-card-text> {{ $vuetify.lang.t('$vuetify.no_ingredient') }}. </v-card-text>
             </v-alert>
             <div v-else>
               <v-row class="mb-2">
@@ -121,7 +121,7 @@
                     v-model="search"
                     class="search"
                     append-icon="mdi-magnify"
-                    label="Search Ingredient"
+                    :label="$vuetify.lang.t('$vuetify.search') + ' ' + $vuetify.lang.t('$vuetify.ingredient')"
                     single-line
                     hide-details
                   ></v-text-field>
@@ -148,7 +148,7 @@
                         <v-container>
                           <v-row v-if="food.nutrition_facts">
                             <v-col>
-                              <b>Serving Size: </b
+                              <b>{{ $vuetify.lang.t('$vuetify.serving_size') }}: </b
                               >{{ food.nutrition_facts.serving_size
                               }}{{
                                 getMeasureName(
@@ -202,17 +202,17 @@ export default {
           class: "primary",
         },
         {
-          text: "Name",
+          text: this.$vuetify.lang.t('$vuetify.name'),
           value: "name",
           class: "primary",
         },
         {
-          text: "Serving Size",
+          text: this.$vuetify.lang.t('$vuetify.serving_size'),
           value: "serving_size",
           class: "primary",
         },
         {
-          text: "Actions",
+          text: this.$vuetify.lang.t('$vuetify.actions'),
           value: "actions",
           class: "primary",
         },
@@ -255,7 +255,9 @@ export default {
   },
 
   mounted() {
-    document.querySelector("th").classList.add("primary");
+    if(!this.isTable){
+      document.querySelector("th").classList.add("primary");
+    }
   },
 
   methods: {
@@ -289,7 +291,7 @@ export default {
       deleteFood(id)
         .then((result) => {
           this.$store.dispatch("setSnackbar", {
-            text: `Ingredient ${name} deleted.`,
+            text: `${this.$vuetify.lang.t('$vuetify.ingredient')} ${name} ${this.$vuetify.lang.t('$vuetify.deleted')}.`,
             color: "success",
           });
           let foodId = this.foodList.findIndex((food) => food.id === id);
@@ -318,7 +320,6 @@ export default {
       let ids = this.selected.map((ingredient) => {
         return ingredient.id;
       })
-      console.log(ids)
       getRDFById(ids)
         .then((response) => {
           var fileURL = window.URL.createObjectURL(
@@ -326,7 +327,7 @@ export default {
           );
           var fileLink = document.createElement("a");
           fileLink.href = fileURL;
-          fileLink.setAttribute("download", "ingredients.rdf");
+          fileLink.setAttribute("download", this.$vuetify.lang.t('$vuetify.ingredients') + ".rdf");
           document.body.appendChild(fileLink);
           fileLink.click();
         })

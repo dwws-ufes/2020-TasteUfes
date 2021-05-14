@@ -8,7 +8,7 @@
           :to="{ name: 'Home' }"
         >
           <v-icon>mdi-home</v-icon>
-          <span class="title-name">TasteUfes</span>
+          <span class="title-name">{{ $vuetify.lang.t('$vuetify.tasteufes') }}</span>
         </router-link>
       </v-toolbar-title>
       <v-spacer />
@@ -22,7 +22,7 @@
       </div>
         <div v-if="!auth && !this.$vuetify.breakpoint.xs">
           <v-btn outlined :to="{ name: 'CreateUser' }" class="mx-2"
-            >Sign Up</v-btn
+            >{{ $vuetify.lang.t('$vuetify.sign_up') }}</v-btn
           >
         </div>
         <Login v-if="!auth && !this.$vuetify.breakpoint.xs" buttonColor="white" />
@@ -55,34 +55,34 @@ export default {
     menuList() {
       return [
         {
-          name: "Recipe",
+          name: this.$vuetify.lang.t('$vuetify.recipe'),
           icon: null,
           show: true,
           isUser: false,
           options: [
             {
-              name: "Create Recipe",
+              name: this.$vuetify.lang.t('$vuetify.create') + " " + this.$vuetify.lang.t('$vuetify.recipe'),
               routeName: "CreateRecipe",
               param: null,
               action: false,
               show: this.auth,
             },
             {
-              name: "List Recipe",
+              name: this.$vuetify.lang.t('$vuetify.list') + " " + this.$vuetify.lang.t('$vuetify.recipe'),
               routeName: "ListRecipe",
               param: null,
               action: false,
               show: this.auth,
             },
             {
-              name: "Create Anonymous Recipe",
+              name: this.$vuetify.lang.t('$vuetify.create_anonymous'),
               routeName: "AnonymousRecipe",
               param: null,
               action: false,
               show: true,
             },
             {
-              name: "Recommendation Recipe",
+              name: this.$vuetify.lang.t('$vuetify.recommendation') + " " +  this.$vuetify.lang.t('$vuetify.recipe'),
               routeName: "RecommendationRecipe",
               param: null,
               action: false,
@@ -91,20 +91,20 @@ export default {
           ],
         },
         {
-          name: "Ingredient",
+          name: this.$vuetify.lang.t('$vuetify.ingredient'),
           icon: null,
           show: this.isAdmin,
           isUser: false,
           options: [
             {
-              name: "Create Ingredient",
+              name: this.$vuetify.lang.t('$vuetify.create') + " " + this.$vuetify.lang.t('$vuetify.ingredient'),
               routeName: "CreateFood",
               param: null,
               action: false,
               show: this.auth,
             },
             {
-              name: "List Ingredient",
+              name: this.$vuetify.lang.t('$vuetify.list') + " " + this.$vuetify.lang.t('$vuetify.ingredient'),
               routeName: "ListFood",
               param: null,
               action: false,
@@ -119,28 +119,28 @@ export default {
           isUser: true,
           options: [
             {
-              name: "My Account",
+              name: this.$vuetify.lang.t('$vuetify.my_account'),
               routeName: "DetailsUser",
               param: this.getUserId,
               action: false,
               show: this.auth,
             },
             {
-              name: "Create User",
+              name: this.$vuetify.lang.t('$vuetify.create') + " " + this.$vuetify.lang.t('$vuetify.user'),
               routeName: "CreateUser",
               param: null,
               action: false,
               show: this.isAdmin,
             },
             {
-              name: "List User",
+              name: this.$vuetify.lang.t('$vuetify.list') + " " + this.$vuetify.lang.t('$vuetify.user'),
               routeName: "ListUser",
               param: null,
               action: false,
               show: this.isAdmin,
             },
             {
-              name: "Logout",
+              name: this.$vuetify.lang.t('$vuetify.logout'),
               routeName: "Logout",
               param: null,
               action: true,
@@ -173,7 +173,9 @@ export default {
 
     toggleMenu() {
       this.menuToogle = !this.menuToogle;
-      this.openMenuMobile();
+      if(this.$vuetify.breakpoint.xs){
+        this.openMenuMobile();
+      }
     },
 
     closeMenu() {

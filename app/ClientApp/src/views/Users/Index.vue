@@ -2,7 +2,7 @@
   <div class="list">
     <v-row class="justify-space-between">
       <v-col>
-        <h1>Users</h1>
+        <h1>{{ $vuetify.lang.t('$vuetify.users') }}</h1>
       </v-col>
       <v-col class="justify-flex-end d-flex">
         <v-btn
@@ -12,7 +12,7 @@
           dark
         >
           <v-icon class="mr-1">mdi-account-circle</v-icon>
-          Create
+          {{ $vuetify.lang.t('$vuetify.create') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -78,27 +78,27 @@ export default {
           class: "primary",
         },
         {
-          text: "Name",
+          text: this.$vuetify.lang.t('$vuetify.name'),
           value: "name",
           class: "primary",
         },
         {
-          text: "Username",
+          text: this.$vuetify.lang.t('$vuetify.username'),
           value: "username",
           class: "primary",
         },
         {
-          text: "Email",
+          text: this.$vuetify.lang.t('$vuetify.email'),
           value: "email",
           class: "primary",
         },
         {
-          text: "Role",
+          text: this.$vuetify.lang.t('$vuetify.role'),
           value: "roles",
           class: "primary",
         },
         {
-          text: "Actions",
+          text: this.$vuetify.lang.t('$vuetify.actions'),
           value: "actions",
           class: "primary",
         },
@@ -137,9 +137,9 @@ export default {
     deleteUser(id, name) {
       this.changeLoading();
       deleteUser(id)
-        .then((result) => {
+        .then(() => {
           this.$store.dispatch("setSnackbar", {
-            text: `User ${name} deleted.`,
+            text: `${this.$vuetify.lang.t('$vuetify.user')} ${name} ${this.$vuetify.lang.t('$vuetify.deleted')}.`,
             color: "success",
           });
           let userId = this.userList.findIndex((user) => user.id === id);

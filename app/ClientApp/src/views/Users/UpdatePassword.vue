@@ -6,14 +6,14 @@
       @submit.prevent="onSubmit"
       v-model="valid"
     >
-      <h1>Update Password</h1>
+      <h1>{{ $vuetify.lang.t('$vuetify.update') }} {{ $vuetify.lang.t('$vuetify.password') }}</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-text-field
               v-model="passwordUpdate.old_password"
               :rules="[rules.required, rules.minPass, rules.maxPass]"
-              label="Old Password*"
+              :label="$vuetify.lang.t('$vuetify.old_password') + '*'"
               :type="'password'"
               class="form-control"
               hide-details="auto"
@@ -21,7 +21,7 @@
             <v-text-field
               v-model="passwordUpdate.new_password"
               :rules="[rules.required, rules.minPass, rules.maxPass]"
-              label="New Password*"
+              :label="$vuetify.lang.t('$vuetify.new_password') + '*'"
               :type="'password'"
               class="form-control"
               hide-details="auto"
@@ -35,7 +35,7 @@
                 rules.minPass,
                 rules.maxPass,
               ]"
-              label="Repeat Password*"
+              :label="$vuetify.lang.t('$vuetify.repeat_password') + '*'"
               :type="'password'"
               class="form-control"
               hide-details="auto"
@@ -52,7 +52,7 @@
               v-if="!submit"
               :disabled="!valid"
             >
-              <span> Save </span>
+              <span> {{ $vuetify.lang.t('$vuetify.update') }} </span>
             </v-btn>
             <v-btn
               v-else
@@ -62,7 +62,7 @@
               :disabled="!valid"
             >
             </v-btn>
-            <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
+            <v-btn elevation="2" @click="$router.go(-1)">{{ $vuetify.lang.t('$vuetify.back') }}</v-btn>
           </v-row>
         </v-card-actions>
       </div>
@@ -84,12 +84,12 @@ export default {
       },
       repeatPassword: "",
       rules: {
-        required: (value) => !!value || "Required.",
-        minPass: (value) => value.length >= 6 || "Must be minimum length of 6.",
-        maxPass: (value) => value.length <= 32 || "Must be maximun length of 32.",
+        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
+        minPass: (value) => value.length >= 6 || this.$vuetify.lang.t('$vuetify.min_six') + '.',
+        maxPass: (value) => value.length <= 32 || this.$vuetify.lang.t('$vuetify.max_thirty_two') + '.',
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "Invalid e-mail.";
+          return pattern.test(value) || this.$vuetify.lang.t('$vuetify.invalid_email') + '.';
         },
       },
     };
@@ -102,14 +102,13 @@ export default {
         updatePassword(this.getUserId, this.passwordUpdate)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `Password updated.`,
+              text: `${this.$vuetify.lang.t('$vuetify.password_updated')}.`,
               color: "success",
             });
             this.$router.push({ name: "ListUser" });
           })
           .catch((error) => {
             this.submit = false;
-            console.log(error.response)
             error.response.data.errors.map((error) => {
               this.$store.dispatch("setSnackbar", {
                 text: `${error.message}`,
@@ -127,7 +126,7 @@ export default {
     ...mapGetters(['getUserId']),
     passwordConfirmationRule() {
       return () =>
-        this.passwordUpdate.new_password === this.repeatPassword || "Password must match";
+        this.passwordUpdate.new_password === this.repeatPassword || this.$vuetify.lang.t('$vuetify.password_match');
     },
   },
 };

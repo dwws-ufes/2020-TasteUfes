@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn :color="buttonColor" light v-bind="attrs" v-on="on"> Sign In </v-btn>
+        <v-btn :color="buttonColor" light v-bind="attrs" v-on="on"> {{ $vuetify.lang.t('$vuetify.sign_in') }} </v-btn>
       </template>
       <v-card>
         <v-container>
@@ -16,7 +16,7 @@
             <v-text-field
               v-model="user.username"
               :rules="[rules.required]"
-              label="Username"
+              :label="$vuetify.lang.t('$vuetify.username')"
               hide-details="auto"
               class="form-control"
             />
@@ -25,7 +25,7 @@
               v-model="user.password"
               :rules="[rules.required, rules.minPass, rules.maxPass]"
               :type="'password'"
-              label="Password"
+              :label="$vuetify.lang.t('$vuetify.password')"
               class="form-control"
               hide-details="auto"
             />
@@ -40,7 +40,7 @@
                     :disabled="!valid"
                     v-if="!submit"
                   >
-                    <span> Submit </span>
+                    <span> {{ $vuetify.lang.t('$vuetify.submit') }} </span>
                   </v-btn>
                   <v-btn
                     v-else
@@ -76,10 +76,10 @@ export default {
         password: "",
       },
       rules: {
-        required: (value) => !!value || "Required.",
-        minPass: (value) => value.length >= 6 || "Must be minimum length of 6.",
+        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
+        minPass: (value) => value.length >= 6 || this.$vuetify.lang.t('$vuetify.min_six') + '.',
         maxPass: (value) =>
-          value.length <= 32 || "Must be maximun length of 32.",
+          value.length <= 32 || this.$vuetify.lang.t('$vuetify.max_thirty_two') + '.',
       },
     };
   },
@@ -108,7 +108,7 @@ export default {
                   }
                   this.dialog = false;
                   this.$store.dispatch("setSnackbar", {
-                    text: `Welcome ${user.data.first_name}.`,
+                    text: `${this.$vuetify.lang.t('$vuetify.welcome')} ${user.data.first_name}.`,
                     color: "success",
                   });
                 });
@@ -133,7 +133,7 @@ export default {
               });
             } else {
               this.$store.dispatch("setSnackbar", {
-                text: `Network error, please contact server administrator.`,
+                text: `${this.$vuetify.lang.t('$vuetify.network_error')}.`,
                 color: "error",
               });
             }

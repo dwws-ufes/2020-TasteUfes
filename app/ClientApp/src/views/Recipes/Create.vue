@@ -6,14 +6,14 @@
       @submit.prevent="onSubmit"
       v-model="valid"
     >
-      <h1>Create Recipe</h1>
+      <h1>{{ $vuetify.lang.t('$vuetify.create') }} {{ $vuetify.lang.t('$vuetify.recipe') }}</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-text-field
               v-model="recipe.name"
               :rules="[this.rules.required]"
-              label="Name*"
+              :label="$vuetify.lang.t('$vuetify.name') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -25,7 +25,7 @@
                 this.rules.limitMin,
               ]"
               type="number"
-              label="Servings*"
+              :label="this.$vuetify.lang.t('$vuetify.servings') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -36,7 +36,7 @@
                 this.rules.limitMaxTime,
                 this.rules.limitMin,
               ]"
-              label="Preparation time (in minutes)*"
+              :label="this.$vuetify.lang.t('$vuetify.preparation_time') + '*'"
               type="number"
               hide-details="auto"
               class="form-control"
@@ -46,7 +46,7 @@
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
-              <h2>Ingredient</h2>
+              <h2>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h2>
               <v-btn
                 v-if="this.recipe.ingredients.length == 0"
                 class="mx-1 my-0"
@@ -60,6 +60,7 @@
             </v-col>
             <div
               v-for="(ingredient, i) in this.recipe.ingredients"
+              :key="ingredient.id"
               class="foods"
             >
               <v-container>
@@ -88,7 +89,7 @@
                           :items="foods"
                           item-text="name"
                           item-value="id"
-                          label="Select a ingredient*"
+                          :label="$vuetify.lang.t('$vuetify.select_o') + ' ' + $vuetify.lang.t('$vuetify.ingredient') + '*'"
                           :rules="[rules.required]"
                           return-value
                           @change="showFields(ingredient)"
@@ -103,7 +104,7 @@
                                 rules.limitMin,
                               ]"
                               type="number"
-                              label="Quantity Ingredient*"
+                              :label="$vuetify.lang.t('$vuetify.quantity') + '*'"
                               hide-details="auto"
                               class="form-control"
                               v-if="ingredient.nutrition_facts_fields"
@@ -115,7 +116,7 @@
                               :items="ingredient.measures"
                               item-text="name"
                               item-value="id"
-                              label="Select a Measure*"
+                              :label="$vuetify.lang.t('$vuetify.select_a') + ' ' + $vuetify.lang.t('$vuetify.measure') + '*'"
                               :rules="[rules.required]"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
@@ -146,7 +147,7 @@
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
-              <h2>Step</h2>
+              <h2>{{ $vuetify.lang.t("$vuetify.step") }}</h2>
               <div>
                 <v-btn
                   v-if="this.recipe.preparation.steps.length == 0"
@@ -188,8 +189,8 @@
                       <v-container>
                         <v-text-field
                           v-model="preparation.description"
-                          :rules="[(value) => !!value || 'Required.']"
-                          label="Description*"
+                          :rules="[(value) => !!value || $vuetify.lang.t('$vuetify.required') + '.']"
+                          :label="$vuetify.lang.t('$vuetify.description') + '*'"
                           hide-details="auto"
                           class="form-control"
                         />
@@ -226,7 +227,7 @@
                   v-if="!submit"
                   :disabled="!valid"
                 >
-                  <span> Create </span>
+                  <span> {{ $vuetify.lang.t('$vuetify.create') }} </span>
                 </v-btn>
                 <v-btn
                   v-else
@@ -236,7 +237,7 @@
                   :disabled="!valid"
                 >
                 </v-btn>
-                <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
+                <v-btn elevation="2" @click="$router.go(-1)">{{ $vuetify.lang.t('$vuetify.back') }}</v-btn>
               </v-row>
             </v-card-actions>
           </v-row>
@@ -272,10 +273,10 @@ export default {
         id: "",
       },
       rules: {
-        required: (value) => !!value || "Required.",
-        limitMax: (value) => value < 10000 || "Value too big",
-        limitMaxTime: (value) => value < 1400 || "Value too big for time",
-        limitMin: (value) => value > 0 || "Value must not be negative or 0",
+        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
+        limitMax: (value) => value < 10000 || this.$vuetify.lang.t('$vuetify.too_big') + '.',
+        limitMaxTime: (value) => value < 1400 || this.$vuetify.lang.t('$vuetify.bit_time') + '.',
+        limitMin: (value) => value > 0 || this.$vuetify.lang.t('$vuetify.neg_zero') + '.',
       },
     };
   },
@@ -367,7 +368,7 @@ export default {
         createRecipe(this.recipe)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `Recipe ${this.recipe.name} created.`,
+              text: `${ this.$vuetify.lang.t('$vuetify.recipe') } ${this.recipe.name} ${this.$vuetify.lang.t('$vuetify.created_a')}.`,
               color: "success",
             });
             this.$router.push({ name: "ListRecipe" });
