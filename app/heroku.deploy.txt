@@ -1,12 +1,12 @@
-[Apenas Linux]
-
+[DEPLOY]
 heroku login
 heroku git:remote -a dotnet-tasteufes
-heroku run base64 tasteufes.db --app dotnet-tasteufes > tasteufes.db.base64
-base64 -di tasteufes.db.base64 > tasteufes.db
 heroku container:login
 docker build -f Dockerfile.web -t dotnet-tasteufes .
 docker tag dotnet-tasteufes registry.heroku.com/dotnet-tasteufes/web
 docker push registry.heroku.com/dotnet-tasteufes/web
 heroku container:release web --app dotnet-tasteufes
 heroku logs --tail
+
+[DB INIT]
+heroku pg:psql postgresql-amorphous-45549 -a dotnet-tasteufes < init.sql
