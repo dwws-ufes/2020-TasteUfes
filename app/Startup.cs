@@ -81,7 +81,7 @@ namespace TasteUfes
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
 
-            app.UseHealthChecks("{culture=en-US}/api/v1/health");
+            app.UseHealthChecks("/api/v1/health");
 
             var requestLocalization = new RequestLocalizationOptions
             {
