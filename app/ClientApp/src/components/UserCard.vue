@@ -25,7 +25,7 @@
               >
             </v-col>
             <v-col v-else cols="12" class="d-flex justify-center pb-0">
-              <span><b>User</b></span>
+              <span><b>{{ $vuetify.lang.t('$vuetify.user') }}</b></span>
             </v-col>
             <v-col cols="12" class="d-flex justify-center pb-0">
               <span>{{ user.email }}</span>
@@ -35,7 +35,7 @@
               cols="12"
               class="d-flex justify-center"
             >
-              <span>Username: {{ user.username }}</span>
+              <span>{{ $vuetify.lang.t('$vuetify.username') }}: {{ user.username }}</span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -44,8 +44,8 @@
     <v-card-actions>
     <v-row v-if="user.id == getUserId && username != null">
       <v-col class="d-flex justify-center">
-        <v-btn class="mr-5" outlined :to="{ name: 'UpdatePassword'}"><v-icon small class="mr-2" color="primary">mdi-key</v-icon>Update</v-btn>
-        <v-btn class="primary" :to="{ name: 'EditUser', params: { id: user.id } }"><v-icon small class="mr-2">mdi-pencil</v-icon> Edit</v-btn>
+        <v-btn class="mr-5" outlined :to="{ name: 'UpdatePassword'}"><v-icon small class="mr-2" color="primary">mdi-key</v-icon>{{ $vuetify.lang.t('$vuetify.update') }}</v-btn>
+        <v-btn class="primary" :to="{ name: 'EditUser', params: { id: user.id } }"><v-icon small class="mr-2">mdi-pencil</v-icon>{{ $vuetify.lang.t('$vuetify.edit') }}</v-btn>
       </v-col>
     </v-row>
 

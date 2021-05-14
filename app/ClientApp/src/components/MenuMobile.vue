@@ -46,7 +46,7 @@
                   :to="{ name: 'CreateUser' }"
                   class="mx-2"
                   @click="$emit('closeMenu')"
-                  >Sign Up</v-btn
+                  >{{ $vuetify.lang.t('$vuetify.sign_up') }}</v-btn
                 >
               </div>
               <Login
@@ -66,7 +66,7 @@
                   v-if="menu.isUser"
                   class="d-flex justify-center pt-0"
                 >
-                  {{ "User" }}
+                  {{ $vuetify.lang.t('$vuetify.user') }}
                 </v-card-title>
                 <v-card-title v-else class="d-flex justify-center pt-0">
                   {{ menu.name }}

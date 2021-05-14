@@ -14,7 +14,7 @@
         v-bind="attrs"
         @click="snackbar.show = false"
       >
-        Close
+        {{ $vuetify.lang.t('$vuetify.close') }}
       </v-btn>
     </template>
   </v-snackbar>

@@ -6,7 +6,7 @@
       @submit.prevent="onSubmit"
       v-model="valid"
     >
-      <h1>Create Ingredient</h1>
+      <h1>{{ $vuetify.lang.t('$vuetify.create') }} {{ $vuetify.lang.t('$vuetify.ingredient') }}</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
@@ -17,7 +17,7 @@
               item-text="name"
               class="search"
               append-outer-icon="mdi-magnify"
-              label="Search Ingredient"
+              :label="$vuetify.lang.t('$vuetify.search') + ' ' + $vuetify.lang.t('$vuetify.ingredient')"
               hide-details
               return-object
               :loading="loadSearch"
@@ -33,7 +33,7 @@
             <v-text-field
               v-model="food.name"
               :rules="[rules.required]"
-              label="Name*"
+              :label="this.$vuetify.lang.t('$vuetify.name') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -42,7 +42,7 @@
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-col class="d-flex justify-content-between">
-              <h2>Nutrition Facts</h2>
+              <h2>{{ $vuetify.lang.t('$vuetify.nutrition_facts') }}</h2>
               <div>
                 <v-btn
                   class="mx-0 my-0"
@@ -73,7 +73,7 @@
                   <v-text-field
                     v-model.number="food.nutrition_facts.serving_size"
                     type="number"
-                    label="Serving Size*"
+                    :label="this.$vuetify.lang.t('$vuetify.serving_size')"
                     hide-details="auto"
                     :rules="[rules.required, rules.limitMax, rules.limitMin]"
                     class="form-control"
@@ -85,7 +85,7 @@
                     :items="nutrition_facts_measures"
                     item-text="name"
                     item-value="id"
-                    label="Select a Measure*"
+                    :label="this.$vuetify.lang.t('$vuetify.select_a') + ' ' + this.$vuetify.lang.t('$vuetify.measure') + '*'"
                     :rules="[rules.required]"
                     return-value
                   />
@@ -97,7 +97,7 @@
         <v-card class="mx-auto" elevation="0" outlined v-if="nutritionFacts">
           <v-container>
             <v-col class="d-flex justify-content-between">
-              <h2>Nutritients</h2>
+              <h2>{{ this.$vuetify.lang.t('$vuetify.nutrients') }}</h2>
               <div>
                 <v-btn
                   v-if="
@@ -117,7 +117,7 @@
             <div
               v-for="(nut_facts_nut, i) in this.food.nutrition_facts
                 .nutrition_facts_nutrients"
-              :key="i"
+              :key="nut_facts_nut.id"
               class="nutrition_facts_nutrients"
             >
               <v-card outlined shaped>
@@ -147,7 +147,7 @@
                             :items="nutrients"
                             item-text="name"
                             item-value="id"
-                            label="Select a Nutrient*"
+                            :label="$vuetify.lang.t('$vuetify.select_o') + ' ' + $vuetify.lang.t('$vuetify.nutrient') + '*'"
                             :rules="[rules.required]"
                             return-value
                           />
@@ -156,7 +156,7 @@
                           <v-text-field
                             v-model.number="nut_facts_nut.amount_per_serving"
                             type="number"
-                            label="Amount per serving (g)*"
+                            :label="$vuetify.lang.t('$vuetify.amount') + '*'"
                             :rules="[
                               rules.valRequired,
                               rules.limitMax,
@@ -201,7 +201,7 @@
               :disabled="!valid"
               v-if="!submit"
             >
-              <span> Create </span>
+              <span> {{ $vuetify.lang.t('$vuetify.create') }} </span>
             </v-btn>
             <v-btn
               v-else
@@ -211,7 +211,7 @@
               :disabled="!valid"
             >
             </v-btn>
-            <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
+            <v-btn elevation="2" @click="$router.go(-1)">{{ $vuetify.lang.t('$vuetify.back') }}</v-btn>
           </v-row>
         </v-card-actions>
       </div>
@@ -241,10 +241,10 @@ export default {
       nutrition_facts_measures: [],
       nutrients: [],
       rules: {
-        required: (value) => !!value || "Required.",
+        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
         valRequired: (value) => !!value || value >= 0 || "Required value.",
-        limitMax: (value) => value < 10000 || "Value too big",
-        limitMin: (value) => value >= 0 || "Value must not be negative or 0",
+        limitMax: (value) => value < 10000 || this.$vuetify.lang.t('$vuetify.too_big') + '.',
+        limitMin: (value) => value >= 0 || this.$vuetify.lang.t('$vuetify.neg_zero') + '.',
       },
     };
   },
@@ -312,7 +312,7 @@ export default {
         createFood(this.food)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `Ingredient ${this.food.name} created.`,
+              text: `${this.$vuetify.lang.t('$vuetify.ingredient')} ${this.food.name} ${this.$vuetify.lang.t('$vuetify.created')}.`,
               color: "success",
             });
             this.$router.push({ name: "ListFood" });

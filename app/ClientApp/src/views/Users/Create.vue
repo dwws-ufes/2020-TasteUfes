@@ -6,14 +6,14 @@
       @submit.prevent="onSubmit"
       v-model="valid"
     >
-      <h1>Create User</h1>
+      <h1>{{ $vuetify.lang.t('$vuetify.create') }} {{ $vuetify.lang.t('$vuetify.user') }}</h1>
       <div class="form-group">
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
             <v-text-field
               v-model="user.first_name"
               :rules="[rules.required]"
-              label="FirstName*"
+              :label="this.$vuetify.lang.t('$vuetify.first_name') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -21,7 +21,7 @@
             <v-text-field
               v-model="user.last_name"
               :rules="[rules.required]"
-              label="LastName*"
+              :label="this.$vuetify.lang.t('$vuetify.last_name') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -29,7 +29,7 @@
             <v-text-field
               v-model="user.username"
               :rules="[rules.required]"
-              label="Username*"
+              :label="$vuetify.lang.t('$vuetify.username') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -37,7 +37,7 @@
             <v-text-field
               v-model="user.email"
               :rules="[rules.required, rules.email]"
-              label="Email*"
+              :label="this.$vuetify.lang.t('$vuetify.email') + '*'"
               hide-details="auto"
               class="form-control"
             />
@@ -45,7 +45,7 @@
             <v-text-field
               v-model="user.password"
               :rules="[rules.required, rules.minPass, rules.maxPass]"
-              label="Password*"
+              :label="this.$vuetify.lang.t('$vuetify.password') + '*'"
               :type="'password'"
               class="form-control"
               hide-details="auto"
@@ -59,7 +59,7 @@
                 rules.minPass,
                 rules.maxPass,
               ]"
-              label="RepeatPassword*"
+              :label="this.$vuetify.lang.t('$vuetify.repeat_password') + '*'"
               :type="'password'"
               class="form-control"
               hide-details="auto"
@@ -72,7 +72,7 @@
               :rules="[rules.required]"
               item-text="name"
               item-value="id"
-              label="Select a Role*"
+              :label="this.$vuetify.lang.t('$vuetify.select_o') + ' ' + this.$vuetify.lang.t('$vuetify.role') + '*'"
               return-value
               hide-details="auto"
             />
@@ -88,7 +88,7 @@
               v-if="!submit"
               :disabled="!valid"
             >
-              <span> Create </span>
+              <span> {{ $vuetify.lang.t('$vuetify.create') }} </span>
             </v-btn>
             <v-btn
               v-else
@@ -99,7 +99,7 @@
             >
             </v-btn>
 
-            <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
+            <v-btn elevation="2" @click="$router.go(-1)">{{ $vuetify.lang.t('$vuetify.back') }}</v-btn>
           </v-row>
         </v-card-actions>
       </div>
@@ -133,13 +133,13 @@ export default {
       roleId: "00000000-0000-0000-0000-000000000000",
       repeatPassword: "",
       rules: {
-        required: (value) => !!value || "Required.",
-        minPass: (value) => value.length >= 6 || "Must be minimum length of 6.",
+        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
+        minPass: (value) => value.length >= 6 || this.$vuetify.lang.t('$vuetify.min_six') + '.',
         maxPass: (value) =>
-          value.length <= 32 || "Must be maximun length of 32.",
+          value.length <= 32 || this.$vuetify.lang.t('$vuetify.max_thirty_two') + '.',
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "Invalid e-mail.";
+          return pattern.test(value) || this.$vuetify.lang.t('$vuetify.invalid_email') + '.';
         },
       },
     };
@@ -155,7 +155,7 @@ export default {
           createUser(this.user)
             .then((result) => {
               this.$store.dispatch("setSnackbar", {
-                text: `User ${this.user.first_name} created.`,
+                text: `${this.$vuetify.lang.t('$vuetify.user')} ${this.user.first_name} ${this.$vuetify.lang.t('$vuetify.created')}.`,
                 color: "success",
               });
               this.$router.push({ name: "ListUser" });
@@ -183,7 +183,7 @@ export default {
                   ]).finally(() => {
                     this.doLogin(result.data);
                     this.$store.dispatch("setSnackbar", {
-                      text: `Welcome ${this.user.first_name}.`,
+                      text: `${this.$vuetify.lang.t('$vuetify.welcome')} ${this.user.first_name}.`,
                       color: "success",
                     });
                     this.$router.push({ name: "ListRecipe" });
@@ -210,7 +210,7 @@ export default {
                 });
               } else {
                 this.$store.dispatch("setSnackbar", {
-                  text: `Network error, please contact server administrator.`,
+                  text: `${this.$vuetify.lang.t('$vuetify.network_error')}.`,
                   color: "error",
                 });
               }
@@ -249,7 +249,7 @@ export default {
   computed: {
     passwordConfirmationRule() {
       return () =>
-        this.user.password === this.repeatPassword || "Password must match";
+        this.user.password === this.repeatPassword || this.$vuetify.lang.t('$vuetify.password_match');
     },
     ...mapGetters(["isAdmin"]),
   },

@@ -21,7 +21,7 @@
           color="primary"
           link
           v-if="!option.action"
-          :to="{ name: option.routeName, params: { id: option.param } }"
+          :to="{ name: option.routeName, params: { id: option.param }}"
         >
           <v-list-item-title>{{ option.name }}</v-list-item-title>
         </v-list-item>

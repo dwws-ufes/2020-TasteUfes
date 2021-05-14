@@ -7,17 +7,24 @@
       ></v-skeleton-loader>
     </v-sheet>
     <div v-else>
-      <v-card-title class="primary">Nutrition Facts</v-card-title>
+      <v-card-title class="primary">{{
+        $vuetify.lang.t("$vuetify.nutrition_facts")
+      }}</v-card-title>
       <v-row>
         <v-col>
           <v-card-text>
             <v-divider class="mb-4" />
             <span class="py-1"
-              >{{ servings }} serving{{ servings != 1 ? "s" : "" }} per
-              container</span
+              >{{ servings }}
+              {{
+                servings != 1
+                  ? $vuetify.lang.t("$vuetify.serving_plural")
+                  : $vuetify.lang.t("$vuetify.serving_singular")
+              }}
+              {{ $vuetify.lang.t("$vuetify.per_container") }}</span
             >
             <h3 class="py-1">
-              Serving size
+              {{ $vuetify.lang.t("$vuetify.serving_size") }}
               <span class="float-right">
                 {{ data.serving_size
                 }}{{ getMeasureName(data.serving_size_unit) }}
@@ -27,7 +34,7 @@
             <v-divider class="my-4" />
             <v-row>
               <v-col>
-                <h2 class="py-1">Amount per serving</h2>
+                <h2 class="py-1">{{ $vuetify.lang.t("$vuetify.amount_per_serving") }}</h2>
                 <h3 class="py-1">
                   Calories
                   <span class="float-right">{{
@@ -35,7 +42,7 @@
                   }}</span>
                 </h3>
                 <h3 class="py-1">
-                  Daily Value
+                  {{ $vuetify.lang.t("$vuetify.daily_value") }}
                   <span class="float-right"
                     >{{ getDailyValue(data.daily_value) }}%</span
                   >
@@ -45,7 +52,7 @@
             <v-divider class="my-4" />
             <v-row>
               <v-col class="pb-0">
-                <span class="float-right"><h5>% Daily Value*</h5></span>
+                <span class="float-right"><h5>% {{ $vuetify.lang.t("$vuetify.daily_value") }}*</h5></span>
               </v-col>
               <v-col cols="12 pb-5">
                 <div
@@ -80,7 +87,7 @@ export default {
   data() {
     return {
       load: true,
-    }
+    };
   },
 
   props: {

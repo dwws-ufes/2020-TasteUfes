@@ -5,7 +5,10 @@
         <v-card class="card-list">
           <v-container>
             <v-card-title>
-              <h2>Recommendation Recipe</h2>
+              <h2>
+                {{ $vuetify.lang.t("$vuetify.recommendation") }}
+                {{ $vuetify.lang.t("$vuetify.recipe") }}
+              </h2>
             </v-card-title>
             <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
               <div class="form-group">
@@ -14,8 +17,12 @@
                   :items="foods"
                   item-text="name"
                   item-value="id"
-                  label="Select a ingredient"
-                  :rules="[(value) => !!value || 'Required.']"
+                  :label="
+                    $vuetify.lang.t('$vuetify.select_o') +
+                    ' ' +
+                    $vuetify.lang.t('$vuetify.ingredient')
+                  "
+                  :rules="[(value) => !!value || $vuetify.lang.t('$vuetify.required') + '.']"
                   multiple
                   clearable
                   deletable-chips
@@ -33,7 +40,7 @@
                     v-if="!submit"
                     :disabled="!valid"
                   >
-                    <span> Submit </span>
+                    <span> {{ $vuetify.lang.t("$vuetify.submit") }} </span>
                   </v-btn>
                   <v-btn
                     v-else
@@ -54,7 +61,7 @@
           <v-row>
             <v-col>
               <v-card-title>
-                <h2>Recipe List</h2>
+                <h2>{{ $vuetify.lang.t("$vuetify.list_recipe") }}</h2>
               </v-card-title>
             </v-col>
             <v-col cols="12">
@@ -75,24 +82,29 @@
                       <v-card-title class="primary">{{
                         recipe.name
                       }}</v-card-title>
-                      <v-divider class="mx-4"></v-divider>
-                      <v-card-text>
-                        <div class="my-2">
-                          <b>Servings:</b> {{ recipe.servings }}
-                        </div>
-                        <div class="my-2" v-if="recipe.preparation != null">
-                          <b>Total steps:</b>
-                          {{ recipe.preparation.steps.length }}
-                        </div>
-                        <div class="my-2" v-if="recipe.preparation != null">
-                          <b>Total time:</b>
-                          {{ recipe.preparation.preparation_time }}
-                        </div>
-                        <div class="my-2">
-                          <b>Author:</b> {{ recipe.user.first_name }}
-                          {{ recipe.user.last_name }}
-                        </div>
-                      </v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col>
+                            <div class="my-2">
+                              <b>{{ $vuetify.lang.t("$vuetify.servings") }}:</b>
+                              {{ recipe.servings }}
+                            </div>
+                            <div class="my-2" v-if="recipe.preparation != null">
+                              <b
+                                >{{
+                                  $vuetify.lang.t("$vuetify.preparation_time")
+                                }}:</b
+                              >
+                              {{ recipe.preparation.preparation_time }}
+                            </div>
+                            <div class="my-2">
+                              <b>{{ $vuetify.lang.t("$vuetify.author") }}:</b>
+                              {{ recipe.user.first_name }}
+                              {{ recipe.user.last_name }}
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </v-container>
                     </v-card>
                   </router-link>
                 </v-col>
@@ -100,14 +112,14 @@
               <div v-else-if="emptyRecipes">
                 <v-alert prominent dense text type="error">
                   <v-card-text>
-                    No recipes found, try with another foods.
+                    {{ $vuetify.lang.t("$vuetify.no_recipes") }}
                   </v-card-text>
                 </v-alert>
               </div>
               <div v-else>
                 <v-alert prominent dense text type="info">
                   <v-card-text>
-                    Session empty, please select foods.
+                    {{ $vuetify.lang.t("$vuetify.session_empty") }}
                   </v-card-text>
                 </v-alert>
               </div>
@@ -133,7 +145,7 @@ export default {
       recipeList: [],
       selectFood: [],
       rules: {
-        required: (value) => !!value || "Required.",
+        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
       },
     };
   },

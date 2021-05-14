@@ -2,11 +2,31 @@
   <v-container class="d-flex justify-center">
     <v-card elevation="2" class="card-form" v-if="!submit">
       <v-form ref="form" @submit.prevent="onSubmit" v-model="valid">
-        <h1>My Recipe</h1>
+        <v-row>
+            <v-col
+              cols="12"
+              sm="12"
+            >
+              <h1>{{ $vuetify.lang.t('$vuetify.my') }} {{ $vuetify.lang.t('$vuetify.recipe') }}</h1>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="12"
+            >
+              <v-alert prominent dense text type="info">
+                <v-card-text>
+                  {{ $vuetify.lang.t('$vuetify.anonymous_text') }}
+                </v-card-text>
+              </v-alert>
+            </v-col>
+          </v-row>
         <v-card class="mx-auto" elevation="0" outlined>
           <v-container>
+
             <v-col class="d-flex justify-content-between">
-              <h2>Ingredient</h2>
+               
+                <h2>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h2>
+                
               <v-btn
                 v-if="this.recipe.ingredients.length == 0"
                 class="mx-1 my-0"
@@ -20,6 +40,7 @@
             </v-col>
             <div
               v-for="(ingredient, i) in this.recipe.ingredients"
+              :key="ingredient.id"
               class="foods"
             >
               <v-container>
@@ -48,7 +69,7 @@
                           :items="foods"
                           item-text="name"
                           item-value="id"
-                          label="Select a ingredient*"
+                          :label="$vuetify.lang.t('$vuetify.select_o') + ' ' + $vuetify.lang.t('$vuetify.ingredient') + '*'"
                           :rules="[rules.required]"
                           return-value
                           @change="showFields(ingredient)"
@@ -59,7 +80,7 @@
                               v-model.number="ingredient.quantity"
                               :rules="[rules.required, rules.limitMin, rules.limitMax]"
                               type="number"
-                              label="Quantity Ingredient*"
+                              :label="$vuetify.lang.t('$vuetify.quantity') + ' ' + $vuetify.lang.t('$vuetify.ingredient') + '*'"
                               hide-details="auto"
                               class="form-control"
                               v-if="ingredient.nutrition_facts_fields"
@@ -71,7 +92,7 @@
                               :items="ingredient.measures"
                               item-text="name"
                               item-value="id"
-                              label="Select a Measure*"
+                              :label="$vuetify.lang.t('$vuetify.select_a') + ' ' + $vuetify.lang.t('$vuetify.measure') + '*'"
                               :rules="[rules.required]"
                               return-value
                               v-if="ingredient.nutrition_facts_fields"
@@ -112,7 +133,7 @@
                     v-if="!submit"
                     :disabled="!valid"
                   >
-                    <span > Create </span>
+                    <span > {{ $vuetify.lang.t('$vuetify.create') }} </span>
                   </v-btn>
                   <v-btn
                     v-else
@@ -123,7 +144,7 @@
                   >
                   </v-btn>
 
-                  <v-btn elevation="2" @click="$router.go(-1)">Back</v-btn>
+                  <v-btn elevation="2" @click="$router.go(-1)">{{ $vuetify.lang.t('$vuetify.back') }}</v-btn>
                 </v-row>
               </v-card-actions>
             </v-row>
@@ -136,19 +157,19 @@
         <v-col cols="12" sm="12" d-flex justify-center class="py-0">
           <div class="d-flex">
             <span class="back-btn" @click="submit = !submit">
-              <v-icon>mdi-chevron-left</v-icon> Back
+              <v-icon>mdi-chevron-left</v-icon> {{ $vuetify.lang.t('$vuetify.back') }}
             </span>
           </div>
         </v-col>
         <v-col cols="12" sm="8" d-flex justify-center>
           <v-card>
             <v-card-title
-            ><h1>Anonymous Recipe</h1></v-card-title
+            ><h1>{{ $vuetify.lang.t('$vuetify.anonymous_recipe') }}</h1></v-card-title
           ></v-card-title>
           <v-divider class="mx-4" />
             <v-list-item v-if="this.anonymous.ingredients.length > 0">
               <v-list-item-content>
-                <h3>Ingredients</h3>
+                <h3>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h3>
                 <v-divider class="px-1 pb-3" />
 
                 <v-list-item-content
@@ -195,6 +216,7 @@ export default {
       valid: false,
       submit: false,
       prepTime: null,
+      show: false,
       nutrition_facts_fields: false,
       recipe: {
         preparation: {},
@@ -216,9 +238,12 @@ export default {
         id: "",
       },
       rules: {
-        required: (value) => !!value || "Required.",
-        limitMax: (value) => value < 10000 || "Value too big",
-        limitMin: (value) => value > 0 || "Value must not be negative or 0",
+        required: (value) =>
+          !!value || this.$vuetify.lang.t("$vuetify.required") + ".",
+        limitMax: (value) =>
+          value < 10000 || this.$vuetify.lang.t("$vuetify.too_big") + ".",
+        limitMin: (value) =>
+          value > 0 || this.$vuetify.lang.t("$vuetify.neg_zero") + ".",
       },
     };
   },

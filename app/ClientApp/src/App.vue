@@ -11,7 +11,7 @@
         <h3 v-if="getLoadingMainError">
           {{ loadingName }}
         </h3>
-        <h3 v-else>Now loading...</h3>
+        <h3 v-else>{{ $vuetify.lang.t('$vuetify.loading') }}</h3>
       </v-row>
     </v-container>
   </v-app>

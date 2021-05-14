@@ -7,10 +7,10 @@
             class="text-decoration-none d-flex align-center"
             :to="{ name: 'ListFood' }"
           >
-            <v-icon>mdi-chevron-left</v-icon> Back
+            <v-icon>mdi-chevron-left</v-icon> {{ $vuetify.lang.t('$vuetify.back') }}
           </router-link>
           <v-btn outlined color="primary" @click="redirect">
-            Generate RDF
+            {{ $vuetify.lang.t('$vuetify.generate') }} RDF
           </v-btn>
         </div>
         <v-card>
