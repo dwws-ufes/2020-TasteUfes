@@ -11,7 +11,7 @@
         <h3 v-if="getLoadingMainError">
           {{ loadingName }}
         </h3>
-        <h3 v-else>{{ $vuetify.lang.t('$vuetify.loading') }}</h3>
+        <h3 v-else>{{ $vuetify.lang.t("$vuetify.loading") }}</h3>
       </v-row>
     </v-container>
   </v-app>
@@ -24,6 +24,7 @@
         <v-row class="row-main">
           <router-view></router-view>
         </v-row>
+        <HelpButton />
       </v-container>
     </v-main>
     <Footbar />
@@ -35,6 +36,7 @@ import Toolbar from "@/components/Toolbar.vue";
 import Snackbar from "@/components/Snackbar.vue";
 import Footbar from "@/components/Footbar.vue";
 import Overlay from "@/components/Overlay.vue";
+import HelpButton from "@/components/HelpButton.vue";
 import { mapActions, mapGetters } from "vuex";
 import { refreshAuthentication } from "@/api";
 
@@ -46,6 +48,7 @@ export default {
     Snackbar,
     Footbar,
     Overlay,
+    HelpButton,
   },
 
   data: () => ({
