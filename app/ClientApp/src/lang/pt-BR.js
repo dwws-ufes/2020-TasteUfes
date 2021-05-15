@@ -88,4 +88,5 @@ export default {
   no_recipe: 'Nenhuma receita encontrada',
   anonymous_text: 'Receita Anônima não tem o papel de persistir a receita no sistema. Portanto os ingredientes aqui selecionados têm apenas o intuito de gerar os valores nutricionais para um prato ou receita.',
   password_match: 'A senha precisa ser igual',
+  manual: 'Manual do Usuário',
 };
