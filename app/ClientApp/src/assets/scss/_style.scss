@@ -39,12 +39,20 @@ body {
   }
 }
 
+.v-card {
+  &__actions {
+    .v-btn {
+      margin: 0.8em;
+    }
+  }
+}
+
 .v-list-item--active::before{
   opacity: 0 !important;
 }
 .container-main {
   .row-main {
-    padding: 2em 1em;
+    padding: 1em;
     display: flex;
     justify-content: center;
 
@@ -57,26 +65,33 @@ body {
       }
     }
 
+    @media (min-width: $breakpoint-cel) {
+      padding: 2em 1em;
+    }
+
     // Cards of forms
     .card-form {
-      padding: 2em;
+      padding: 1em;
       display: flex;
       justify-content: center;
-      width: 600px;
-      min-width: 600px;
+      // width: 600px;
+      // min-width: 600px;
       .v-form {
         width: 100%;
       }
       .v-input {
-        margin: 0.8em 0em;
+        margin: 0 0.5em;
+        @media (min-width: $breakpoint-cel) {
+          margin: 0.8em 0em;
+        }
       }
       .v-btn {
         margin: 0.8em;
       }
-    }
 
-    @media (min-width: $breakpoint-cel) {
-      padding: 2em;
+      @media (min-width: $breakpoint-cel) {
+        padding: 2em;
+      }
     }
   }
 }
@@ -108,5 +123,51 @@ body {
 @media (min-width: $breakpoint-full){
   .container {
       max-width: 1185px;
+  }
+}
+
+.v-alert__wrapper {
+  flex-direction: column;
+  margin-top: 1rem;
+  @media (min-width: $breakpoint-cel){
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: $breakpoint-cel-xs) {
+  .v-sheet.v-snack__wrapper {
+    padding: 0 1rem;
+  }
+}
+@media (max-width: $breakpoint-cel) {
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
+
+.btn-minus {
+  justify-content: flex-start;
+  padding-bottom: 0;
+
+  .v-btn {
+    height: 28px;
+    width: 28px;
+  }
+  
+  @media (min-width: $breakpoint-cel) {
+    justify-content: flex-end;
+    padding-bottom: 12px;
+    .v-btn {
+      height: 32px;
+      width: 32px;
+    }
   }
 }

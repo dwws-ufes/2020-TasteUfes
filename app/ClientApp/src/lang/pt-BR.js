@@ -72,7 +72,7 @@ export default {
   welcome: 'Bem vindo(a)',
   no_recipes: 'Nenhuma receita encontrada, tente com outros ingredientes.',
   session_empty: 'Selecione ingredientes para encontrar receitas.',
-  network_error: 'Erro de rede, por favor contate o administrador do sistema.',
+  network_error: 'Erro de rede, por favor contate o administrador do sistema',
   phrase_1: 'Somos pobres e precisamos esperar o servidor acordar...',
   phrase_2: 'Espere um pouco, o dólar está muito alto...',
   phrase_3: 'Se você quer um site mais rápido, faça uma doação no Pix...',

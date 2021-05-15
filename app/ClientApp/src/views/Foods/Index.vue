@@ -3,7 +3,7 @@
     <template v-if="!isTable">
       <v-row class="justify-space-between">
         <v-col>
-          <h1>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h1>
+          <h1>{{ $vuetify.lang.t('$vuetify.ingredients') }}</h1>
         </v-col>
         <v-col class="align-flex-end d-flex flex-column">
           <v-btn
@@ -85,7 +85,7 @@
       <div class="list">
         <div>
           <v-col class="pb-0">
-            <h1>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h1>
+            <h1>{{ $vuetify.lang.t('$vuetify.ingredients') }}</h1>
           </v-col>
           <v-container>
             <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
@@ -255,7 +255,7 @@ export default {
   },
 
   mounted() {
-    if(!this.isTable){
+    if(!this.isTable && !this.$vuetify.breakpoint.xs){
       document.querySelector("th").classList.add("primary");
     }
   },
