@@ -35,7 +35,7 @@ services:
       VUE_APP_TITLE: "TasteUfes"
       VUE_APP_API_URL: "http://localhost:80/en-US/api/v1/"
       VUE_APP_API_URL_BR: "http://localhost:80/pt-BR/api/v1/"
-      VUE_HEALTH_CHECK: "http://localhost:80/api/v1/health/"
+      VUE_HEALTH_CHECK: "http://localhost:80/api/v1/health"
     command: ["npm", "run", "serve"]
   app:
     image: tasteufes-app:1.0.0
