@@ -1,250 +1,279 @@
 <template>
-  <v-card :width="width" elevation="2" class="card-form"> 
-    <v-form
-      ref="form"
-      lazy-validation
-      @submit.prevent="onSubmit"
-      v-model="valid"
-    >
-      <h1>{{ $vuetify.lang.t('$vuetify.create') }} {{ $vuetify.lang.t('$vuetify.recipe') }}</h1>
-      <div class="form-group">
-        <v-card class="mx-auto" elevation="0" outlined>
-          <v-container>
-            <v-text-field
-              v-model="recipe.name"
-              :rules="[this.rules.required]"
-              :label="$vuetify.lang.t('$vuetify.name') + '*'"
-              hide-details="auto"
-              class="form-control"
-            />
-            <v-text-field
-              v-model.number="recipe.servings"
-              :rules="[
-                this.rules.required,
-                this.rules.limitMax,
-                this.rules.limitMin,
-              ]"
-              type="number"
-              :label="this.$vuetify.lang.t('$vuetify.servings') + '*'"
-              hide-details="auto"
-              class="form-control"
-            />
-            <v-text-field
-              v-model.number="prepTime"
-              :rules="[
-                this.rules.required,
-                this.rules.limitMaxTime,
-                this.rules.limitMin,
-              ]"
-              :label="this.$vuetify.lang.t('$vuetify.preparation_time') + '*'"
-              type="number"
-              hide-details="auto"
-              class="form-control"
-            />
-          </v-container>
-        </v-card>
-        <v-card class="mx-auto" elevation="0" outlined>
-          <v-container>
-            <v-col class="d-flex justify-content-between">
-              <h2>{{ $vuetify.lang.t('$vuetify.ingredient') }}</h2>
-              <v-btn
-                v-if="this.recipe.ingredients.length == 0"
-                class="mx-1 my-0"
-                fab
-                x-small
-                color="primary"
-                @click="addFoodField"
-              >
-                <v-icon dark> mdi-plus </v-icon>
-              </v-btn>
-            </v-col>
-            <div
-              v-for="(ingredient, i) in this.recipe.ingredients"
-              :key="ingredient.id"
-              class="foods"
-            >
+  <v-row class="justify-center">
+    <v-col cols="12" lg="8" sm="10" xs="12">
+      <v-card elevation="2" class="card-form">
+        <v-form
+          ref="form"
+          lazy-validation
+          @submit.prevent="onSubmit"
+          v-model="valid"
+        >
+          <h1>
+            {{ $vuetify.lang.t("$vuetify.create") }}
+            {{ $vuetify.lang.t("$vuetify.recipe") }}
+          </h1>
+          <div class="form-group">
+            <v-card class="mx-auto" elevation="0" outlined>
               <v-container>
-                <v-card outlined shaped>
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="2"
-                      class="d-flex align-center justify-flex-end"
-                    >
-                      <v-btn
-                        fab
-                        x-small
-                        dark
-                        color="red"
-                        class="mx-0"
-                        @click="removeFoodField(i)"
-                      >
-                        <v-icon dark>mdi-minus</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="10" class="pl-0">
-                      <v-container>
-                        <v-autocomplete
-                          v-model="ingredient.food_id"
-                          :items="foods"
-                          item-text="name"
-                          item-value="id"
-                          :label="$vuetify.lang.t('$vuetify.select_o') + ' ' + $vuetify.lang.t('$vuetify.ingredient') + '*'"
-                          :rules="[rules.required]"
-                          return-value
-                          @change="showFields(ingredient)"
-                        />
-                        <v-row>
-                          <v-col>
-                            <v-text-field
-                              v-model.number="ingredient.quantity"
-                              :rules="[
-                                rules.required,
-                                rules.limitMax,
-                                rules.limitMin,
-                              ]"
-                              type="number"
-                              :label="$vuetify.lang.t('$vuetify.quantity') + '*'"
-                              hide-details="auto"
-                              class="form-control"
-                              v-if="ingredient.nutrition_facts_fields"
-                            />
-                          </v-col>
-                          <v-col>
-                            <v-select
-                              v-model="ingredient.quantity_unit"
-                              :items="ingredient.measures"
+                <v-text-field
+                  v-model="recipe.name"
+                  :rules="[this.rules.required]"
+                  :label="$vuetify.lang.t('$vuetify.name') + '*'"
+                  hide-details="auto"
+                  class="form-control"
+                />
+                <v-text-field
+                  v-model.number="recipe.servings"
+                  :rules="[
+                    this.rules.required,
+                    this.rules.limitMax,
+                    this.rules.limitMin,
+                  ]"
+                  type="number"
+                  :label="this.$vuetify.lang.t('$vuetify.servings') + '*'"
+                  hide-details="auto"
+                  class="form-control"
+                />
+                <v-text-field
+                  v-model.number="prepTime"
+                  :rules="[
+                    this.rules.required,
+                    this.rules.limitMaxTime,
+                    this.rules.limitMin,
+                  ]"
+                  :label="
+                    this.$vuetify.lang.t('$vuetify.preparation_time') + '*'
+                  "
+                  type="number"
+                  hide-details="auto"
+                  class="form-control"
+                />
+              </v-container>
+            </v-card>
+            <v-card class="mx-auto" elevation="0" outlined>
+              <v-container>
+                <v-col class="d-flex justify-content-between">
+                  <h2>{{ $vuetify.lang.t("$vuetify.ingredient") }}</h2>
+                  <v-btn
+                    v-if="this.recipe.ingredients.length == 0"
+                    class="mx-1 my-0"
+                    fab
+                    x-small
+                    color="primary"
+                    @click="addFoodField"
+                  >
+                    <v-icon dark> mdi-plus </v-icon>
+                  </v-btn>
+                </v-col>
+                <div
+                  v-for="(ingredient, i) in this.recipe.ingredients"
+                  :key="ingredient.id"
+                  class="foods"
+                >
+                  <v-card outlined shaped>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                          cols="12"
+                          sm="2"
+                          class="d-flex align-center btn-minus"
+                        >
+                          <v-btn
+                            fab
+                            x-small
+                            dark
+                            color="red"
+                            class="mx-0"
+                            @click="removeFoodField(i)"
+                          >
+                            <v-icon dark>mdi-minus</v-icon>
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="10" class="pl-0">
+                          <v-container>
+                            <v-autocomplete
+                              v-model="ingredient.food_id"
+                              :items="foods"
                               item-text="name"
                               item-value="id"
-                              :label="$vuetify.lang.t('$vuetify.select_a') + ' ' + $vuetify.lang.t('$vuetify.measure') + '*'"
+                              :label="
+                                $vuetify.lang.t('$vuetify.select_o') +
+                                ' ' +
+                                $vuetify.lang.t('$vuetify.ingredient') +
+                                '*'
+                              "
                               :rules="[rules.required]"
                               return-value
-                              v-if="ingredient.nutrition_facts_fields"
+                              @change="showFields(ingredient)"
                             />
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-container>
-            </div>
-            <v-row v-if="this.recipe.ingredients.length > 0">
-              <v-col class="d-flex justify-end">
-                <v-btn
-                  class="mx-1 my-0"
-                  fab
-                  x-small
-                  color="primary"
-                  @click="addFoodField"
-                >
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
-        <v-card class="mx-auto" elevation="0" outlined>
-          <v-container>
-            <v-col class="d-flex justify-content-between">
-              <h2>{{ $vuetify.lang.t("$vuetify.step") }}</h2>
-              <div>
-                <v-btn
-                  v-if="this.recipe.preparation.steps.length == 0"
-                  class="mx-1 my-0"
-                  fab
-                  x-small
-                  color="primary"
-                  @click="addStepField"
-                >
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-              </div>
-            </v-col>
-            <div
-              v-for="(preparation, i) in this.recipe.preparation.steps"
-              :key="i"
-              class="foods"
-            >
-              <v-container>
-                <v-card outlined shaped>
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="2"
-                      class="d-flex align-center justify-flex-end"
+                            <v-row>
+                              <v-col cols="12" sm="6" xs="12">
+                                <v-text-field
+                                  v-model.number="ingredient.quantity"
+                                  :rules="[
+                                    rules.required,
+                                    rules.limitMax,
+                                    rules.limitMin,
+                                  ]"
+                                  type="number"
+                                  :label="
+                                    $vuetify.lang.t('$vuetify.quantity') + '*'
+                                  "
+                                  hide-details="auto"
+                                  class="form-control"
+                                  v-if="ingredient.nutrition_facts_fields"
+                                />
+                              </v-col cols="12" sm="6" xs="12">
+                              <v-col>
+                                <v-select
+                                  v-model="ingredient.quantity_unit"
+                                  :items="ingredient.measures"
+                                  item-text="name"
+                                  item-value="id"
+                                  :label="
+                                    $vuetify.lang.t('$vuetify.select_a') +
+                                    ' ' +
+                                    $vuetify.lang.t('$vuetify.measure') +
+                                    '*'
+                                  "
+                                  :rules="[rules.required]"
+                                  return-value
+                                  v-if="ingredient.nutrition_facts_fields"
+                                />
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </div>
+                <v-row v-if="this.recipe.ingredients.length > 0">
+                  <v-col class="d-flex justify-end">
+                    <v-btn
+                      class="mx-1 my-0"
+                      fab
+                      x-small
+                      color="primary"
+                      @click="addFoodField"
                     >
-                      <v-btn
-                        fab
-                        x-small
-                        dark
-                        color="red"
-                        class="mx-0"
-                        @click="removeStepField(i)"
-                      >
-                        <v-icon dark>mdi-minus</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col cols="12" sm="10" class="pl-0">
-                      <v-container>
-                        <v-text-field
-                          v-model="preparation.description"
-                          :rules="[(value) => !!value || $vuetify.lang.t('$vuetify.required') + '.']"
-                          :label="$vuetify.lang.t('$vuetify.description') + '*'"
-                          hide-details="auto"
-                          class="form-control"
-                        />
-                      </v-container>
-                    </v-col>
-                  </v-row>
-                </v-card>
+                      <v-icon dark> mdi-plus </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-container>
-            </div>
-            <v-row v-if="this.recipe.preparation.steps.length > 0">
-              <v-col class="d-flex justify-end">
-                <v-btn
-                  class="mx-1 my-0"
-                  fab
-                  x-small
-                  color="primary"
-                  @click="addStepField"
+            </v-card>
+            <v-card class="mx-auto" elevation="0" outlined>
+              <v-container>
+                <v-col class="d-flex justify-content-between">
+                  <h2>{{ $vuetify.lang.t("$vuetify.step") }}</h2>
+                  <div>
+                    <v-btn
+                      v-if="this.recipe.preparation.steps.length == 0"
+                      class="mx-1 my-0"
+                      fab
+                      x-small
+                      color="primary"
+                      @click="addStepField"
+                    >
+                      <v-icon dark> mdi-plus </v-icon>
+                    </v-btn>
+                  </div>
+                </v-col>
+                <div
+                  v-for="(preparation, i) in this.recipe.preparation.steps"
+                  :key="i"
+                  class="foods"
                 >
-                  <v-icon dark> mdi-plus </v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
-        <v-card-actions>
-          <v-row justify="center">
+                  <v-card outlined shaped>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                          cols="12"
+                          sm="2"
+                          class="d-flex align-center btn-minus"
+                        >
+                          <v-btn
+                            fab
+                            x-small
+                            dark
+                            color="red"
+                            class="mx-0"
+                            @click="removeStepField(i)"
+                          >
+                            <v-icon dark>mdi-minus</v-icon>
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="10" class="pl-0">
+                          <v-container>
+                            <v-text-field
+                              v-model="preparation.description"
+                              :rules="[
+                                (value) =>
+                                  !!value ||
+                                  $vuetify.lang.t('$vuetify.required') + '.',
+                              ]"
+                              :label="
+                                $vuetify.lang.t('$vuetify.description') + '*'
+                              "
+                              hide-details="auto"
+                              class="form-control"
+                            />
+                          </v-container>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card>
+                </div>
+                <v-row v-if="this.recipe.preparation.steps.length > 0">
+                  <v-col class="d-flex justify-end">
+                    <v-btn
+                      class="mx-1 my-0"
+                      fab
+                      x-small
+                      color="primary"
+                      @click="addStepField"
+                    >
+                      <v-icon dark> mdi-plus </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
             <v-card-actions>
               <v-row justify="center">
-                <v-btn
-                  class="submit"
-                  type="submit"
-                  elevation="2"
-                  color="primary"
-                  v-if="!submit"
-                  :disabled="!valid"
-                >
-                  <span> {{ $vuetify.lang.t('$vuetify.create') }} </span>
-                </v-btn>
-                <v-btn
-                  v-else
-                  color="primary"
-                  class="submit"
-                  loading
-                  :disabled="!valid"
-                >
-                </v-btn>
-                <v-btn elevation="2" @click="$router.go(-1)">{{ $vuetify.lang.t('$vuetify.back') }}</v-btn>
+                <v-card-actions>
+                  <v-row justify="center">
+                    <v-btn
+                      class="submit"
+                      type="submit"
+                      elevation="2"
+                      color="primary"
+                      v-if="!submit"
+                      :disabled="!valid"
+                    >
+                      <span> {{ $vuetify.lang.t("$vuetify.create") }} </span>
+                    </v-btn>
+                    <v-btn
+                      v-else
+                      color="primary"
+                      class="submit"
+                      loading
+                      :disabled="!valid"
+                    >
+                    </v-btn>
+                    <v-btn elevation="2" @click="$router.go(-1)">{{
+                      $vuetify.lang.t("$vuetify.back")
+                    }}</v-btn>
+                  </v-row>
+                </v-card-actions>
               </v-row>
             </v-card-actions>
-          </v-row>
-        </v-card-actions>
-      </div>
-    </v-form>
-  </v-card>
+          </div>
+        </v-form>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -273,24 +302,18 @@ export default {
         id: "",
       },
       rules: {
-        required: (value) => !!value || this.$vuetify.lang.t('$vuetify.required') + '.',
-        limitMax: (value) => value < 10000 || this.$vuetify.lang.t('$vuetify.too_big') + '.',
-        limitMaxTime: (value) => value < 1400 || this.$vuetify.lang.t('$vuetify.bit_time') + '.',
-        limitMin: (value) => value > 0 || this.$vuetify.lang.t('$vuetify.neg_zero') + '.',
+        required: (value) =>
+          !!value || this.$vuetify.lang.t("$vuetify.required") + ".",
+        limitMax: (value) =>
+          value < 10000 || this.$vuetify.lang.t("$vuetify.too_big") + ".",
+        limitMaxTime: (value) =>
+          value < 1400 || this.$vuetify.lang.t("$vuetify.bit_time") + ".",
+        limitMin: (value) =>
+          value > 0 || this.$vuetify.lang.t("$vuetify.neg_zero") + ".",
       },
     };
   },
-  computed: {
-      width () {
-        switch (this.$vuetify.breakpoint.name) {
-          case 'xs': return 300
-          case 'sm': return 400
-          case 'md': return 500
-          case 'lg': return 600
-          case 'xl': return 800
-        }
-      },
-    },
+
   methods: {
     addFoodField: function () {
       this.recipe.ingredients.push({});
@@ -368,7 +391,9 @@ export default {
         createRecipe(this.recipe)
           .then((result) => {
             this.$store.dispatch("setSnackbar", {
-              text: `${ this.$vuetify.lang.t('$vuetify.recipe') } ${this.recipe.name} ${this.$vuetify.lang.t('$vuetify.created_a')}.`,
+              text: `${this.$vuetify.lang.t("$vuetify.recipe")} ${
+                this.recipe.name
+              } ${this.$vuetify.lang.t("$vuetify.created_a")}.`,
               color: "success",
             });
             this.$router.push({ name: "ListRecipe" });

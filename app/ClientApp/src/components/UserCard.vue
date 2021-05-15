@@ -41,12 +41,10 @@
         </v-card-text>
       </v-row>
     </v-card-title>
-    <v-card-actions>
-    <v-row v-if="user.id == getUserId && username != null">
-      <v-col class="d-flex justify-center">
-        <v-btn class="mr-5" outlined :to="{ name: 'UpdatePassword'}"><v-icon small class="mr-2" color="primary">mdi-key</v-icon>{{ $vuetify.lang.t('$vuetify.update') }}</v-btn>
-        <v-btn class="primary" :to="{ name: 'EditUser', params: { id: user.id } }"><v-icon small class="mr-2">mdi-pencil</v-icon>{{ $vuetify.lang.t('$vuetify.edit') }}</v-btn>
-      </v-col>
+    <v-card-actions color="primary">
+    <v-row justify="center" v-if="user.id == getUserId && username != null">
+      <v-btn class="primary" :to="{ name: 'EditUser', params: { id: user.id } }"><v-icon small class="mr-2">mdi-pencil</v-icon>{{ $vuetify.lang.t('$vuetify.edit') }}</v-btn>
+      <v-btn color="primary" outlined :to="{ name: 'UpdatePassword'}"><v-icon small class="mr-2" color="golden">mdi-key</v-icon>{{ $vuetify.lang.t('$vuetify.update') }}</v-btn>
     </v-row>
 
     </v-card-actions>

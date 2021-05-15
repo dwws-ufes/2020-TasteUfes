@@ -124,4 +124,10 @@ export default {
 .v-window {
   width: 100%;
 }
+
+  .v-tab {
+    @media (max-width: $breakpoint-cel){
+      padding: 0;
+    }
+  }
 </style>

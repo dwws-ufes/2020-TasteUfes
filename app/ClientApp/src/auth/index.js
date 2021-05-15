@@ -182,7 +182,7 @@ const store = new Vuex.Store({
               })
               .catch(() => {
                 dispatch("setSnackbar", {
-                  text: `${this.$vuetify.lang.t('$vuetify.network_error')}.`,
+                  text: `Network error, please contact server administrator.`,
                   color: "error",
                 });
                 dispatch('ActionSetLoadingMain', false);
@@ -210,7 +210,7 @@ const store = new Vuex.Store({
         })
           .catch(() => {
             dispatch("setSnackbar", {
-              text: `${this.$vuetify.lang.t('$vuetify.network_error')}.`,
+              text: `Network error, please contact server administrator.`,
               color: "error",
             });
           })

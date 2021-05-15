@@ -3,6 +3,7 @@
     v-model="snackbar.show"
     top
     text
+    width="100%"
     :timeout="timeout"
     :color="snackbar.color"
   >
@@ -25,7 +26,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      timeout: 5000,
+      timeout: 500000,
     };
   },
 
@@ -34,3 +35,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+// @media (max-width: $breakpoint-cel) {
+  .v-sheet.v-snack__wrapper {
+    padding: 0 1rem;
+  }
+// }
+</style>
