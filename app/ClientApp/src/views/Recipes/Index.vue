@@ -4,7 +4,7 @@
       <div class="list">
         <v-row class="justify-space-between">
           <v-col>
-            <h1>Recipes</h1>
+            <h1>{{ $vuetify.lang.t('$vuetify.recipes') }}</h1>
           </v-col>
           <v-col class="justify-flex-end d-flex">
             <v-btn
@@ -14,7 +14,7 @@
               dark
             >
               <v-icon class="mr-1">mdi-note-text</v-icon>
-              Create
+              {{ $vuetify.lang.t('$vuetify.create') }}
             </v-btn>
           </v-col>
         </v-row>
@@ -24,7 +24,7 @@
               v-model="search"
               class="search"
               append-icon="mdi-magnify"
-              label="Search Recipe"
+              :label="$vuetify.lang.t('$vuetify.search')  + ' ' + $vuetify.lang.t('$vuetify.recipe')"
               single-line
               hide-details
             ></v-text-field>
@@ -67,13 +67,23 @@
     <template v-else>
       <div class="list">
         <v-col class="pb-0">
-          <h1>Recipes</h1>
+          <h1>{{ $vuetify.lang.t('$vuetify.recipes') }}</h1>
         </v-col>
         <v-container>
           <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
             <v-container>
+              <v-skeleton-loader class="mx-auto mb-4" type="text" />
               <v-row>
-                <v-skeleton-loader class="mx-auto w-100" type="image" />
+                <v-col
+                  v-for="index in 9"
+                  :key="index"
+                  cols="12"
+                  xs="12"
+                  sm="6"
+                  lg="4"
+                >
+                  <v-skeleton-loader class="mx-auto" type="image" />
+                </v-col>
               </v-row>
             </v-container>
           </v-sheet>
@@ -84,7 +94,7 @@
             text
             type="warning"
           >
-            <v-card-text> No recipe found. </v-card-text>
+            <v-card-text> {{ $vuetify.lang.t('$vuetify.no_recipe') }}. </v-card-text>
           </v-alert>
           <div v-else>
             <v-row class="mb-2">
@@ -93,7 +103,7 @@
                   v-model="search"
                   class="search"
                   append-icon="mdi-magnify"
-                  label="Search Recipe"
+                  :label="$vuetify.lang.t('$vuetify.search')  + ' ' + $vuetify.lang.t('$vuetify.recipe')"
                   single-line
                   hide-details
                 ></v-text-field>
@@ -120,14 +130,14 @@
                       <v-row>
                         <v-col>
                           <div class="my-2">
-                            <b>Servings:</b> {{ recipe.servings }}
+                            <b>{{ $vuetify.lang.t('$vuetify.servings') }}:</b> {{ recipe.servings }}
                           </div>
                           <div class="my-2" v-if="recipe.preparation != null">
-                            <b>Preparation Time:</b>
+                            <b>{{ $vuetify.lang.t('$vuetify.preparation_time') }}:</b>
                             {{ recipe.preparation.preparation_time }}
                           </div>
                           <div class="my-2">
-                            <b>Author:</b> {{ recipe.user.first_name }}
+                            <b>{{ $vuetify.lang.t('$vuetify.author') }}:</b> {{ recipe.user.first_name }}
                             {{ recipe.user.last_name }}
                           </div>
                         </v-col>
@@ -171,27 +181,27 @@ export default {
           class: "primary",
         },
         {
-          text: "Name",
+          text: this.$vuetify.lang.t('$vuetify.name'),
           value: "name",
           class: "primary",
         },
         {
-          text: "Servings",
+          text: this.$vuetify.lang.t('$vuetify.servings'),
           value: "servings",
           class: "primary",
         },
         {
-          text: "Time",
+          text: this.$vuetify.lang.t('$vuetify.time'),
           value: "preparation.preparation_time",
           class: "primary",
         },
         {
-          text: "User",
+          text: this.$vuetify.lang.t('$vuetify.user'),
           value: "user.first_name",
           class: "primary",
         },
         {
-          text: "Actions",
+          text: this.$vuetify.lang.t('$vuetify.actions'),
           value: "actions",
           class: "primary",
         },
@@ -215,6 +225,7 @@ export default {
     this.getData();
     setTimeout(() => {
       this.loadSkeleton = false;
+      this.$store.dispatch("ActionSetOverlay", false);
     }, 300);
   },
 
@@ -228,8 +239,10 @@ export default {
     ...mapGetters(["isAdmin", "getUserId"]),
     filterRecipe() {
       let search = this.search.toString().toLowerCase();
-      return this.recipeList.filter(recipe =>
-        Object.keys(recipe).some(() => recipe.name.toLowerCase().includes(search))
+      return this.recipeList.filter((recipe) =>
+        Object.keys(recipe).some(() =>
+          recipe.name.toLowerCase().includes(search)
+        )
       );
     },
   },
@@ -238,12 +251,12 @@ export default {
     deleteRecipe(id, name) {
       this.changeLoading();
       deleteRecipe(id)
-        .then((result) => {
+        .then(() => {
           let recipeId = this.recipeListTable.findIndex(
             (recipe) => recipe.id === id
           );
           this.$store.dispatch("setSnackbar", {
-            text: `Recipe ${name} deleted.`,
+            text: `${this.$vuetify.lang.t('$vuetify.recipe')} ${name} ${this.$vuetify.lang.t('$vuetify.deleted')}.`,
             color: "success",
           });
           this.recipeListTable.splice(recipeId, 1);

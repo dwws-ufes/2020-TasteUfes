@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Requests
 {
-    public class PreparationStepResource : EntityResource
+    public class PreparationStepRequest : EntityRequest
     {
         [Required]
         [Range(1, Int16.MaxValue)]

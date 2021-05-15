@@ -1,19 +1,18 @@
-using System;
-using System.Linq;
 using FluentValidation;
-using TasteUfes.Data.Interfaces;
+using Microsoft.Extensions.Localization;
 
 namespace TasteUfes.Models.Validators
 {
     public class FoodValidator : AbstractValidator<Food>
     {
-        public FoodValidator()
+        public FoodValidator(IStringLocalizer<SharedResources> localizer)
         {
             RuleFor(f => f.Name)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage(localizer["Food.Name.Required"]);
 
             RuleFor(f => f.NutritionFacts)
-                .SetValidator(new NutritionFactsValidator());
+                .SetValidator(new NutritionFactsValidator(localizer));
         }
     }
 }

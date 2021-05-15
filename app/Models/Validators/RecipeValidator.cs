@@ -1,13 +1,11 @@
-using System;
-using System.Linq;
 using FluentValidation;
-using TasteUfes.Data.Interfaces;
+using Microsoft.Extensions.Localization;
 
 namespace TasteUfes.Models.Validators
 {
     public class RecipeValidator : AbstractValidator<Recipe>
     {
-        public RecipeValidator()
+        public RecipeValidator(IStringLocalizer<SharedResources> localizer)
         {
             RuleFor(r => r.Name)
                 .NotEmpty()
@@ -21,7 +19,7 @@ namespace TasteUfes.Models.Validators
                 .SetValidator(new PreparationValidator());
 
             RuleForEach(r => r.Ingredients)
-                .SetValidator(new IngredientValidator());
+                .SetValidator(new IngredientValidator(localizer));
 
             RuleFor(r => r.UserId)
                 .NotEmpty();

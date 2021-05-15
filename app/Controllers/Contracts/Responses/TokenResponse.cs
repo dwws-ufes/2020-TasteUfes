@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Responses
 {
-    public class TokenResource
+    public class TokenResponse
     {
         [JsonPropertyName("user_id")]
         public Guid UserId { get; set; }

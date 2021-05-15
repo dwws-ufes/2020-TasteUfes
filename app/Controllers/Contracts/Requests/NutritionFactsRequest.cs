@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using TasteUfes.Models;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Requests
 {
-    public class NutritionFactsResource : EntityResource
+    public class NutritionFactsRequest : EntityRequest
     {
-        [Required]
-        [Range(1, Int16.MaxValue)]
+        // [Required]
+        // [Range(1, Int16.MaxValue)]
         [JsonPropertyName("serving_size")]
         public double ServingSize { get; set; }
 
-        [Required]
-        [Range(1, 7)]
+        // [Required]
+        // [Range(1, 7)]
         [JsonPropertyName("serving_size_unit")]
         public Measures ServingSizeUnit { get; set; }
 
@@ -25,7 +24,7 @@ namespace TasteUfes.Resources
         public double DailyValue { get; set; }
 
         [JsonPropertyName("nutrition_facts_nutrients")]
-        public IEnumerable<NutritionFactsNutrientsResource> NutritionFactsNutrients { get; set; }
+        public IEnumerable<NutritionFactsNutrientsRequest> NutritionFactsNutrients { get; set; }
 
         [JsonPropertyName("food_id")]
         public Guid FoodId { get; set; }

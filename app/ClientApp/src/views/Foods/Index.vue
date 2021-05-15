@@ -3,9 +3,9 @@
     <template v-if="!isTable">
       <v-row class="justify-space-between">
         <v-col>
-          <h1>Ingredients</h1>
+          <h1>{{ $vuetify.lang.t('$vuetify.ingredients') }}</h1>
         </v-col>
-        <v-col class="justify-flex-end d-flex">
+        <v-col class="align-flex-end d-flex flex-column">
           <v-btn
             elevation="2"
             :to="{ name: 'CreateFood' }"
@@ -13,7 +13,19 @@
             dark
           >
             <v-icon class="mr-1">mdi-food</v-icon>
-            Create
+            {{ $vuetify.lang.t('$vuetify.create') }}
+          </v-btn>
+          <v-btn
+            v-if="!selected.length"
+            outlined
+            color="primary"
+            @click="redirect"
+          >
+            {{ $vuetify.lang.t('$vuetify.generate') }} RDF
+            <v-icon class="d-inline" small>mdi-open-in-new</v-icon>
+          </v-btn>
+          <v-btn v-else outlined color="primary" @click="download">
+            {{ $vuetify.lang.t('$vuetify.download') }} RDF
           </v-btn>
         </v-col>
       </v-row>
@@ -23,19 +35,21 @@
             v-model="search"
             class="search"
             append-icon="mdi-magnify"
-            label="Search Ingredient"
+            :label="$vuetify.lang.t('$vuetify.search') + ' ' + $vuetify.lang.t('$vuetify.ingredient')"
             single-line
             hide-details
           ></v-text-field>
         </v-col>
       </v-row>
       <v-data-table
+        v-model="selected"
         :loading="load"
-        loading-text="Loading... Please wait"
+        :loading-text="$vuetify.lang.t('$vuetify.loading_wait')"
         :headers="headers"
         :items="foodList"
         :items-per-page="10"
         :search="search"
+        show-select
         class="elevation-1"
       >
         <template v-slot:item.name="{ item }">
@@ -71,13 +85,23 @@
       <div class="list">
         <div>
           <v-col class="pb-0">
-            <h1>Ingredients</h1>
+            <h1>{{ $vuetify.lang.t('$vuetify.ingredients') }}</h1>
           </v-col>
           <v-container>
             <v-sheet v-if="loadSkeleton" :color="`grey lighten-4`" class="pa-3">
               <v-container>
+                <v-skeleton-loader class="mx-auto mb-4" type="text" />
                 <v-row>
-                  <v-skeleton-loader class="mx-auto w-100" type="image" />
+                  <v-col
+                    v-for="index in 9"
+                    :key="index"
+                    cols="12"
+                    xs="12"
+                    sm="6"
+                    lg="4"
+                  >
+                    <v-skeleton-loader class="mx-auto" type="image" />
+                  </v-col>
                 </v-row>
               </v-container>
             </v-sheet>
@@ -88,21 +112,21 @@
               text
               type="warning"
             >
-              <v-card-text> No ingredient found. </v-card-text>
+              <v-card-text> {{ $vuetify.lang.t('$vuetify.no_ingredient') }}. </v-card-text>
             </v-alert>
             <div v-else>
               <v-row class="mb-2">
-              <v-col>
-                <v-text-field
-                  v-model="search"
-                  class="search"
-                  append-icon="mdi-magnify"
-                  label="Search Ingredient"
-                  single-line
-                  hide-details
-                ></v-text-field>
-              </v-col>
-            </v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="search"
+                    class="search"
+                    append-icon="mdi-magnify"
+                    :label="$vuetify.lang.t('$vuetify.search') + ' ' + $vuetify.lang.t('$vuetify.ingredient')"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col
                   v-for="food in visibleFoods"
@@ -124,7 +148,7 @@
                         <v-container>
                           <v-row v-if="food.nutrition_facts">
                             <v-col>
-                              <b>Serving Size: </b
+                              <b>{{ $vuetify.lang.t('$vuetify.serving_size') }}: </b
                               >{{ food.nutrition_facts.serving_size
                               }}{{
                                 getMeasureName(
@@ -155,7 +179,7 @@
 </template>
 
 <script>
-import { getFoods, deleteFood } from "@/api";
+import { getFoods, deleteFood, getRDFById } from "@/api";
 import EditButton from "@/components/buttons/EditButton.vue";
 import DetailsButton from "@/components/buttons/DetailsButton.vue";
 import DeleteButton from "@/components/buttons/DeleteButton.vue";
@@ -168,6 +192,8 @@ export default {
       perPage: 12,
       load: true,
       loadSkeleton: true,
+      selected: [],
+      linkRDF: process.env.VUE_APP_API_URL + "foods/ld/rdf",
       headers: [
         {
           text: "Nº",
@@ -176,17 +202,17 @@ export default {
           class: "primary",
         },
         {
-          text: "Name",
+          text: this.$vuetify.lang.t('$vuetify.name'),
           value: "name",
           class: "primary",
         },
         {
-          text: "Serving Size",
+          text: this.$vuetify.lang.t('$vuetify.serving_size'),
           value: "serving_size",
           class: "primary",
         },
         {
-          text: "Actions",
+          text: this.$vuetify.lang.t('$vuetify.actions'),
           value: "actions",
           class: "primary",
         },
@@ -224,7 +250,14 @@ export default {
     this.getData();
     setTimeout(() => {
       this.loadSkeleton = false;
+      this.$store.dispatch("ActionSetOverlay", false);
     }, 300);
+  },
+
+  mounted() {
+    if(!this.isTable && !this.$vuetify.breakpoint.xs){
+      document.querySelector("th").classList.add("primary");
+    }
   },
 
   methods: {
@@ -258,7 +291,7 @@ export default {
       deleteFood(id)
         .then((result) => {
           this.$store.dispatch("setSnackbar", {
-            text: `Ingredient ${name} deleted.`,
+            text: `${this.$vuetify.lang.t('$vuetify.ingredient')} ${name} ${this.$vuetify.lang.t('$vuetify.deleted')}.`,
             color: "success",
           });
           let foodId = this.foodList.findIndex((food) => food.id === id);
@@ -278,6 +311,41 @@ export default {
     changeLoading() {
       this.load = !this.load;
     },
+
+    redirect() {
+      window.open(this.linkRDF, "_blank");
+    },
+
+    download() {
+      let ids = this.selected.map((ingredient) => {
+        return ingredient.id;
+      })
+      getRDFById(ids)
+        .then((response) => {
+          var fileURL = window.URL.createObjectURL(
+            new Blob([response.data])
+          );
+          var fileLink = document.createElement("a");
+          fileLink.href = fileURL;
+          fileLink.setAttribute("download", this.$vuetify.lang.t('$vuetify.ingredients') + ".rdf");
+          document.body.appendChild(fileLink);
+          fileLink.click();
+        })
+        .catch((error) => {
+          error.response.data.errors.map((error) => {
+            this.$store.dispatch("setSnackbar", {
+              text: `${error.message}`,
+              color: "error",
+            });
+          });
+        });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+th:first-of-type {
+  background-color: $primary;
+}
+</style>

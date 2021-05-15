@@ -11,7 +11,7 @@
             <v-col justify="space-around">
               <v-text-field
                 v-model.number="serv"
-                label="Servings"
+                :label="this.$vuetify.lang.t('$vuetify.servings')"
                 type="number"
                 :rules="this.limitRule"
                 @change="recalculate()"
@@ -20,14 +20,14 @@
           </v-row>
         </div>
         <div class="my-2">
-          <b>Preparation Time:</b>
+          <b>{{ $vuetify.lang.t('$vuetify.preparation_time') }}:</b>
           {{ recipeData.preparation.preparation_time }}
         </div>
       </v-list-item-content>
     </v-list-item>
     <v-list-item v-if="recipeData.ingredients.length > 0">
       <v-list-item-content>
-        <h3>Ingredients</h3>
+        <h3>{{ $vuetify.lang.t('$vuetify.ingredients') }}</h3>
         <v-divider class="px-1 pb-3" />
 
         <v-list-item-content
@@ -45,7 +45,7 @@
     <div v-if="!anonymous">
       <v-list-item v-if="recipeData.preparation.steps.length > 0">
         <v-list-item-content>
-          <h3>Steps</h3>
+          <h3>{{ $vuetify.lang.t('$vuetify.steps') }}</h3>
           <v-divider class="px-1 pb-3" />
           <v-list-item-content
             v-for="step in recipeData.preparation.steps"
@@ -54,7 +54,7 @@
             <ul>
               <li>
                 <span>
-                  <b>Step {{ step.step }}:</b> {{ step.description }}
+                  <b>{{ $vuetify.lang.t('$vuetify.step') }} {{ step.step }}:</b> {{ step.description }}
                 </span>
               </li>
             </ul>
@@ -72,8 +72,8 @@ export default {
     return {
       serv: null,
       limitRule: [
-        (value) => value < 10000 || "Value too big",
-        (value) => value > 0 || "Value must not be negative or 0",
+        (value) => value < 10000 || this.$vuetify.lang.t('$vuetify.too_big') + '.',
+        (value) => value > 0 || this.$vuetify.lang.t('$vuetify.neg_zero') + '.',
       ],
       recipeData: null,
     };
@@ -114,7 +114,6 @@ export default {
           .then((result) => {
             this.recipeData = result.data;
             // this.$emit('recalculate', this.recipe.nutrition_facts);
-            console.log(result);
           })
           .catch((error) => {
             error.response.data.errors.map((error) => {

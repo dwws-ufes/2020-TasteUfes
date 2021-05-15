@@ -8,7 +8,7 @@ using TasteUfes.Models;
 using TasteUfes.Models.Validators;
 using TasteUfes.Services.Interfaces;
 using TasteUfes.Services.Notifications;
-using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace TasteUfes.Services
 {
@@ -17,12 +17,15 @@ namespace TasteUfes.Services
         private readonly static string G = Enum.GetName(typeof(Measures), Measures.g);
         private readonly static string L = Enum.GetName(typeof(Measures), Measures.L);
         private readonly IFoodService _foodService;
+        private readonly IStringLocalizer<SharedResources> _localizer;
 
         public RecipeService(IFoodService foodService,
-            IUnitOfWork unitOfWork, RecipeValidator validator, INotificator notificator, ILogger<RecipeService> logger)
+            IUnitOfWork unitOfWork, RecipeValidator validator, INotificator notificator, ILogger<RecipeService> logger,
+            IStringLocalizer<SharedResources> localizer)
             : base(unitOfWork, validator, notificator, logger)
         {
             _foodService = foodService;
+            _localizer = localizer;
         }
 
         public Recipe GetDetailed(Guid id)
@@ -186,7 +189,7 @@ namespace TasteUfes.Services
 
                 ingredient.Food = food;
 
-                if (!IsValid(new IngredientValidator(), ingredient, "MassVolumeConflict"))
+                if (!IsValid(new IngredientValidator(_localizer), ingredient, "MassVolumeConflict"))
                     return null;
 
                 var foodServingSize = food.NutritionFacts.ServingSize;

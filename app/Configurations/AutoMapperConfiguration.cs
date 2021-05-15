@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using TasteUfes.Controllers.Contracts.Requests;
+using TasteUfes.Controllers.Contracts.Responses;
 using TasteUfes.Models;
-using TasteUfes.Resources;
 
 namespace TasteUfes.Configurations
 {
@@ -8,19 +9,30 @@ namespace TasteUfes.Configurations
     {
         public AutoMapperConfig()
         {
-            CreateMap<Food, FoodResource>().ReverseMap();
-            CreateMap<Ingredient, IngredientResource>().ReverseMap();
-            CreateMap<Nutrient, NutrientResource>().ReverseMap();
-            CreateMap<NutritionFactsNutrients, NutritionFactsNutrientsResource>().ReverseMap();
-            CreateMap<NutritionFacts, NutritionFactsResource>().ReverseMap();
-            CreateMap<Preparation, PreparationResource>().ReverseMap();
-            CreateMap<PreparationStep, PreparationStepResource>().ReverseMap();
-            CreateMap<Recipe, RecipeResource>().ReverseMap();
-            CreateMap<Recipe, AnonymousRecipeResource>().ReverseMap();
-            CreateMap<Role, RoleResource>().ReverseMap();
-            CreateMap<User, UserResource>()
-                .ForMember(u => u.Password, opt => opt.Ignore())
-                .ReverseMap();
+            CreateMap<FoodRequest, Food>();
+            CreateMap<IngredientRequest, Ingredient>();
+            CreateMap<NutrientRequest, Nutrient>();
+            CreateMap<NutritionFactsNutrientsRequest, NutritionFactsNutrients>();
+            CreateMap<NutritionFactsRequest, NutritionFacts>();
+            CreateMap<PreparationRequest, Preparation>();
+            CreateMap<PreparationStepRequest, PreparationStep>();
+            CreateMap<RecipeRequest, Recipe>();
+            CreateMap<AnonymousRecipeRequest, Recipe>();
+            CreateMap<RoleRequest, Role>();
+            CreateMap<UserRequest, User>();
+
+            CreateMap<Food, FoodResponse>();
+            CreateMap<Ingredient, IngredientResponse>();
+            CreateMap<Nutrient, NutrientResponse>();
+            CreateMap<NutritionFactsNutrients, NutritionFactsNutrientsResponse>();
+            CreateMap<NutritionFacts, NutritionFactsResponse>();
+            CreateMap<Preparation, PreparationResponse>();
+            CreateMap<PreparationStep, PreparationStepResponse>();
+            CreateMap<Recipe, RecipeResponse>();
+            CreateMap<Recipe, AnonymousRecipeResponse>();
+            CreateMap<Role, RoleResponse>();
+            CreateMap<User, UserResponse>()
+                .ForMember(u => u.Password, opt => opt.Ignore());
         }
     }
 }

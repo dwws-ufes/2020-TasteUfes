@@ -1,6 +1,13 @@
 import { authAPI, notAuthAPI, createAuthAPI, deleteAuthAPI } from '@/config/axios/index';
+import axios from 'axios';
 
 // Functions
+async function healthCheck() {
+  return await axios.create({
+    method: 'GET',
+    url: process.env.VUE_HEALTH_CHECK,
+  });
+}
 
 // --- User ---
 async function login(data) {
@@ -65,7 +72,7 @@ async function deleteUser(id) {
   });
 }
 
-async function getRoles(id) {
+async function getRoles() {
   return await authAPI({
     method: 'GET',
     url: `/roles`,
@@ -141,6 +148,21 @@ async function getFood(id) {
   });
 }
 
+async function getRDFById(ids) {
+  return await notAuthAPI({
+    method: 'POST',
+    url: `/foods/ld/rdf`,
+    data: ids,
+  });
+}
+
+async function getLDFood(name) {
+  return await notAuthAPI({
+    method: 'GET',
+    url: `/foods/ld/${name}`,
+  });
+}
+
 async function updateFood(id, food) {
   return await authAPI({
     method: 'PUT',
@@ -191,6 +213,8 @@ async function recommendationByFoods(foods) {
 }
 
 export {
+  healthCheck,
+
   login,
   updatePassword,
   registerUser,
@@ -215,6 +239,8 @@ export {
   createFood,
   getFoods,
   getFood,
+  getRDFById,
+  getLDFood,
   updateFood,
   deleteFood,
 

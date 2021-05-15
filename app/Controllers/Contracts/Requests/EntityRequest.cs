@@ -1,9 +1,9 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Requests
 {
-    public abstract class EntityResource
+    public abstract class EntityRequest
     {
         [JsonPropertyName("id")]
         public Guid Id { get; set; }

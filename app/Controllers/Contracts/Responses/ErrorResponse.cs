@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace TasteUfes.Resources
+namespace TasteUfes.Controllers.Contracts.Responses
 {
-    public class ErrorResource
+    public class ErrorResponse
     {
         [JsonPropertyName("property")]
         public string Property { get; set; }

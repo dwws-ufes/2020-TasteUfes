@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace TasteUfes.Models.Validators
 {
@@ -10,7 +10,7 @@ namespace TasteUfes.Models.Validators
         private static readonly Measures[] MASS = new[] { Measures.mg, Measures.g, Measures.kg, Measures.un };
         private static readonly Measures[] VOLUME = new[] { Measures.L, Measures.ml, Measures.un };
 
-        public IngredientValidator()
+        public IngredientValidator(IStringLocalizer<SharedResources> localizer)
         {
             RuleFor(i => i.Quantity)
                 .NotEmpty()
@@ -28,7 +28,7 @@ namespace TasteUfes.Models.Validators
             {
                 RuleFor(i => i.Food)
                     .NotEmpty()
-                    .SetValidator(new FoodValidator());
+                    .SetValidator(new FoodValidator(localizer));
 
                 When(i => MASS.Contains(i.Food.NutritionFacts.ServingSizeUnit), () =>
                 {

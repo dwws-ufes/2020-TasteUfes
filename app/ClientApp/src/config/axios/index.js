@@ -16,14 +16,15 @@ if (access_token != null && token_type != null) {
 // TasteUfes API
 
 var authAPI;
+var url = navigator.language === 'pt-BR' ? process.env.VUE_APP_API_URL_BR : process.env.VUE_APP_API_URL;
 
 const notAuthAPI = axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
+  baseURL: url,
 });
 
 function createAuthAPI(token_type, access_token) {
   authAPI = axios.create({
-    baseURL: process.env.VUE_APP_API_URL,
+    baseURL: url,
     headers: {
       Authorization: token_type + ' ' + access_token
     }

@@ -1,6 +1,25 @@
 ﻿version: '3'
 
+networks:
+  taste-api-dev:
+    driver: bridge
+
 services:
+  db:
+    image: postgres:13-alpine
+    container_name: tasteufes_db_container
+    mem_limit: 1G
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: tasteuser
+      POSTGRES_PASSWORD: tastepassword
+      POSTGRES_DB: tasteufes-pg
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - taste-api-dev
   ui:
     image: tasteufes-ui:1.0.0
     container_name: tasteufes_ui_container
@@ -10,9 +29,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+    networks:
+      - taste-api-dev
     environment:
       VUE_APP_TITLE: "TasteUfes"
-      VUE_APP_API_URL: "http://localhost:80/api/v1"
+      VUE_APP_API_URL: "http://localhost:80/en-US/api/v1/"
+      VUE_APP_API_URL_BR: "http://localhost:80/pt-BR/api/v1/"
+      VUE_HEALTH_CHECK: "http://localhost:80/api/v1/health"
     command: ["npm", "run", "serve"]
   app:
     image: tasteufes-app:1.0.0
@@ -21,11 +44,14 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    depends_on:
+      - db
     ports:
       - 80:80
       - 443:443
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Host=tasteufes_db_container;Port=5432;Pooling=true;Database=tasteufes-pg;User Id=tasteuser;Password=tastepassword;CommandTimeout=300;"
       # Por tratar-se de um trabalho de faculdade e, buscando a simplificação do mesmo para
       # facilitar na correção do professor da disciplina, estaremos expondo a chave secreta
       # do token de acesso, mas isso NUNCA deve ser feito num projeto real.
@@ -33,5 +59,9 @@ services:
       TOKEN_TYPE: "Bearer"
       TOKEN_LIFETIME: "0.02:00:00"
       REFRESH_LIFETIME: "3.00:00:00"
+    networks:
+      - taste-api-dev
     restart: always
-    command: ["dotnet", "TasteUfes.dll"]
+    command: ["/wait-for-it.sh", "tasteufes_db_container:5432", "--", "dotnet", "TasteUfes.dll"]
+volumes:
+  pgdata:

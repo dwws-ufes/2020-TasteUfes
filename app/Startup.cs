@@ -1,9 +1,12 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TasteUfes.Configurations;
@@ -24,7 +27,7 @@ namespace TasteUfes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services
                 .ResolveDependencyInjections(Configuration)
@@ -43,6 +46,9 @@ namespace TasteUfes
                 .AddAuthConfig(Configuration["SECRET_KEY"]);
 
             services.AddControllers();
+            services.AddHealthChecks();
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.Configure<ApiBehaviorOptions>(options =>
                 options.SuppressModelStateInvalidFilter = true);
@@ -74,6 +80,27 @@ namespace TasteUfes
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
+
+            app.UseHealthChecks("/api/v1/health");
+
+            var requestLocalization = new RequestLocalizationOptions
+            {
+                SupportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-BR")
+                },
+                SupportedUICultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-BR")
+                },
+                DefaultRequestCulture = new RequestCulture("en-US")
+            };
+
+            requestLocalization.RequestCultureProviders.Insert(0, new UrlRequestCultureProvider());
+
+            app.UseRequestLocalization(requestLocalization);
 
             app.UseEndpoints(endpoints =>
             {
