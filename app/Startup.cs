@@ -37,7 +37,7 @@ namespace TasteUfes
                 .AddCors(options =>
                 {
                     options.AddPolicy("TastePolicy", builder => builder
-                        .WithOrigins("https://vue-tasteufes.herokuapp.com", "http://localhost:8080")
+                        .WithOrigins("http://vue-tasteufes.herokuapp.com", "https://vue-tasteufes.herokuapp.com", "http://localhost:8080")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()

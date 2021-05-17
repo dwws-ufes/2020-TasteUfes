@@ -88,4 +88,5 @@ export default {
   no_recipe: 'No recipe found',
   anonymous_text: 'Anonymous Recipe does not have the role of persisting recipe in the system. Therefore, the ingredients selected here are only intended to generate the nutritional values for a dish or recipe.',
   password_match: 'Password must match',
+  manual: 'User Manual',
 };
